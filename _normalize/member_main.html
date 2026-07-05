@@ -1,0 +1,622 @@
+  <!-- 会员中心主体 v2 -->
+  <main class="mc-main">
+
+    <!-- 面包屑 -->
+    <div class="shell mc-crumb" style="background:#1c1812;margin:0;padding:14px 0;">
+      <div class="shell" style="padding:0;">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <span class="cur">个人中心</span>
+      </div>
+    </div>
+
+    <!-- 会员卡 + 数据格 -->
+    <section class="mc-hero">
+      <div class="shell mc-hero-grid">
+        <!-- 会员卡 -->
+        <div class="mc-card">
+          <div class="mc-card-bg"></div>
+          <div class="mc-card-deco"></div>
+
+          <div class="mc-card-top">
+            <div class="mc-card-tier-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg>
+              <span id="mcTierName">黄金会员</span>
+            </div>
+            <div class="mc-card-num">
+              MEMBER ID
+              <em>BZ20240617001</em>
+            </div>
+          </div>
+
+          <div class="mc-card-mid">
+            <div class="mc-card-avatar-wrap">
+              <div class="mc-card-avatar">
+                <img src="uploads/user-avatar.jpg" alt="会员头像" id="mcAvatar">
+              </div>
+              <span class="mc-card-vip">VIP</span>
+            </div>
+            <div class="mc-card-info">
+              <h2 id="mcUserName">百珍坊会员</h2>
+              <div class="mc-card-id">注册于 2024.03.18 · 累计在线 162h</div>
+              <div class="mc-card-meta">
+                <span><i></i>累计消费 ¥ 6,820</span>
+                <span><i></i>累计订单 12 笔</span>
+                <span><i></i>下次特权日 2025.03.18</span>
+              </div>
+            </div>
+            <a class="mc-card-edit" href="#mc-account">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+              编辑资料
+            </a>
+          </div>
+
+          <div class="mc-card-progress">
+            <div class="mc-progress-head">
+              <div class="mc-progress-tip">距离 <em>铂金会员</em> 还差 <em>1,180</em> 成长值</div>
+              <strong>2,820 / 4,000</strong>
+            </div>
+            <div class="mc-progress-bar"><span style="width:70.5%"></span></div>
+            <div class="mc-progress-stages">
+              <span>青铜</span>
+              <span>白银</span>
+              <span class="active">黄金 ●</span>
+              <span>铂金</span>
+              <span>钻石</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 数据格 -->
+        <div class="mc-stats">
+          <a class="mc-stat" href="#mc-points">
+            <div class="mc-stat-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </div>
+            <div class="mc-stat-body">
+              <strong>2,820</strong>
+              <span>成长积分</span>
+            </div>
+          </a>
+          <a class="mc-stat" href="#mc-fav">
+            <div class="mc-stat-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <div class="mc-stat-body">
+              <strong>18</strong>
+              <span>收藏宝物</span>
+            </div>
+          </a>
+          <a class="mc-stat" href="#mc-orders">
+            <div class="mc-stat-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </div>
+            <div class="mc-stat-body">
+              <strong>12</strong>
+              <span>历史订单</span>
+            </div>
+          </a>
+          <a class="mc-stat" href="#mc-coupon">
+            <div class="mc-stat-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 12V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v5a2 2 0 0 1 0 4v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3a2 2 0 0 1 0-4z"/><path d="M9 5v14"/></svg>
+            </div>
+            <div class="mc-stat-body">
+              <strong>5</strong>
+              <span>可用优惠</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 订单状态 -->
+    <section class="mc-section" id="mc-orders">
+      <div class="shell">
+        <div class="mc-section-head">
+          <div>
+            <span class="mc-eyebrow">My Orders</span>
+            <h3>我的订单</h3>
+          </div>
+          <a class="mc-link" href="#">查看全部 →</a>
+        </div>
+
+        <div class="mc-order-status">
+          <a class="mc-os" href="#">
+            <span class="mc-os-num">2</span>
+            <div class="mc-os-ico">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+            </div>
+            <span class="mc-os-name">待付款</span>
+          </a>
+          <a class="mc-os" href="#">
+            <span class="mc-os-num">1</span>
+            <div class="mc-os-ico">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="13" height="12" rx="1"/><path d="M16 9h4l1 5h-5z"/><circle cx="7" cy="20" r="2"/><circle cx="18" cy="20" r="2"/></svg>
+            </div>
+            <span class="mc-os-name">待发货</span>
+          </a>
+          <a class="mc-os" href="#">
+            <span class="mc-os-num">3</span>
+            <div class="mc-os-ico">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v8l9 4 9-4V7"/><path d="M12 11v8"/></svg>
+            </div>
+            <span class="mc-os-name">待收货</span>
+          </a>
+          <a class="mc-os" href="#" data-zero>
+            <span class="mc-os-num">0</span>
+            <div class="mc-os-ico">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg>
+            </div>
+            <span class="mc-os-name">待评价</span>
+          </a>
+          <a class="mc-os" href="#" data-zero>
+            <span class="mc-os-num">0</span>
+            <div class="mc-os-ico">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 6.5 2.7L21 3"/><path d="M21 3v6h-6"/><path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-6.5-2.7L3 21"/><path d="M3 21v-6h6"/></svg>
+            </div>
+            <span class="mc-os-name">退换/售后</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 最近订单 -->
+    <section class="mc-section">
+      <div class="shell">
+        <div class="mc-section-head">
+          <div>
+            <span class="mc-eyebrow">Recent Orders</span>
+            <h3>最近订单</h3>
+          </div>
+          <a class="mc-link sm" href="#">订单管理 →</a>
+        </div>
+
+        <div class="mc-recent">
+          <div class="mc-recent-card">
+            <div class="mc-recent-head">
+              <span class="mc-recent-id">FC20240617001</span>
+              <span class="mc-recent-status delivering">配送中</span>
+            </div>
+            <div class="mc-recent-prod">
+              <img src="uploads/product1.jpg" alt="方城黄石砚">
+              <div style="flex:1;min-width:0;">
+                <h4>方城黄石砚 · 紫袍玉带款</h4>
+                <p>规格 · 标准款 · 数量 1</p>
+              </div>
+              <strong>¥ 399</strong>
+            </div>
+            <div class="mc-recent-foot">
+              <div class="mc-recent-now">
+                <span class="mc-dot delivering"></span>
+                包裹已抵达 南阳转运中心
+              </div>
+              <div class="mc-recent-actions">
+                <a class="mc-btn-line" href="#">物流详情</a>
+                <a class="mc-btn-fill" href="#">确认收货</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="mc-recent-card">
+            <div class="mc-recent-head">
+              <span class="mc-recent-id">FC20240612083</span>
+              <span class="mc-recent-status pending">待付款</span>
+            </div>
+            <div class="mc-recent-prod">
+              <img src="uploads/pack-silk.jpg" alt="风味礼盒">
+              <div style="flex:1;min-width:0;">
+                <h4>方城风味四宝礼盒</h4>
+                <p>规格 · 中秋限定 · 数量 2</p>
+              </div>
+              <strong>¥ 1,260</strong>
+            </div>
+            <div class="mc-recent-foot">
+              <div class="mc-recent-now">
+                <span class="mc-dot pending"></span>
+                订单将于 23:46 后自动取消
+              </div>
+              <div class="mc-recent-actions">
+                <a class="mc-btn-line" href="#">取消订单</a>
+                <a class="mc-btn-fill" href="#">立即付款</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 常用工具 -->
+    <section class="mc-section">
+      <div class="shell">
+        <div class="mc-section-head">
+          <div>
+            <span class="mc-eyebrow">Quick Tools</span>
+            <h3>常用工具</h3>
+          </div>
+        </div>
+        <div class="mc-tools">
+          <a class="mc-tool" href="#mc-fav" style="position:relative;">
+            <div class="mc-tool-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <span>我的收藏</span>
+            <em class="mc-tool-dot">18</em>
+          </a>
+          <a class="mc-tool" href="#mc-coupon" style="position:relative;">
+            <div class="mc-tool-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 12V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v5a2 2 0 0 1 0 4v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3a2 2 0 0 1 0-4z"/></svg>
+            </div>
+            <span>优惠券包</span>
+            <em class="mc-tool-dot">5</em>
+          </a>
+          <a class="mc-tool" href="#mc-address">
+            <div class="mc-tool-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <span>地址管理</span>
+          </a>
+          <a class="mc-tool" href="#" style="position:relative;">
+            <div class="mc-tool-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+            </div>
+            <span>消息通知</span>
+            <em class="mc-tool-dot">3</em>
+          </a>
+          <a class="mc-tool" href="#mc-security">
+            <div class="mc-tool-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <span>账户安全</span>
+          </a>
+          <a class="mc-tool" href="#">
+            <div class="mc-tool-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            </div>
+            <span>消费记录</span>
+          </a>
+          <a class="mc-tool" href="#">
+            <div class="mc-tool-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 6.5 2.7L21 3"/><path d="M21 3v6h-6"/></svg>
+            </div>
+            <span>退换售后</span>
+          </a>
+          <a class="mc-tool" href="#">
+            <div class="mc-tool-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </div>
+            <span>在线客服</span>
+          </a>
+          <a class="mc-tool" href="custom-gift.html">
+            <div class="mc-tool-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M12 8V21M3 13h18"/><path d="M12 8c0-2.5-2-4-4-2s0 4 4 4m0-4c0-2.5 2-4 4-2s0 4-4 4"/></svg>
+            </div>
+            <span>礼盒定制</span>
+          </a>
+          <a class="mc-tool" href="auction.html">
+            <div class="mc-tool-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 9l6 6"/><path d="M9 14l-5.5 5.5a1.5 1.5 0 0 1-2.1-2.1L7 12"/><path d="M16 7l-9 9"/><path d="M11 5l8 8"/></svg>
+            </div>
+            <span>竞拍中心</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 等级权益 -->
+    <section class="mc-section" id="mc-tier">
+      <div class="shell">
+        <div class="mc-section-head">
+          <div>
+            <span class="mc-eyebrow">Membership Tiers</span>
+            <h3>会员等级 · 权益</h3>
+          </div>
+          <a class="mc-link sm" href="#">权益规则 →</a>
+        </div>
+
+        <div class="mc-tier-grid">
+          <div class="mc-tier">
+            <div class="mc-tier-head t1">
+              <span class="mc-tier-name">青铜</span>
+              <span class="mc-tier-need">0 ~ 499 成长值</span>
+            </div>
+            <ul class="mc-tier-list">
+              <li>新人专享礼包</li>
+              <li>基础积分 1×</li>
+              <li class="mute">无生日礼</li>
+              <li class="mute">无专属客服</li>
+            </ul>
+          </div>
+          <div class="mc-tier">
+            <div class="mc-tier-head t2">
+              <span class="mc-tier-name">白银</span>
+              <span class="mc-tier-need">500 ~ 1,499</span>
+            </div>
+            <ul class="mc-tier-list">
+              <li>全场 95 折</li>
+              <li>积分 1.2×</li>
+              <li>生日 9 折券</li>
+              <li class="mute">无专属客服</li>
+            </ul>
+          </div>
+          <div class="mc-tier featured">
+            <div class="mc-tier-flag">当前等级</div>
+            <div class="mc-tier-head t3">
+              <span class="mc-tier-name">黄金</span>
+              <span class="mc-tier-need">1,500 ~ 3,999</span>
+            </div>
+            <ul class="mc-tier-list">
+              <li>全场 9 折</li>
+              <li>积分 1.5×</li>
+              <li>生日双倍积分</li>
+              <li>满 ¥299 免邮</li>
+              <li class="mute">无专属客服</li>
+            </ul>
+          </div>
+          <div class="mc-tier">
+            <div class="mc-tier-head t4">
+              <span class="mc-tier-name">铂金</span>
+              <span class="mc-tier-need">4,000 ~ 9,999</span>
+            </div>
+            <ul class="mc-tier-list">
+              <li>全场 88 折</li>
+              <li>积分 2×</li>
+              <li>专属生日礼盒</li>
+              <li>无门槛包邮</li>
+              <li>VIP 客服</li>
+            </ul>
+          </div>
+          <div class="mc-tier">
+            <div class="mc-tier-head t5">
+              <span class="mc-tier-name">钻石</span>
+              <span class="mc-tier-need">≥ 10,000</span>
+            </div>
+            <ul class="mc-tier-list">
+              <li>全场 85 折</li>
+              <li>积分 3×</li>
+              <li>新品优先购</li>
+              <li>线下品鉴邀约</li>
+              <li>1 对 1 管家</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 积分 + 优惠券 -->
+    <section class="mc-section">
+      <div class="shell mc-2col">
+        <!-- 积分 -->
+        <div class="mc-pane" id="mc-points">
+          <div class="mc-pane-head">
+            <h4>积分明细</h4>
+            <a class="mc-link sm" href="#">全部记录 →</a>
+          </div>
+          <div class="mc-points-now">
+            <div>
+              <span>当前可用</span>
+              <strong>2,820</strong>
+            </div>
+            <em>本月 +320</em>
+          </div>
+          <ul class="mc-points-list">
+            <li>
+              <span class="t">每日签到 · 第 7 天</span>
+              <span class="d">06.17</span>
+              <span class="add">+20</span>
+            </li>
+            <li>
+              <span class="t">订单消费 FC...001</span>
+              <span class="d">06.15</span>
+              <span class="add">+399</span>
+            </li>
+            <li>
+              <span class="t">兑换优惠券 ¥50</span>
+              <span class="d">06.12</span>
+              <span class="sub">-200</span>
+            </li>
+            <li>
+              <span class="t">评价晒单奖励</span>
+              <span class="d">06.10</span>
+              <span class="add">+50</span>
+            </li>
+            <li>
+              <span class="t">分享商品页</span>
+              <span class="d">06.08</span>
+              <span class="add">+10</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 优惠券 -->
+        <div class="mc-pane" id="mc-coupon">
+          <div class="mc-pane-head">
+            <h4>优惠券中心</h4>
+            <a class="mc-link sm" href="#">领券中心 →</a>
+          </div>
+          <div class="mc-coupon">
+            <div class="mc-coupon-l">
+              <em>满 299 可用</em>
+              <strong>50</strong>
+              <span>无门槛通用</span>
+            </div>
+            <div class="mc-coupon-r">
+              <div>
+                <h5>会员专享 · 6月好礼</h5>
+                <p>有效期至 2024.06.30</p>
+              </div>
+              <button>立即使用</button>
+            </div>
+          </div>
+          <div class="mc-coupon">
+            <div class="mc-coupon-l">
+              <em>满 599 可用</em>
+              <strong>120</strong>
+              <span>礼盒类专享</span>
+            </div>
+            <div class="mc-coupon-r">
+              <div>
+                <h5>礼盒定制满减券</h5>
+                <p>有效期至 2024.07.15</p>
+              </div>
+              <button>立即使用</button>
+            </div>
+          </div>
+          <div class="mc-coupon">
+            <div class="mc-coupon-l">
+              <em>9 折</em>
+              <strong>9折</strong>
+              <span>文房雅器</span>
+            </div>
+            <div class="mc-coupon-r">
+              <div>
+                <h5>文房品类折扣券</h5>
+                <p>有效期至 2024.07.31</p>
+              </div>
+              <button>立即使用</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 收藏 + 地址 -->
+    <section class="mc-section">
+      <div class="shell mc-2col">
+        <!-- 收藏 -->
+        <div class="mc-pane" id="mc-fav">
+          <div class="mc-pane-head">
+            <h4>我的收藏</h4>
+            <a class="mc-link sm" href="#">查看全部 18 →</a>
+          </div>
+          <ul class="mc-fav-list">
+            <li>
+              <img src="uploads/product1.jpg" alt="">
+              <div style="flex:1;min-width:0;">
+                <h5>方城黄石砚 · 紫袍玉带款</h5>
+                <p>文房雅器 · 收藏于 06.10</p>
+              </div>
+              <strong>¥ 399</strong>
+            </li>
+            <li>
+              <img src="uploads/product2.jpg" alt="">
+              <div style="flex:1;min-width:0;">
+                <h5>方城丹参茶饼 · 限量首发</h5>
+                <p>养生珍品 · 收藏于 06.05</p>
+              </div>
+              <strong>¥ 168</strong>
+            </li>
+            <li>
+              <img src="uploads/pack-silk.jpg" alt="">
+              <div style="flex:1;min-width:0;">
+                <h5>风味四宝礼盒</h5>
+                <p>美食特产 · 收藏于 05.28</p>
+              </div>
+              <strong>¥ 630</strong>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 地址 -->
+        <div class="mc-pane" id="mc-address">
+          <div class="mc-pane-head">
+            <h4>收货地址</h4>
+            <a class="mc-link sm" href="#">+ 新增地址</a>
+          </div>
+          <div class="mc-addr default">
+            <div class="mc-addr-top">
+              <strong>张先生</strong>
+              <span>138 **** 6789</span>
+              <em class="mc-addr-flag">默认</em>
+            </div>
+            <p>河南省 南阳市 方城县 凤瑞街道 文化路 28 号 · 百珍坊体验中心 3F</p>
+            <div class="mc-addr-act">
+              <a href="#">编辑</a>
+              <a href="#">删除</a>
+              <a href="#">复制</a>
+            </div>
+          </div>
+          <div class="mc-addr">
+            <div class="mc-addr-top">
+              <strong>张先生（公司）</strong>
+              <span>138 **** 6789</span>
+            </div>
+            <p>北京市 朝阳区 建国门外大街 1 号 · 国贸大厦 A 座 18F</p>
+            <div class="mc-addr-act">
+              <a href="#">设为默认</a>
+              <a href="#">编辑</a>
+              <a href="#">删除</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 账户安全 -->
+    <section class="mc-section" id="mc-security">
+      <div class="shell">
+        <div class="mc-section-head">
+          <div>
+            <span class="mc-eyebrow">Account Security</span>
+            <h3>账户安全</h3>
+          </div>
+          <div class="mc-sec-score">安全等级 <em class="lvl-mid">中</em></div>
+        </div>
+
+        <div class="mc-pane" style="padding:6px 22px;">
+          <ul class="mc-sec-list">
+            <li>
+              <div class="mc-sec-ico">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </div>
+              <div>
+                <h5>登录密码</h5>
+                <p>建议每 90 天更换一次，最近修改于 2024.04.12</p>
+              </div>
+              <a href="#">修改</a>
+            </li>
+            <li>
+              <div class="mc-sec-ico">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+              </div>
+              <div>
+                <h5>绑定手机</h5>
+                <p>已绑定 138****6789</p>
+              </div>
+              <a href="#">更换</a>
+            </li>
+            <li>
+              <div class="mc-sec-ico">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <h5>邮箱地址</h5>
+                <p>未绑定 · 用于接收订单通知和找回密码</p>
+              </div>
+              <a href="#">绑定</a>
+            </li>
+            <li>
+              <div class="mc-sec-ico">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+              <div>
+                <h5>登录设备</h5>
+                <p>当前 2 台设备在线 · 最后登录于 06.17 14:02 · 南阳</p>
+              </div>
+              <a href="#">管理</a>
+            </li>
+            <li>
+              <div class="mc-sec-ico">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2L4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5z"/></svg>
+              </div>
+              <div>
+                <h5>实名认证</h5>
+                <p>已认证 · 张** · 身份证 4113***********1234</p>
+              </div>
+              <a href="#" style="color:#6b9b87;">已完成</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>

@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鏂瑰煄鎵嬪伐铓曚笣琚?- 鏂瑰煄鐧剧弽鍧?/title>
+<style>
+:root{--primary:#171411;--accent:#B9975B;--bg:#F6F0E6;--text:#2b241e;--muted:#766D61;--clay:#A85F3D;--pine:#596C58;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Serif SC','Songti SC','STSong','SimSun',serif;background:var(--bg);color:var(--text);font-variant-numeric:tabular-nums lining-nums;font-feature-settings:'tnum' 1,'lnum' 1;}
+.header{background:var(--primary);padding:0 32px;box-shadow:0 2px 12px rgba(0,0,0,0.15);}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#b89b5b,#d4b876);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--primary);}
+.logo-title{font-size:20px;font-weight:700;color:#fff;letter-spacing:2px;}
+.back-btn{color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;display:flex;align-items:center;gap:6px;transition:color .3s;}
+.back-btn:hover{color:#d4b876;}
+.detail-wrap{max-width:900px;margin:0 auto;padding:40px 24px;}
+.breadcrumb{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.breadcrumb a{color:var(--muted);text-decoration:none;}
+.breadcrumb a:hover{color:var(--primary);}
+.detail-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08);}
+.detail-img{width:100%;height:400px;object-fit:cover;display:block;}
+.detail-body{padding:32px;}
+.detail-tag{display:inline-block;background:rgba(26,60,110,0.08);color:var(--primary);border:1px solid rgba(26,60,110,0.15);font-size:12px;padding:3px 12px;border-radius:4px;margin-bottom:12px;}
+.detail-body h1{font-size:28px;font-weight:700;margin-bottom:12px;color:var(--primary);}
+.detail-price{font-size:36px;font-weight:800;color:var(--accent);margin-bottom:20px;}
+.detail-desc{font-size:15px;line-height:2;color:#555;margin-bottom:28px;}
+.detail-desc p{margin-bottom:12px;}
+.detail-attr{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px;}
+.attr-item{background:#f8f8f8;border-radius:10px;padding:14px 18px;}
+.attr-label{font-size:12px;color:var(--muted);margin-bottom:4px;}
+.attr-value{font-size:15px;font-weight:600;color:var(--text);}
+.btn-buy{background:linear-gradient(135deg,#b89b5b,#d4b876);color:#fff;border:none;border-radius:10px;padding:14px 48px;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s;}
+.btn-buy:hover{box-shadow:0 4px 16px rgba(184,155,91,0.4);transform:translateY(-2px);}
+.rec-section{max-width:900px;margin:0 auto;padding:0 24px 40px;}
+.rec-title{font-size:20px;font-weight:700;color:var(--primary);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.rec-title::before{content:'';width:4px;height:20px;background:var(--accent);border-radius:2px;}
+.rec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.rec-card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e8e4de;text-decoration:none;color:var(--text);transition:all .3s;}
+.rec-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(26,60,110,0.12);}
+.rec-img{width:100%;padding-top:75%;background-size:cover;background-position:center;}
+.rec-body{padding:12px;}
+.rec-name{font-size:13px;font-weight:600;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.rec-price{font-size:15px;font-weight:700;color:var(--accent);margin-top:6px;}
+@media(max-width:768px){.rec-grid{grid-template-columns:repeat(2,1fr);}.detail-img{height:250px;}}
+
+/* ============ 渚ц竟鏍忓鑸?============ */
+.side-tab.active{background:var(--primary)!important;color:#fff!important;}
+.side-tab.active:hover{background:var(--primary)!important;}
+.tab-content{display:none;animation:fadeIn .5s ease;}
+.tab-content.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+    .shell { width: min(1240px, calc(100vw - 48px)); margin: 0 auto; }
+
+
+    .topbar {
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 60;
+
+      border-bottom: 1px solid var(--line-dark);
+
+      background: rgba(23, 20, 17, .91);
+
+      color: var(--cream);
+
+      backdrop-filter: blur(18px);
+
+    }
+
+    .nav {
+
+      min-height: 76px;
+
+      display: grid;
+
+      grid-template-columns: auto 1fr auto;
+
+      align-items: center;
+
+      gap: 28px;
+
+    }
+
+    .brand { display: flex; align-items: center; gap: 14px; min-width: max-content; color: var(--cream); text-decoration: none; }
+
+    .brand-mark {
+
+      position: relative;
+
+      width: 48px;
+
+      height: 48px;
+
+      border-radius: 50%;
+
+      overflow: hidden;
+
+      flex-shrink: 0;
+
+      box-shadow: 0 0 0 2px rgba(185,151,91,.45), 0 0 14px rgba(185,151,91,.15);
+
+    }
+
+    .brand-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .brand-mark::after { display: none; }
+
+    .brand strong { display: block; font-size: 21px; letter-spacing: 5px; font-weight: 900; }
+
+    .brand span span { display: block; margin-top: 3px; color: rgba(255,249,237,.58); font-family: var(--latin); font-size: 12px; letter-spacing: 4px; text-transform: uppercase; }
+
+    .navlinks { display: flex; justify-content: center; gap: 24px; color: rgba(255,249,237,.74); font-size: 14px; letter-spacing: 2px; }
+
+    .navlinks a { position: relative; white-space: nowrap; transition: color .25s ease; text-decoration: none; color: inherit; }
+
+    .navlinks a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -12px; height: 1px; background: var(--gold); transition: right .25s ease; }
+
+    .navlinks a:hover { color: var(--gold); }
+
+    .navlinks a:hover::after { right: 0; }
+
+    .nav-avatar {
+
+      width: 42px;
+
+      height: 42px;
+
+      border-radius: 50%;
+
+      border: 2px solid rgba(185,151,91,.6);
+
+      overflow: hidden;
+
+      cursor: pointer;
+
+      flex-shrink: 0;
+
+      background: rgba(185,151,91,.18);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      transition: border-color .2s;
+
+    }
+
+    .nav-avatar:hover { border-color: var(--gold); }
+
+    .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .nav-avatar-placeholder {
+
+      width: 22px;
+
+      height: 22px;
+
+      fill: rgba(255,249,237,.6);
+
+    }
+
+    /* 个人中心侧边栏 */
+
+    .profile-overlay {
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 200;
+
+      background: rgba(23,20,17,.45);
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: opacity .3s ease;
+
+    }
+
+    .profile-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .profile-sidebar {
+
+      position: fixed;
+
+      top: 0;
+
+      right: 0;
+
+      bottom: 0;
+
+      width: 320px;
+
+      z-index: 201;
+
+      background: #1c1812;
+
+      border-left: 1px solid rgba(185,151,91,.2);
+
+      display: flex;
+
+      flex-direction: column;
+
+      transform: translateX(100%);
+
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+
+      overflow-y: auto;
+
+    }
+
+    .profile-sidebar.open { transform: translateX(0); }
+
+    .profile-sidebar-header {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 22px 24px 18px;
+
+      border-bottom: 1px solid rgba(185,151,91,.15);
+
+    }
+
+    .profile-sidebar-header span {
+
+      color: var(--gold);
+
+      font-size: 15px;
+
+      letter-spacing: 3px;
+
+      font-weight: 900;
+
+    }
+
+    .profile-close {
+
+      width: 32px;
+
+      height: 32px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      cursor: pointer;
+
+      color: rgba(255,249,237,.5);
+
+      font-size: 20px;
+
+      border-radius: 4px;
+
+      transition: color .2s;
+
+    }
+
+    .profile-close:hover { color: var(--gold); }
+
+    .profile-user-block {
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 32px 24px 24px;
+
+      border-bottom: 1px solid rgba(185,151,91,.1);
+
+    }
+
+    .profile-avatar-large {
+
+      width: 80px;
+
+      height: 80px;
+
+      border-radius: 50%;
+
+      border: 2px solid rgba(185,151,91,.5);
+
+      overflow: hidden;
+
+      background: rgba(185,151,91,.15);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      cursor: pointer;
+
+      position: relative;
+
+    }
+
+    .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
+
+    .profile-avatar-large:hover::after {
+
+      content: "更换头像";
+
+      position: absolute;
+
+      inset: 0;
+
+      background: rgba(23,20,17,.6);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      color: var(--gold);
+
+      font-size: 12px;
+
+      letter-spacing: 1px;
+
+      border-radius: 50%;
+
+    }
+
+    .profile-username {
+
+      color: var(--cream);
+
+      font-size: 16px;
+
+      letter-spacing: 2px;
+
+      font-weight: 700;
+
+    }
+
+    .profile-tag {
+
+      color: rgba(255,249,237,.42);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+    }
+
+    .profile-upload-input { display: none; }
+
+    .profile-menu {
+
+      display: flex;
+
+      flex-direction: column;
+
+      padding: 16px 0;
+
+    }
+
+    .profile-menu a {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
+      padding: 14px 24px;
+
+      color: rgba(255,249,237,.7);
+
+      font-size: 14px;
+
+      letter-spacing: 1px;
+
+      transition: background .2s, color .2s;
+
+      border-left: 2px solid transparent;
+
+      text-decoration: none;
+
+    }
+
+    .profile-menu a:hover {
+
+      background: rgba(185,151,91,.08);
+
+      color: var(--gold);
+
+      border-left-color: var(--gold);
+
+    }
+
+    .profile-menu a svg { opacity: .6; flex-shrink: 0; }
+
+
+
+    /* 账户子面板 */
+
+    .profile-panel { display: none; flex-direction: column; flex: 1; }
+
+    .profile-panel.active { display: flex; }
+
+    .profile-panel-back {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      padding: 14px 24px;
+
+      color: rgba(255,249,237,.5);
+
+      font-size: 13px;
+
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      border-bottom: 1px solid rgba(185,151,91,.1);
+
+      transition: color .2s;
+
+    }
+
+    .profile-panel-back:hover { color: var(--gold); }
+
+    .account-balance-card {
+
+      margin: 20px 20px 0;
+
+      padding: 20px;
+
+      background: linear-gradient(135deg, rgba(185,151,91,.18), rgba(185,151,91,.06));
+
+      border: 1px solid rgba(185,151,91,.25);
+
+      border-radius: 4px;
+
+    }
+
+    .account-balance-card small {
+
+      display: block;
+
+      color: rgba(255,249,237,.45);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 8px;
+
+    }
+
+    .account-balance-amount {
+
+      font-size: 32px;
+
+      color: var(--gold);
+
+      font-weight: 700;
+
+      font-family: var(--latin);
+
+      letter-spacing: 1px;
+
+    }
+
+    .account-balance-amount span {
+
+      font-size: 14px;
+
+      margin-right: 4px;
+
+      opacity: .7;
+
+    }
+
+    .account-section-title {
+
+      padding: 20px 20px 10px;
+
+      color: rgba(255,249,237,.4);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+    }
+
+    .topup-grid {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 8px;
+
+      padding: 0 20px;
+
+    }
+
+    .topup-btn {
+
+      padding: 10px 0;
+
+      text-align: center;
+
+      border: 1px solid rgba(185,151,91,.25);
+
+      color: rgba(255,249,237,.7);
+
+      font-size: 14px;
+
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      background: rgba(185,151,91,.06);
+
+      border-radius: 2px;
+
+      transition: background .2s, color .2s, border-color .2s;
+
+    }
+
+    .topup-btn:hover { background: rgba(185,151,91,.18); color: var(--gold); border-color: rgba(185,151,91,.5); }
+
+    .topup-btn.selected { background: rgba(185,151,91,.22); color: var(--gold); border-color: var(--gold); }
+
+    .topup-custom {
+
+      margin: 10px 20px 0;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 0;
+
+      border: 1px solid rgba(185,151,91,.2);
+
+    }
+
+    .topup-custom span {
+
+      padding: 0 12px;
+
+      color: rgba(255,249,237,.4);
+
+      font-size: 14px;
+
+      background: rgba(185,151,91,.08);
+
+      height: 38px;
+
+      display: flex;
+
+      align-items: center;
+
+      border-right: 1px solid rgba(185,151,91,.2);
+
+    }
+
+    .topup-custom input {
+
+      flex: 1;
+
+      height: 38px;
+
+      background: transparent;
+
+      border: none;
+
+      outline: none;
+
+      color: var(--cream);
+
+      font-size: 14px;
+
+      padding: 0 12px;
+
+      font-family: var(--serif);
+
+    }
+
+    .topup-custom input::placeholder { color: rgba(255,249,237,.25); }
+
+    .topup-confirm {
+
+      margin: 14px 20px 20px;
+
+      width: calc(100% - 40px);
+
+      padding: 12px 0;
+
+      background: var(--gold);
+
+      color: var(--ink);
+
+      font-size: 14px;
+
+      font-weight: 900;
+
+      letter-spacing: 3px;
+
+      border: none;
+
+      cursor: pointer;
+
+      transition: opacity .2s;
+
+    }
+
+    .topup-confirm:hover { opacity: .85; }
+
+    .account-info-list {
+
+      padding: 0 20px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 0;
+
+    }
+
+    .account-info-row {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      padding: 12px 0;
+
+      border-bottom: 1px solid rgba(185,151,91,.08);
+
+      font-size: 13px;
+
+      color: rgba(255,249,237,.6);
+
+    }
+
+    .account-info-row:last-child { border-bottom: none; }
+
+    .account-info-row strong { color: rgba(255,249,237,.85); font-weight: 400; }
+
+
+
+    /* 订单卡片 */
+
+    .order-card {
+
+      margin: 0 20px 12px;
+
+      border: 1px solid rgba(185,151,91,.18);
+
+      background: rgba(185,151,91,.05);
+
+    }
+
+    .order-card-header {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      padding: 10px 14px;
+
+      border-bottom: 1px solid rgba(185,151,91,.12);
+
+    }
+
+    .order-card-header small { color: rgba(255,249,237,.35); font-size: 11px; letter-spacing: 1px; }
+
+    .order-status { font-size: 12px; letter-spacing: 1px; }
+
+    .order-status.delivering { color: #7eb8a4; }
+
+    .order-status.done { color: rgba(255,249,237,.4); }
+
+    .order-status.pending { color: var(--gold); }
+
+    .order-product-row {
+
+      display: flex;
+
+      gap: 12px;
+
+      padding: 12px 14px;
+
+      align-items: center;
+
+      border-bottom: 1px solid rgba(185,151,91,.08);
+
+    }
+
+    .order-product-row img {
+
+      width: 52px;
+
+      height: 52px;
+
+      object-fit: cover;
+
+      flex-shrink: 0;
+
+      opacity: .9;
+
+    }
+
+    .order-product-info { flex: 1; min-width: 0; }
+
+    .order-product-info h4 { color: rgba(255,249,237,.85); font-size: 13px; font-weight: 400; letter-spacing: 1px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .order-product-info span { color: rgba(255,249,237,.35); font-size: 12px; }
+
+    .order-product-price { color: var(--gold); font-size: 14px; font-family: var(--latin); flex-shrink: 0; }
+
+    .order-logistics {
+
+      padding: 12px 14px;
+
+    }
+
+    .order-logistics-title { color: rgba(255,249,237,.35); font-size: 11px; letter-spacing: 2px; margin-bottom: 10px; }
+
+    .logistics-track { display: flex; flex-direction: column; gap: 0; position: relative; }
+
+    .logistics-track::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: rgba(185,151,91,.2); }
+
+    .logistics-step { display: flex; gap: 14px; align-items: flex-start; position: relative; padding-bottom: 10px; }
+
+    .logistics-step:last-child { padding-bottom: 0; }
+
+    .logistics-dot { width: 11px; height: 11px; border-radius: 50%; border: 1px solid rgba(185,151,91,.4); background: #1c1812; flex-shrink: 0; margin-top: 2px; position: relative; z-index: 1; }
+
+    .logistics-step.active .logistics-dot { background: var(--gold); border-color: var(--gold); }
+
+    .logistics-step-body {}
+
+    .logistics-step-body p { font-size: 12px; color: rgba(255,249,237,.65); letter-spacing: .5px; margin-bottom: 2px; }
+
+    .logistics-step-body small { font-size: 11px; color: rgba(255,249,237,.3); }
+  </style>
+
+<style id="num-feature-fix">
+  /* 让数字字体（--latin）使用整齐的等宽 lining 数字 */
+  body { font-feature-settings: "kern" 1, "liga" 1; }
+  [class*="num"], [class*="price"], [class*="amount"], [class*="bid"],
+  .number, strong, .au-history-amt, .mc-card-num em, .au-detail-cat,
+  .mc-progress-head strong, .mc-stat-body strong, .au-time-box strong,
+  .au-cal-date strong, .au-stat strong, .mc-points-now > div strong,
+  .mc-coupon-l strong, .mc-os-num, .mc-tool-dot, .mc-points-list .add,
+  .mc-points-list .sub, .au-price-now strong, .au-history-rank {
+    font-feature-settings: "tnum" 1, "lnum" 1, "ss01" 1;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+</style>
+
+  <link rel="stylesheet" href="site-fixes.css">
+</head>
+<body>
+  <header class="topbar">
+
+    <div class="shell nav">
+
+      <a class="brand" href="index.html" aria-label="方城特产百珍坊首页">
+
+        <span class="brand-mark"><img src="uploads/logo.png" alt="百珍坊logo"></span>
+
+        <span>
+
+          <strong>方城特产百珍坊</strong>
+
+          <span>Fangcheng Selected</span>
+
+        </span>
+
+      </a>
+
+      <nav class="navlinks" aria-label="主导航">
+        <a href="index.html">首页</a>
+        <a href="baizhen-collection.html">百珍荟萃</a>
+        <a href="auction.html">拍卖中心</a>
+      </nav>
+
+
+
+          <div class="nav-avatar" id="navAvatar" role="button" aria-label="个人中心" tabindex="0">
+
+      <img src="" alt="头像" id="navAvatarImg" style="display:none">
+
+      <svg class="nav-avatar-placeholder" id="navAvatarIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="rgba(255,249,237,.6)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,249,237,.5)"/></svg>
+
+    </div>
+
+    </div>
+
+  </header>
+
+<div class="detail-wrap">
+  <div class="breadcrumb">
+    <a href="index.html">棣栭〉</a> &gt; 鏂瑰煄铓曚笣琚?&gt; 鏂瑰煄鎵嬪伐铓曚笣琚?  </div>
+  <div class="detail-card">
+    <img class="detail-img" src="./uploads/product-silk.jpg" alt="鏂瑰煄鎵嬪伐铓曚笣琚?>
+    <div class="detail-body">
+
+<!-- 渚ц竟鏍?+ 鍐呭鍖?-->
+<div style="display:flex;gap:32px;align-items:flex-start;">
+
+<!-- 宸︿晶渚ц竟鏍?-->
+<div style="flex-shrink:0;width:140px;position:sticky;top:80px;align-self:flex-start;">
+  <button class="side-tab active" id="sideTab0" onclick="switchTab(0)" style="display:block;width:100%;text-align:left;padding:12px 16px;font-size:14px;font-weight:600;color:#fff;cursor:pointer;border:none;border-radius:8px;margin-bottom:4px;transition:all .3s;background:var(--primary);" onmouseover="if(!this.classList.contains('active'))this.style.background='rgba(184,155,91,0.08)'" onmouseout="if(!this.classList.contains('active'))this.style.background='transparent'">鍟嗗搧璇︽儏</button>
+  <button class="side-tab" id="sideTab1" onclick="switchTab(1)" style="display:block;width:100%;text-align:left;padding:12px 16px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border:none;border-radius:8px;margin-bottom:4px;transition:all .3s;background:transparent;" onmouseover="if(!this.classList.contains('active'))this.style.background='rgba(184,155,91,0.08)'" onmouseout="if(!this.classList.contains('active'))this.style.background='transparent'">鍒朵綔宸ヨ壓</button>
+  <button class="side-tab" id="sideTab2" onclick="switchTab(2)" style="display:block;width:100%;text-align:left;padding:12px 16px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border:none;border-radius:8px;margin-bottom:4px;transition:all .3s;background:transparent;" onmouseover="if(!this.classList.contains('active'))this.style.background='rgba(184,155,91,0.08)'" onmouseout="if(!this.classList.contains('active'))this.style.background='transparent'">浣跨敤鍏绘姢</button>
+  <button class="side-tab" id="sideTab3" onclick="switchTab(3)" style="display:block;width:100%;text-align:left;padding:12px 16px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border:none;border-radius:8px;margin-bottom:4px;transition:all .3s;background:transparent;" onmouseover="if(!this.classList.contains('active'))this.style.background='rgba(184,155,91,0.08)'" onmouseout="if(!this.classList.contains('active'))this.style.background='transparent'">鍖呰灞曠ず</button>
+</div>
+
+<!-- 鍙充晶鍐呭鍖?-->
+<div style="flex:1;min-width:0;">
+
+<!-- Tab 0: 鍟嗗搧璇︽儏 -->
+<div class="tab-content active">
+      <span class="detail-tag">鏂瑰煄铓曚笣琚?/span>
+      <h1>鏂瑰煄鎵嬪伐铓曚笣琚?/h1>
+      <div class="detail-price">楼1,280 <span style="font-size:18px;color:var(--muted)">/ 200脳230cm</span></div>
+      <div class="detail-desc">
+        <p>鏂瑰煄鍘跨礌鏈?涓濈桓涔嬩埂"鐨勭編瑾夛紝鍏昏殨缂笣鍘嗗彶鎮犱箙銆傛柟鍩庤殨涓濅互涓濊川缁嗛暱銆佸厜娉芥煍鍜屻€侀煣鎬у己鍔茶憲绉般€?/p>
+        <p>鎴戜滑鐨勮殨涓濊閲囩敤100%妗戣殨涓濋暱涓濆～鍏咃紝鐢辩粡楠屼赴瀵岀殑鑰佽壓浜烘墜宸ユ媺涓濋摵鍒躲€傛瘡涓€搴婅殨涓濊闇€缁忚繃閫夎導銆佺叜鑼с€佺极涓濄€佹媺涓濈瓑鏁板崄閬撳伐搴忥紝鍘嗘椂鏁板懆鎵嶈兘瀹屾垚銆?/p>
+        <p>铓曚笣琚叿鏈夎创韬繚鏆栥€侀€忔皵鎺掓箍銆佽交鏌旇垝閫傜殑鐗圭偣銆傚啲鏆栧鍑夛紝鐩栧湪韬笂浠夸經鏃犵墿锛岃鎮ㄥ澶滃畨鐫★紝鏄€佺粰鑷繁鍜屽浜虹殑楂樺搧璐ㄧぜ鐗┿€?/p>
+      </div>
+      </div><!-- /tab0 鍟嗗搧璇︽儏 -->
+
+<!-- Tab 1: 鍒朵綔宸ヨ壓 -->
+<div class="tab-content">
+  <div class="detail-desc" style="margin-bottom:0;">
+    <p style="font-size:15px;line-height:2;color:#555;margin-bottom:16px;font-weight:600;">鏂瑰煄鎵嬪伐铓曚笣琚殑鍒朵綔杩囩▼涓ヨ皑缁嗚嚧锛屾瘡涓€閬撳伐搴忛兘鍑濊仛鐫€鍖犱汉鐨勫績琛€銆?/p>
+<p><strong>鍏昏殨鏀惰導锛?/strong>鏂瑰煄鍘挎皵鍊欐俯鍜岋紝妗戞爲璧勬簮涓板瘜銆傛瘡骞存槬瀛ｅ紑濮嬪吇铓曪紝缁忚繃绾?8澶╃殑绮惧績楗插吇锛岃殨瀹濆疂寮€濮嬪悙涓濈粨鑼с€傞€夌敤涓婅導鍜屽弻瀹導涓哄師鏂欍€?/p>
+    <p><strong>鐓導缂笣锛?/strong>灏嗚殨鑼ф斁鍏ユ俯姘翠腑鐓埗锛屼娇涓濊兌杞寲銆傜敱缁忛獙涓板瘜鐨勭极涓濆伐浜烘墜宸ユ娊涓濓紝灏嗗鏍硅殨涓濆悎骞舵垚涓€鏍逛笣绾匡紝纭繚涓濈嚎绮楃粏鍧囧寑銆?/p>
+    <p><strong>閫変笣閰嶄笣锛?/strong>缂ソ鐨勮殨涓濇寜涓濋暱銆佷笣搴︺€佽壊娉界瓑鎸囨爣鍒嗙骇銆傚埗浣滀竴搴婇珮鍝佽川铓曚笣琚渶瑕佺簿閫変笂鍗冧釜铓曡導鐨勮殨涓濓紝纭繚涓濊川涓€鑷淬€?/p>
+    <p><strong>鎵嬪伐鎷変笣锛?/strong>鐢辫€佽壓浜烘墜宸ュ皢铓曚笣涓€灞傚眰鎷夊紑閾哄埗銆傛媺涓濇槸鍒朵綔铓曚笣琚殑鏍稿績宸ヨ壓锛岄渶瑕佹墜娉曞潎鍖€銆佸姏搴﹂€備腑锛屼繚璇佽鑳庡帤钖勪竴鑷淬€佽摤鏉鹃€忔皵銆?/p>
+    <p><strong>缂濆埗鍥哄畾锛?/strong>灏嗘媺濂界殑铓曚笣鑳庡涓婄函妫夎础缂庤濂楋紝鎵嬪伐瀹氱偣缂濆埗鍥哄畾锛岄槻姝㈣殨涓濈Щ浣嶃€傛瘡搴婅殨涓濊閮介渶瑕佹暟鐧鹃拡鐨勭簿蹇冪紳鍒躲€?/p>
+  </div>
+</div>
+
+<!-- Tab 2: 浣跨敤鍏绘姢 -->
+<div class="tab-content">
+  <div class="detail-desc" style="margin-bottom:0;">
+    <p style="font-size:15px;line-height:2;color:#555;margin-bottom:16px;font-weight:600;">涓轰簡璁╂偍鏇村ソ鍦颁韩鐢ㄦ柟鍩庢墜宸ヨ殨涓濊锛屼互涓嬫槸浣跨敤鍜屽吇鎶ゅ缓璁€?/p>
+<p><strong>鏃ュ父浣跨敤锛?/strong>铓曚笣琚€傚悎鍥涘浣跨敤锛屽啲鏆栧鍑夈€備娇鐢ㄦ椂寤鸿鎼厤琚锛屼究浜庢竻娲椼€傞伩鍏嶅湪琚笂璺宠穬鎴栭噸鍘嬶紝浠ュ厤褰卞搷钃澗搴︺€?/p>
+    <p><strong>淇濆吇鏂规硶锛?/strong>铓曚笣琚笉鍙按娲椼€佷笉鍙共娲椼€傚畾鏈熷湪閫氶澶勬櫨鏅掞紙閬垮厤鏆存檼锛夛紝姣忔1-2灏忔椂鍗冲彲銆傛櫨鏅掑悗杞昏交鎷嶆墦锛屼繚鎸佽摤鏉俱€?/p>
+    <p><strong>鏀剁撼寤鸿锛?/strong>鏀剁撼鍓嶅厛鍦ㄩ槾鍑夊鏅炬檼锛屽緟瀹屽叏骞茬嚗鍚庢姌鍙犲瓨鏀俱€備笉瑕佷娇鐢ㄧ湡绌哄帇缂╄锛屼互鍏嶅奖鍝嶈殨涓濈殑钃澗搴﹀拰淇濇殩鎬с€?/p>
+    <p><strong>娉ㄦ剰浜嬮」锛?/strong>閬垮厤鎺ヨЕ灏栭攼鐗╁搧锛岄槻姝㈠垝鐮磋濂楀拰铓曚笣鑳庛€傚涓嶆厧娌炬煋姹℃笉锛岃鐢ㄦ箍姣涘肪灞€閮ㄦ摝鎷紝鑷劧鏅惧共銆?/p>
+  </div>
+</div>
+
+<!-- Tab 3: 鍖呰灞曠ず -->
+<div class="tab-content">
+<div class="detail-attr">
+        <div class="attr-item"><div class="attr-label">浜у湴</div><div class="attr-value">娌冲崡鐪佸崡闃冲競鏂瑰煄鍘?/div></div>
+        <div class="attr-item"><div class="attr-label">瑙勬牸</div><div class="attr-value">200脳230cm锛堝～鍏?.5kg锛?/div></div>
+        <div class="attr-item"><div class="attr-label">濉厖鐗?/div><div class="attr-value">100%妗戣殨涓濓紙闀夸笣锛?/div></div>
+        <div class="attr-item"><div class="attr-label">闈㈡枡</div><div class="attr-value">60鏀叏妫夎础缂?/div></div>
+        <div class="attr-item"><div class="attr-label">閫傜敤瀛ｈ妭</div><div class="attr-value">鍥涘閫氱敤</div></div>
+        <div class="attr-item"><div class="attr-label">淇濆吇</div><div class="attr-value">涓嶅彲姘存礂锛屽畾鏈熸櫨鏅?/div></div>
+      </div>
+      <!-- 鍖呰灞曠ず -->
+      <div style="margin-top:24px;">
+        <div style="font-size:14px;font-weight:600;color:var(--primary);margin-bottom:12px;">馃摝 鍖呰灞曠ず</div>
+        <div style="width:100%;max-width:500px;height:280px;border-radius:12px;background-image:url(./uploads/pack-silk.jpg);background-size:cover;background-position:center;border:1px solid #e8e4de;"></div>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px;">绮剧編绀肩洅鍖呰锛岄€傚悎閫佺ぜ鎴栬嚜鐢ㄦ敹钘?/p>
+      </div>
+      </div><!-- /tab3 鍖呰灞曠ず -->
+</div><!-- /鍙充晶鍐呭鍖?-->
+</div><!-- /渚ц竟鏍?鍐呭鍖篺lex -->
+
+<button class="btn-buy">绔嬪嵆璐拱</button>
+    </div>
+  </div>
+</div>
+
+<div class="rec-section">
+  <div class="rec-title">鐚滀綘鍠滄</div>
+  <div class="rec-grid">
+    <a href="detail-danshen.html" class="rec-card">
+      <div class="rec-img" style="background-image:url(./uploads/product-danshen.jpg)"></div>
+      <div class="rec-body"><div class="rec-name">鏂瑰煄閲庣敓涓瑰弬 路 250g</div><div class="rec-price">楼128</div></div>
+    </a>
+    <a href="detail-guokui.html" class="rec-card">
+      <div class="rec-img" style="background-image:url(./uploads/product-guokui.jpg)"></div>
+      <div class="rec-body"><div class="rec-name">鏂瑰煄浼犵粺閿呯洈</div><div class="rec-price">楼18</div></div>
+    </a>
+    <a href="detail-silk.html" class="rec-card">
+      <div class="rec-img" style="background-image:url(./uploads/product-silk.jpg)"></div>
+      <div class="rec-body"><div class="rec-name">鏂瑰煄鎵嬪伐铓曚笣琚?/div><div class="rec-price">楼1,280</div></div>
+    </a>
+    <a href="detail-mushroom.html" class="rec-card">
+      <div class="rec-img" style="background-image:url(./uploads/product-mushroom.jpg)"></div>
+      <div class="rec-body"><div class="rec-name">鏂瑰煄榛勯噾鑿?路 150g</div><div class="rec-price">楼68</div></div>
+    </a>
+  </div>
+</div>
+<script>
+function switchTab(idx) {
+  for(var i=0;i<4;i++){
+    var btn=document.getElementById('sideTab'+i);
+    if(i===idx){ btn.classList.add('active'); btn.style.background='var(--primary)'; btn.style.color='#fff'; }
+    else { btn.classList.remove('active'); btn.style.background='transparent'; btn.style.color='var(--muted)'; }
+  }
+  document.querySelectorAll('.tab-content').forEach(function(c,i){c.classList.toggle('active',i===idx);});
+}
+</script>
+
+
+<script>
+</script>
+<!-- 个人中心侧边栏 -->
+  <div class="profile-overlay" id="profileOverlay"></div>
+  <aside class="profile-sidebar" id="profileSidebar">
+    <div class="profile-sidebar-header">
+      <span>个人中心</span>
+      <div class="profile-close" id="profileClose">✕</div>
+    </div>
+    <div class="profile-user-block">
+      <label class="profile-avatar-large" for="avatarUpload" title="点击更换头像">
+        <img src="" alt="头像" id="sidebarAvatarImg" style="display:none">
+        <svg id="sidebarAvatarIcon" width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="rgba(255,249,237,.5)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,249,237,.35)"/></svg>
+      </label>
+      <input type="file" id="avatarUpload" class="profile-upload-input" accept="image/*">
+      <div class="profile-username" id="profileUsername">访客</div>
+      <div class="profile-tag">方城特产百珍坊会员</div>
+    </div>
+    <!-- 主菜单面板 -->
+    <div class="profile-panel active" id="panelMain">
+      <nav class="profile-menu">
+                <a href="member-center.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          个人中心
+        </a>
+<a href="#" id="menuAccount">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          我的账户
+        </a>
+        <a href="#" id="menuOrders">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          我的订单
+        </a>
+        <a href="member-center.html#collection">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          我的收藏
+        </a>
+        <a href="custom-gift.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M12 8V21M3 13h18"/><path d="M12 8c0-2.5-2-4-4-2s0 4 4 4m0-4c0-2.5 2-4 4-2s0 4-4 4"/></svg>
+          礼盒定制
+        </a>
+        <a href="contact.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          联系合作
+        </a>
+      </nav>
+    </div>
+
+    <!-- 账户子面板 -->
+    <div class="profile-panel" id="panelAccount">
+      <div class="profile-panel-back" id="accountBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        返回
+      </div>
+      <div class="account-balance-card">
+        <small>账户余额</small>
+        <div class="account-balance-amount"><span>¥</span><span id="balanceNum">0.00</span></div>
+      </div>
+      <div class="account-section-title">快速充值</div>
+      <div class="topup-grid">
+        <div class="topup-btn" data-val="50">¥ 50</div>
+        <div class="topup-btn" data-val="100">¥ 100</div>
+        <div class="topup-btn" data-val="200">¥ 200</div>
+        <div class="topup-btn" data-val="500">¥ 500</div>
+      </div>
+      <div class="topup-custom">
+        <span>¥</span>
+        <input type="text" id="topupCustom" placeholder="自定义金额">
+      </div>
+      <button class="topup-confirm" id="topupConfirm">确认充值</button>
+      <div class="account-section-title">账户信息</div>
+      <div class="account-info-list">
+        <div class="account-info-row"><span>会员等级</span><strong>普通会员</strong></div>
+        <div class="account-info-row"><span>累计消费</span><strong id="totalSpend">¥ 0.00</strong></div>
+        <div class="account-info-row"><span>优惠券</span><strong>0 张</strong></div>
+        <div class="account-info-row"><span>积分</span><strong id="pointsNum">0</strong></div>
+      </div>
+    </div>
+
+    <!-- 订单子面板 -->
+    <div class="profile-panel" id="panelOrders">
+      <div class="profile-panel-back" id="ordersBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        返回
+      </div>
+      <div class="account-section-title">我的订单</div>
+      <div class="account-info-list" style="padding:0 20px;">
+        <div class="account-info-row"><span>待付款</span><strong>0</strong></div>
+        <div class="account-info-row"><span>待发货</span><strong>0</strong></div>
+        <div class="account-info-row"><span>待收货</span><strong>0</strong></div>
+        <div class="account-info-row"><span>已完成</span><strong>0</strong></div>
+        <div class="account-info-row"><span>退款/售后</span><strong>0</strong></div>
+      </div>
+      <div class="account-section-title" style="margin-top:8px;">最近订单</div>
+      <div class="order-card">
+        <div class="order-card-header">
+          <small>订单号 FC20240617001</small>
+          <span class="order-status delivering">配送中</span>
+        </div>
+        <div class="order-product-row">
+          <img src="uploads/product1.jpg" alt="方城黄石砚">
+          <div class="order-product-info">
+            <h4>方城黄石砚</h4>
+            <span>数量 × 1</span>
+          </div>
+          <span class="order-product-price">¥ 399</span>
+        </div>
+        <div class="order-logistics">
+          <div class="order-logistics-title">物流跟踪</div>
+          <div class="logistics-track">
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>包裹已签收</p>
+                <small>2024-06-17 &nbsp;14:32</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>派送中 — 快递员已取件</p>
+                <small>2024-06-17 &nbsp;09:05</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>已到达 南阳 转运中心</p>
+                <small>2024-06-16 &nbsp;22:41</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>商家已发货</p>
+                <small>2024-06-15 &nbsp;16:18</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>订单已下单，等待商家处理</p>
+                <small>2024-06-15 &nbsp;10:03</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+<script>
+    (function() {
+      const overlay = document.getElementById('profileOverlay');
+      const sidebar = document.getElementById('profileSidebar');
+      const navAvatar = document.getElementById('navAvatar');
+      const closeBtn = document.getElementById('profileClose');
+      const avatarUpload = document.getElementById('avatarUpload');
+      const navAvatarImg = document.getElementById('navAvatarImg');
+      const navAvatarIcon = document.getElementById('navAvatarIcon');
+      const sidebarAvatarImg = document.getElementById('sidebarAvatarImg');
+      const sidebarAvatarIcon = document.getElementById('sidebarAvatarIcon');
+
+      function openSidebar() {
+        overlay.classList.add('open');
+        sidebar.classList.add('open');
+      }
+      function closeSidebar() {
+        overlay.classList.remove('open');
+        sidebar.classList.remove('open');
+      }
+
+      navAvatar.addEventListener('click', openSidebar);
+      navAvatar.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openSidebar(); });
+      closeBtn.addEventListener('click', closeSidebar);
+      overlay.addEventListener('click', closeSidebar);
+
+      // 头像上传
+      avatarUpload.addEventListener('change', function() {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const src = e.target.result;
+          // 更新导航头像
+          navAvatarImg.src = src;
+          navAvatarImg.style.display = 'block';
+          navAvatarIcon.style.display = 'none';
+          // 更新侧边栏头像
+          sidebarAvatarImg.src = src;
+          sidebarAvatarImg.style.display = 'block';
+          sidebarAvatarIcon.style.display = 'none';
+          // 本地持久化
+          try { localStorage.setItem('baizhenfang_avatar', src); } catch(e) {}
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // 恢复已保存头像
+      try {
+        const saved = localStorage.getItem('baizhenfang_avatar');
+        if (saved) {
+          navAvatarImg.src = saved;
+          navAvatarImg.style.display = 'block';
+          navAvatarIcon.style.display = 'none';
+          sidebarAvatarImg.src = saved;
+          sidebarAvatarImg.style.display = 'block';
+          sidebarAvatarIcon.style.display = 'none';
+        }
+      } catch(e) {}
+
+      // 面板切换
+      const panelMain = document.getElementById('panelMain');
+      const panelAccount = document.getElementById('panelAccount');
+      const panelOrders = document.getElementById('panelOrders');
+      const menuAccount = document.getElementById('menuAccount');
+      const menuOrders = document.getElementById('menuOrders');
+      const accountBack = document.getElementById('accountBack');
+      const ordersBack = document.getElementById('ordersBack');
+
+      function showPanel(panel) {
+        panelMain.classList.remove('active');
+        panelAccount.classList.remove('active');
+        panelOrders.classList.remove('active');
+        panel.classList.add('active');
+      }
+
+      menuAccount.addEventListener('click', function(e) { e.preventDefault(); showPanel(panelAccount); });
+      menuOrders.addEventListener('click', function(e) { e.preventDefault(); showPanel(panelOrders); });
+      accountBack.addEventListener('click', function() { showPanel(panelMain); });
+      ordersBack.addEventListener('click', function() { showPanel(panelMain); });
+
+      // 关闭时重置到主面板
+      function closeSidebarFull() {
+        overlay.classList.remove('open');
+        sidebar.classList.remove('open');
+        setTimeout(() => showPanel(panelMain), 350);
+      }
+      closeBtn.removeEventListener('click', closeSidebar);
+      overlay.removeEventListener('click', closeSidebar);
+      closeBtn.addEventListener('click', closeSidebarFull);
+      overlay.addEventListener('click', closeSidebarFull);
+
+      // 余额与充值
+      const balanceNum = document.getElementById('balanceNum');
+      const topupCustom = document.getElementById('topupCustom');
+      const topupConfirm = document.getElementById('topupConfirm');
+      const topupBtns = document.querySelectorAll('.topup-btn');
+
+      let balance = 0;
+      try { balance = parseFloat(localStorage.getItem('baizhenfang_balance') || '0'); } catch(e) {}
+      balanceNum.textContent = balance.toFixed(2);
+
+      let selectedAmount = 0;
+      topupBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          topupBtns.forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedAmount = parseFloat(this.dataset.val);
+          topupCustom.value = '';
+        });
+      });
+      topupCustom.addEventListener('input', function() {
+        topupBtns.forEach(b => b.classList.remove('selected'));
+        selectedAmount = 0;
+      });
+
+      topupConfirm.addEventListener('click', function() {
+        const custom = parseFloat(topupCustom.value);
+        const amount = custom > 0 ? custom : selectedAmount;
+        if (!amount || amount <= 0) return;
+        balance += amount;
+        balanceNum.textContent = balance.toFixed(2);
+        try { localStorage.setItem('baizhenfang_balance', balance.toString()); } catch(e) {}
+        topupBtns.forEach(b => b.classList.remove('selected'));
+        topupCustom.value = '';
+        selectedAmount = 0;
+        topupConfirm.textContent = '充值成功 ✓';
+        setTimeout(() => { topupConfirm.textContent = '确认充值'; }, 1500);
+      });
+    })();
+  </script>
+  <script src="cart.js"></script>
+<script src="sku.js"></script>
+<script src="favorites.js"></script>
+  <script src="lightbox.js"></script>
+</body>
+</html>

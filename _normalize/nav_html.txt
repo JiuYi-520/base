@@ -1,0 +1,20 @@
+<header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="#top" aria-label="方城特产百珍坊首页">
+        <span class="brand-mark"><img src="uploads/logo.png" alt="百珍坊logo"></span>
+        <span>
+          <strong>方城特产百珍坊</strong>
+          <span>Fangcheng Selected</span>
+        </span>
+      </a>
+      <nav class="navlinks" aria-label="主导航">
+        <a href="#top">首页</a>
+        <a href="baizhen-collection.html">百珍荟萃</a>
+      </nav>
+
+          <div class="nav-avatar" id="navAvatar" role="button" aria-label="个人中心" tabindex="0">
+      <img src="" alt="头像" id="navAvatarImg" style="display:none">
+      <svg class="nav-avatar-placeholder" id="navAvatarIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="rgba(255,249,237,.6)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,249,237,.5)"/></svg>
+    </div>
+    </div>
+  </header>

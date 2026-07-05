@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>百珍荟萃 · 方城特产百珍坊</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #171411;
+      --paper: #F6F0E6;
+      --paper-deep: #E8DCC8;
+      --gold: #B9975B;
+      --gold-light: #D4B483;
+      --cream: #FFF9ED;
+      --smoke: #766D61;
+      --pine: #596C58;
+      --clay: #A85F3D;
+      --line: rgba(23,20,17,.12);
+      --serif: "Noto Serif SC","Source Han Serif SC","Songti SC","STSong","SimSun",serif;
+      --latin: "Playfair Display", "Cormorant Garamond","Georgia",serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--cream);color:var(--ink);font-family:var(--serif);min-height:100vh;}
+
+    /* ── NAV ── */
+
+    /* ── HERO BANNER ── */
+    .collection-hero{
+      background: linear-gradient(135deg, #1a1410 0%, #2c1f12 50%, #1a1410 100%);
+      padding: 100px 40px 80px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    /* 底部暖光 */
+    .collection-hero::before{
+      content:"";position:absolute;inset:0;
+      background:
+        radial-gradient(ellipse 90% 55% at 50% 110%, rgba(185,151,91,.28) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 15% 30%, rgba(185,151,91,.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 85% 20%, rgba(185,151,91,.08) 0%, transparent 60%);
+    }
+    /* 斜线纹理 */
+    .collection-hero::after{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 18px,
+        rgba(185,151,91,.03) 18px,
+        rgba(185,151,91,.03) 19px
+      );
+    }
+    .collection-hero .kicker{
+      font-family:var(--latin);font-size:12px;letter-spacing:.25em;
+      color:var(--gold);text-transform:uppercase;display:block;margin-bottom:20px;
+      position:relative;z-index:1;
+    }
+    /* 大字水印背景 */
+    .collection-hero .hero-watermark{
+      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      font-family:var(--latin);font-size:clamp(100px,16vw,200px);
+      color:rgba(185,151,91,.04);letter-spacing:.1em;white-space:nowrap;
+      pointer-events:none;user-select:none;line-height:1;z-index:0;font-weight:700;
+    }
+    /* 左右装饰光点 */
+    .collection-hero .hero-orb{
+      position:absolute;border-radius:50%;pointer-events:none;
+    }
+    .collection-hero .hero-orb-l{
+      width:320px;height:320px;left:-80px;top:50%;transform:translateY(-50%);
+      background:radial-gradient(circle, rgba(185,151,91,.12) 0%, transparent 70%);
+    }
+    .collection-hero .hero-orb-r{
+      width:280px;height:280px;right:-60px;top:30%;
+      background:radial-gradient(circle, rgba(185,151,91,.10) 0%, transparent 70%);
+    }
+    .collection-hero h1,.collection-hero p,.hero-divider{position:relative;z-index:1;}
+    .collection-hero h1{
+      font-family:var(--serif);font-size:clamp(32px,5vw,60px);
+      color:var(--cream);letter-spacing:.12em;line-height:1.2;
+      position:relative;
+    }
+    .collection-hero h1 em{font-style:normal;color:var(--gold);}
+    .collection-hero p{
+      margin-top:20px;color:rgba(255,249,237,.55);font-size:15px;
+      letter-spacing:.06em;line-height:1.8;max-width:560px;margin-left:auto;margin-right:auto;
+      position:relative;
+    }
+    .hero-divider{width:48px;height:1px;background:var(--gold);margin:32px auto 0;opacity:.6;}
+
+    /* ── FILTER TABS ── */
+    .filter-bar{max-width:1280px;margin:0 auto;padding:52px 40px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .filter-tab{
+      padding:9px 22px;border-radius:40px;font-size:13px;letter-spacing:.08em;
+      border:1px solid var(--line);background:transparent;color:var(--smoke);
+      cursor:pointer;transition:all .2s;font-family:var(--serif);
+    }
+    .filter-tab:hover{border-color:var(--gold);color:var(--gold);background:rgba(185,151,91,.06);}
+    .filter-tab.active{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+    .filter-count{margin-left:auto;font-size:12px;color:var(--smoke);letter-spacing:.06em;}
+
+    /* ── SECTION LABEL ── */
+    .cat-section{max-width:1280px;margin:0 auto;padding:80px 40px 0;}
+    .cat-label{
+      display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:56px;text-align:center;
+      position:relative;padding:36px 0 28px;
+    }
+    /* 上边框装饰线 */
+    .cat-label::before{
+      content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+      width:200px;height:1px;
+      background:linear-gradient(to right,transparent,rgba(185,151,91,.5),transparent);
+    }
+    /* 背景微光晕 */
+    .cat-label::after{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse 60% 100% at 50% 50%, rgba(185,151,91,.04) 0%, transparent 70%);
+    }
+    .cat-label-left{display:flex;flex-direction:column;align-items:center;gap:10px;position:relative;z-index:1;}
+    /* 英文标签两侧横线 */
+    .cat-label-en{
+      font-family:var(--latin);font-size:11px;color:var(--gold);letter-spacing:.38em;text-transform:uppercase;
+      display:flex;align-items:center;gap:16px;
+    }
+    .cat-label-en::before,.cat-label-en::after{
+      content:"";display:block;width:48px;height:1px;
+      background:linear-gradient(to right,transparent,rgba(185,151,91,.55));
+    }
+    .cat-label-en::after{transform:scaleX(-1);}
+    /* 中文大标题 */
+    .cat-label-text{font-size:36px;letter-spacing:.22em;color:var(--ink);font-family:var(--serif);line-height:1;}
+    /* 下方菱形装饰组 */
+    .cat-label-line{
+      display:flex;align-items:center;gap:8px;margin-top:4px;
+    }
+    .cat-label-line::before,.cat-label-line::after{
+      content:"";display:block;width:52px;height:1px;
+      background:linear-gradient(to right,transparent,rgba(185,151,91,.6));
+    }
+    .cat-label-line::after{transform:scaleX(-1);}
+    /* 中间菱形用 span 实现 */
+    .cat-label-line span{
+      display:block;width:6px;height:6px;
+      background:var(--gold);transform:rotate(45deg);opacity:.7;
+    }
+    /* 四角装饰（用两个额外伪元素模拟） */
+    .cat-label-left::before,.cat-label-left::after{
+      content:"";position:absolute;width:16px;height:16px;
+      border-color:rgba(185,151,91,.35);border-style:solid;
+    }
+    .cat-label-left::before{top:-4px;left:-20px;border-width:1px 0 0 1px;}
+    .cat-label-left::after{bottom:-4px;right:-20px;border-width:0 1px 1px 0;}
+
+    /* ── SHOWCASE (split panel) ── */
+    .showcase{
+      display:grid;grid-template-columns:1fr 1fr;
+      height:520px;
+      border-radius:20px;overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 24px 64px rgba(0,0,0,.45);
+      position:relative;
+      background:#12100e;
+    }
+    .showcase-img-side{
+      position:relative;background:#1a1612;overflow:hidden;height:100%;
+    }
+    .showcase-img-side img{
+      width:100%;height:100%;object-fit:cover;display:block;
+      transition:opacity .18s ease;
+    }
+    .sc-btn{
+      position:absolute;top:50%;transform:translateY(-50%);
+      width:44px;height:44px;
+      background:rgba(18,16,14,.72);backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.85);
+      border-radius:50%;font-size:26px;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;z-index:10;
+      transition:background .2s,border-color .2s,color .2s;outline:none;
+    }
+    .sc-btn:hover{background:rgba(185,151,91,.25);border-color:var(--gold);color:var(--gold);}
+    .sc-prev{left:0;}
+    .sc-next{right:0;}
+    .sc-dots{
+      position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+      display:flex;gap:8px;
+    }
+    .sc-dot{
+      width:6px;height:6px;border-radius:50%;
+      background:rgba(255,255,255,.25);border:none;
+      cursor:pointer;padding:0;
+      transition:background .2s,transform .2s;
+    }
+    .sc-dot.active{background:var(--gold);transform:scale(1.4);}
+    .showcase-info{
+      display:flex;flex-direction:column;justify-content:flex-start;
+      padding:44px 48px 44px;
+      background:linear-gradient(135deg,#1c1814 0%,#12100e 100%);
+      position:relative;overflow:hidden;
+    }
+    .showcase-info::before{
+      content:"";position:absolute;inset:0;
+      background:radial-gradient(ellipse 70% 60% at 80% 20%,rgba(185,151,91,.07) 0%,transparent 70%);
+      pointer-events:none;
+    }
+    .showcase-name{
+      font-size:34px;letter-spacing:.08em;color:#fff;
+      line-height:1.25;margin-bottom:16px;
+    }
+    .showcase-badge{
+      display:inline-block;padding:4px 14px;
+      background:rgba(185,151,91,.15);
+      border:1px solid rgba(185,151,91,.35);
+      color:var(--gold);
+      font-size:10px;letter-spacing:.2em;margin-bottom:10px;
+      font-family:var(--latin);border-radius:40px;align-self:flex-start;
+    }
+    .showcase-cat{
+      font-size:11px;letter-spacing:.24em;color:rgba(185,151,91,.7);
+      text-transform:uppercase;font-family:var(--latin);margin-bottom:20px;
+    }
+    .showcase-desc{
+      font-size:14px;color:rgba(255,255,255,.45);line-height:1.85;
+      letter-spacing:.04em;margin-bottom:20px;max-width:380px;
+      display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+      height:calc(14px * 1.85 * 3);
+    }
+    .showcase-sales{
+      font-size:13px;color:rgba(255,255,255,.35);letter-spacing:.1em;
+      margin-bottom:24px;font-family:var(--latin);
+    }
+    .showcase-sales em{font-style:normal;color:var(--gold);font-size:22px;font-weight:500;letter-spacing:.04em;font-family:"Playfair Display","Georgia",serif;font-variant-numeric:lining-nums tabular-nums;}
+    .showcase-foot{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-top:auto;}
+    .showcase-price{font-family:"Playfair Display","Georgia",serif;font-size:30px;color:#fff;font-weight:400;letter-spacing:.04em;line-height:1;display:inline-flex;align-items:center;height:46px;font-variant-numeric:lining-nums tabular-nums;}
+    .showcase-link{
+      display:inline-flex;align-items:center;justify-content:center;
+      height:46px;
+      padding:0 32px;
+      background:#fff;color:#12100e;
+      font-size:12px;letter-spacing:.14em;font-family:var(--serif);
+      text-decoration:none;border-radius:40px;border:1px solid #fff;
+      font-weight:700;white-space:nowrap;
+      transition:background .2s,color .2s,border-color .2s;
+    }
+    .showcase-link:hover{background:var(--gold);border-color:var(--gold);color:#fff;}
+    .sc-counter{
+      font-family:var(--latin);font-size:11px;color:rgba(255,255,255,.2);
+      letter-spacing:.18em;
+      position:absolute;bottom:20px;right:24px;z-index:5;
+    }
+
+    /* ── BANNER STRIP ── */
+    .banner-strip{
+      background:var(--ink);
+      padding:56px 40px;
+      margin-top:80px;
+    }
+    .banner-strip-inner{
+      max-width:1280px;margin:0 auto;
+      display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;
+    }
+    .banner-strip h2{font-size:28px;color:var(--cream);letter-spacing:.1em;line-height:1.4;}
+    .banner-strip h2 em{font-style:normal;color:var(--gold);}
+    .banner-strip p{color:rgba(255,249,237,.5);font-size:14px;letter-spacing:.06em;line-height:1.8;max-width:420px;}
+    .banner-actions{display:flex;gap:16px;flex-wrap:wrap;}
+    .btn{display:inline-block;text-decoration:none;padding:12px 28px;font-size:13px;letter-spacing:.12em;font-family:var(--serif);transition:all .2s;border:1px solid transparent;}
+    .btn-primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+    .btn-primary:hover{background:var(--gold-light);border-color:var(--gold-light);}
+    .btn-ghost{background:transparent;color:var(--cream);border-color:rgba(255,249,237,.3);}
+    .btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+
+    /* ── FOOTER ── */
+    footer{background:var(--ink);border-top:1px solid rgba(185,151,91,.12);padding:48px 40px 32px;}
+    .footer-inner{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px;}
+    .footer-brand{color:rgba(255,249,237,.35);font-size:13px;letter-spacing:.08em;line-height:1.8;}
+    .footer-brand strong{color:var(--gold);display:block;font-size:14px;margin-bottom:4px;}
+    .footer-links{display:flex;gap:24px;}
+    .footer-links a{color:rgba(255,249,237,.35);text-decoration:none;font-size:12px;letter-spacing:.1em;transition:color .2s;}
+    .footer-links a:hover{color:var(--gold);}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      .showcase{grid-template-columns:1fr;min-height:auto;}
+      .showcase-img-side{aspect-ratio:4/3;height:auto;}
+      .showcase-info{padding:36px 28px;}
+      .showcase-name{font-size:22px;}
+      .showcase-price{font-size:26px;}
+      .cat-section{padding:48px 20px 0;}
+      .filter-bar{padding:36px 20px 0;}
+      .collection-hero{padding:72px 20px 56px;}
+    }
+    @media(max-width:600px){
+      .showcase-info{padding:24px 20px;}
+      .showcase-foot{flex-direction:column;align-items:flex-start;gap:16px;}
+    }
+      /* 个人中心侧边栏 */
+    .shell { width: min(1240px, calc(100vw - 48px)); margin: 0 auto; }
+
+
+    .topbar {
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 60;
+
+      border-bottom: 1px solid var(--line-dark);
+
+      background: rgba(23, 20, 17, .91);
+
+      color: var(--cream);
+
+      backdrop-filter: blur(18px);
+
+    }
+
+    .nav {
+
+      min-height: 76px;
+
+      display: grid;
+
+      grid-template-columns: auto 1fr auto;
+
+      align-items: center;
+
+      gap: 28px;
+
+    }
+
+    .brand { display: flex; align-items: center; gap: 14px; min-width: max-content; color: var(--cream); text-decoration: none; }
+
+    .brand-mark {
+
+      position: relative;
+
+      width: 48px;
+
+      height: 48px;
+
+      border-radius: 50%;
+
+      overflow: hidden;
+
+      flex-shrink: 0;
+
+      box-shadow: 0 0 0 2px rgba(185,151,91,.45), 0 0 14px rgba(185,151,91,.15);
+
+    }
+
+    .brand-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .brand-mark::after { display: none; }
+
+    .brand strong { display: block; font-size: 21px; letter-spacing: 5px; font-weight: 900; }
+
+    .brand span span { display: block; margin-top: 3px; color: rgba(255,249,237,.58); font-family: var(--latin); font-size: 12px; letter-spacing: 4px; text-transform: uppercase; }
+
+    .navlinks { display: flex; justify-content: center; gap: 24px; color: rgba(255,249,237,.74); font-size: 14px; letter-spacing: 2px; }
+
+    .navlinks a { position: relative; white-space: nowrap; transition: color .25s ease; text-decoration: none; color: inherit; }
+
+    .navlinks a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -12px; height: 1px; background: var(--gold); transition: right .25s ease; }
+
+    .navlinks a:hover { color: var(--gold); }
+
+    .navlinks a:hover::after { right: 0; }
+
+    .nav-avatar {
+
+      width: 42px;
+
+      height: 42px;
+
+      border-radius: 50%;
+
+      border: 2px solid rgba(185,151,91,.6);
+
+      overflow: hidden;
+
+      cursor: pointer;
+
+      flex-shrink: 0;
+
+      background: rgba(185,151,91,.18);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      transition: border-color .2s;
+
+    }
+
+    .nav-avatar:hover { border-color: var(--gold); }
+
+    .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .nav-avatar-placeholder {
+
+      width: 22px;
+
+      height: 22px;
+
+      fill: rgba(255,249,237,.6);
+
+    }
+
+    /* 个人中心侧边栏 */
+
+    .profile-overlay {
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 200;
+
+      background: rgba(23,20,17,.45);
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: opacity .3s ease;
+
+    }
+
+    .profile-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .profile-sidebar {
+
+      position: fixed;
+
+      top: 0;
+
+      right: 0;
+
+      bottom: 0;
+
+      width: 320px;
+
+      z-index: 201;
+
+      background: #1c1812;
+
+      border-left: 1px solid rgba(185,151,91,.2);
+
+      display: flex;
+
+      flex-direction: column;
+
+      transform: translateX(100%);
+
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+
+      overflow-y: auto;
+
+    }
+
+    .profile-sidebar.open { transform: translateX(0); }
+
+    .profile-sidebar-header {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 22px 24px 18px;
+
+      border-bottom: 1px solid rgba(185,151,91,.15);
+
+    }
+
+    .profile-sidebar-header span {
+
+      color: var(--gold);
+
+      font-size: 15px;
+
+      letter-spacing: 3px;
+
+      font-weight: 900;
+
+    }
+
+    .profile-close {
+
+      width: 32px;
+
+      height: 32px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      cursor: pointer;
+
+      color: rgba(255,249,237,.5);
+
+      font-size: 20px;
+
+      border-radius: 4px;
+
+      transition: color .2s;
+
+    }
+
+    .profile-close:hover { color: var(--gold); }
+
+    .profile-user-block {
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 32px 24px 24px;
+
+      border-bottom: 1px solid rgba(185,151,91,.1);
+
+    }
+
+    .profile-avatar-large {
+
+      width: 80px;
+
+      height: 80px;
+
+      border-radius: 50%;
+
+      border: 2px solid rgba(185,151,91,.5);
+
+      overflow: hidden;
+
+      background: rgba(185,151,91,.15);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      cursor: pointer;
+
+      position: relative;
+
+    }
+
+    .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
+
+    .profile-avatar-large:hover::after {
+
+      content: "更换头像";
+
+      position: absolute;
+
+      inset: 0;
+
+      background: rgba(23,20,17,.6);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      color: var(--gold);
+
+      font-size: 12px;
+
+      letter-spacing: 1px;
+
+      border-radius: 50%;
+
+    }
+
+    .profile-username {
+
+      color: var(--cream);
+
+      font-size: 16px;
+
+      letter-spacing: 2px;
+
+      font-weight: 700;
+
+    }
+
+    .profile-tag {
+
+      color: rgba(255,249,237,.42);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+    }
+
+    .profile-upload-input { display: none; }
+
+    .profile-menu {
+
+      display: flex;
+
+      flex-direction: column;
+
+      padding: 16px 0;
+
+    }
+
+    .profile-menu a {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
+      padding: 14px 24px;
+
+      color: rgba(255,249,237,.7);
+
+      font-size: 14px;
+
+      letter-spacing: 1px;
+
+      transition: background .2s, color .2s;
+
+      border-left: 2px solid transparent;
+
+      text-decoration: none;
+
+    }
+
+    .profile-menu a:hover {
+
+      background: rgba(185,151,91,.08);
+
+      color: var(--gold);
+
+      border-left-color: var(--gold);
+
+    }
+
+    .profile-menu a svg { opacity: .6; flex-shrink: 0; }
+
+
+
+    /* 账户子面板 */
+
+    .profile-panel { display: none; flex-direction: column; flex: 1; }
+
+    .profile-panel.active { display: flex; }
+
+    .profile-panel-back {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      padding: 14px 24px;
+
+      color: rgba(255,249,237,.5);
+
+      font-size: 13px;
+
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      border-bottom: 1px solid rgba(185,151,91,.1);
+
+      transition: color .2s;
+
+    }
+
+    .profile-panel-back:hover { color: var(--gold); }
+
+    .account-balance-card {
+
+      margin: 20px 20px 0;
+
+      padding: 20px;
+
+      background: linear-gradient(135deg, rgba(185,151,91,.18), rgba(185,151,91,.06));
+
+      border: 1px solid rgba(185,151,91,.25);
+
+      border-radius: 4px;
+
+    }
+
+    .account-balance-card small {
+
+      display: block;
+
+      color: rgba(255,249,237,.45);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 8px;
+
+    }
+
+    .account-balance-amount {
+
+      font-size: 32px;
+
+      color: var(--gold);
+
+      font-weight: 700;
+
+      font-family: var(--latin);
+
+      letter-spacing: 1px;
+
+    }
+
+    .account-balance-amount span {
+
+      font-size: 14px;
+
+      margin-right: 4px;
+
+      opacity: .7;
+
+    }
+
+    .account-section-title {
+
+      padding: 20px 20px 10px;
+
+      color: rgba(255,249,237,.4);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+    }
+
+    .topup-grid {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 8px;
+
+      padding: 0 20px;
+
+    }
+
+    .topup-btn {
+
+      padding: 10px 0;
+
+      text-align: center;
+
+      border: 1px solid rgba(185,151,91,.25);
+
+      color: rgba(255,249,237,.7);
+
+      font-size: 14px;
+
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      background: rgba(185,151,91,.06);
+
+      border-radius: 2px;
+
+      transition: background .2s, color .2s, border-color .2s;
+
+    }
+
+    .topup-btn:hover { background: rgba(185,151,91,.18); color: var(--gold); border-color: rgba(185,151,91,.5); }
+
+    .topup-btn.selected { background: rgba(185,151,91,.22); color: var(--gold); border-color: var(--gold); }
+
+    .topup-custom {
+
+      margin: 10px 20px 0;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 0;
+
+      border: 1px solid rgba(185,151,91,.2);
+
+    }
+
+    .topup-custom span {
+
+      padding: 0 12px;
+
+      color: rgba(255,249,237,.4);
+
+      font-size: 14px;
+
+      background: rgba(185,151,91,.08);
+
+      height: 38px;
+
+      display: flex;
+
+      align-items: center;
+
+      border-right: 1px solid rgba(185,151,91,.2);
+
+    }
+
+    .topup-custom input {
+
+      flex: 1;
+
+      height: 38px;
+
+      background: transparent;
+
+      border: none;
+
+      outline: none;
+
+      color: var(--cream);
+
+      font-size: 14px;
+
+      padding: 0 12px;
+
+      font-family: var(--serif);
+
+    }
+
+    .topup-custom input::placeholder { color: rgba(255,249,237,.25); }
+
+    .topup-confirm {
+
+      margin: 14px 20px 20px;
+
+      width: calc(100% - 40px);
+
+      padding: 12px 0;
+
+      background: var(--gold);
+
+      color: var(--ink);
+
+      font-size: 14px;
+
+      font-weight: 900;
+
+      letter-spacing: 3px;
+
+      border: none;
+
+      cursor: pointer;
+
+      transition: opacity .2s;
+
+    }
+
+    .topup-confirm:hover { opacity: .85; }
+
+    .account-info-list {
+
+      padding: 0 20px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 0;
+
+    }
+
+    .account-info-row {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      padding: 12px 0;
+
+      border-bottom: 1px solid rgba(185,151,91,.08);
+
+      font-size: 13px;
+
+      color: rgba(255,249,237,.6);
+
+    }
+
+    .account-info-row:last-child { border-bottom: none; }
+
+    .account-info-row strong { color: rgba(255,249,237,.85); font-weight: 400; }
+
+
+
+    /* 订单卡片 */
+
+    .order-card {
+
+      margin: 0 20px 12px;
+
+      border: 1px solid rgba(185,151,91,.18);
+
+      background: rgba(185,151,91,.05);
+
+    }
+
+    .order-card-header {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      padding: 10px 14px;
+
+      border-bottom: 1px solid rgba(185,151,91,.12);
+
+    }
+
+    .order-card-header small { color: rgba(255,249,237,.35); font-size: 11px; letter-spacing: 1px; }
+
+    .order-status { font-size: 12px; letter-spacing: 1px; }
+
+    .order-status.delivering { color: #7eb8a4; }
+
+    .order-status.done { color: rgba(255,249,237,.4); }
+
+    .order-status.pending { color: var(--gold); }
+
+    .order-product-row {
+
+      display: flex;
+
+      gap: 12px;
+
+      padding: 12px 14px;
+
+      align-items: center;
+
+      border-bottom: 1px solid rgba(185,151,91,.08);
+
+    }
+
+    .order-product-row img {
+
+      width: 52px;
+
+      height: 52px;
+
+      object-fit: cover;
+
+      flex-shrink: 0;
+
+      opacity: .9;
+
+    }
+
+    .order-product-info { flex: 1; min-width: 0; }
+
+    .order-product-info h4 { color: rgba(255,249,237,.85); font-size: 13px; font-weight: 400; letter-spacing: 1px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .order-product-info span { color: rgba(255,249,237,.35); font-size: 12px; }
+
+    .order-product-price { color: var(--gold); font-size: 14px; font-family: var(--latin); flex-shrink: 0; }
+
+    .order-logistics {
+
+      padding: 12px 14px;
+
+    }
+
+    .order-logistics-title { color: rgba(255,249,237,.35); font-size: 11px; letter-spacing: 2px; margin-bottom: 10px; }
+
+    .logistics-track { display: flex; flex-direction: column; gap: 0; position: relative; }
+
+    .logistics-track::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: rgba(185,151,91,.2); }
+
+    .logistics-step { display: flex; gap: 14px; align-items: flex-start; position: relative; padding-bottom: 10px; }
+
+    .logistics-step:last-child { padding-bottom: 0; }
+
+    .logistics-dot { width: 11px; height: 11px; border-radius: 50%; border: 1px solid rgba(185,151,91,.4); background: #1c1812; flex-shrink: 0; margin-top: 2px; position: relative; z-index: 1; }
+
+    .logistics-step.active .logistics-dot { background: var(--gold); border-color: var(--gold); }
+
+    .logistics-step-body {}
+
+    .logistics-step-body p { font-size: 12px; color: rgba(255,249,237,.65); letter-spacing: .5px; margin-bottom: 2px; }
+
+    .logistics-step-body small { font-size: 11px; color: rgba(255,249,237,.3); }
+  </style>
+
+<style id="num-feature-fix">
+  /* 让数字字体（--latin）使用整齐的等宽 lining 数字 */
+  body { font-feature-settings: "kern" 1, "liga" 1; }
+  [class*="num"], [class*="price"], [class*="amount"], [class*="bid"],
+  .number, strong, .au-history-amt, .mc-card-num em, .au-detail-cat,
+  .mc-progress-head strong, .mc-stat-body strong, .au-time-box strong,
+  .au-cal-date strong, .au-stat strong, .mc-points-now > div strong,
+  .mc-coupon-l strong, .mc-os-num, .mc-tool-dot, .mc-points-list .add,
+  .mc-points-list .sub, .au-price-now strong, .au-history-rank {
+    font-feature-settings: "tnum" 1, "lnum" 1, "ss01" 1;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+</style>
+
+  <link rel="stylesheet" href="site-fixes.css">
+</head>
+<body>
+  <header class="topbar">
+
+    <div class="shell nav">
+
+      <a class="brand" href="index.html" aria-label="方城特产百珍坊首页">
+
+        <span class="brand-mark"><img src="uploads/logo.png" alt="百珍坊logo"></span>
+
+        <span>
+
+          <strong>方城特产百珍坊</strong>
+
+          <span>Fangcheng Selected</span>
+
+        </span>
+
+      </a>
+
+      <nav class="navlinks" aria-label="主导航">
+        <a href="index.html">首页</a>
+        <a class="active" href="baizhen-collection.html">百珍荟萃</a>
+        <a href="auction.html">拍卖中心</a>
+      </nav>
+
+
+
+          <div class="nav-avatar" id="navAvatar" role="button" aria-label="个人中心" tabindex="0">
+
+      <img src="" alt="头像" id="navAvatarImg" style="display:none">
+
+      <svg class="nav-avatar-placeholder" id="navAvatarIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="rgba(255,249,237,.6)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,249,237,.5)"/></svg>
+
+    </div>
+
+    </div>
+
+  </header>
+
+
+<!-- NAV -->
+<!-- HERO -->
+<section class="collection-hero">
+  <div class="hero-watermark">百珍坊</div>
+  <div class="hero-orb hero-orb-l"></div>
+  <div class="hero-orb hero-orb-r"></div>
+  <span class="kicker">Fangcheng · Selected Collection</span>
+  <h1>百珍<em>荟萃</em></h1>
+  <p>以方城风物为线索，汇聚文房、美食、养生、工艺四大类目，每一件皆源于本地，精选而来。</p>
+  <div class="hero-divider"></div>
+</section>
+
+<!-- FILTER -->
+<div class="filter-bar">
+  <button class="filter-tab active">全部</button>
+  <button class="filter-tab">文房雅器</button>
+  <button class="filter-tab">地方美食</button>
+  <button class="filter-tab">养生滋补</button>
+  <button class="filter-tab">工艺收藏</button>
+  <button class="filter-tab">礼盒套装</button>
+  <span class="filter-count">共 11 件精选</span>
+</div>
+
+<script>
+  // Filter tabs
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Showcase engine — defined here so inline section scripts can call it
+  function initShowcase(el, items) {
+    let cur = 0;
+    const imgEl     = el.querySelector('[data-sc-img]');
+    const infoEl    = el.querySelector('[data-sc-info]');
+    const prevBtn   = el.querySelector('.sc-prev');
+    const nextBtn   = el.querySelector('.sc-next');
+    const dotsEl    = el.querySelector('[data-sc-dots]');
+    const counterEl = el.querySelector('[data-sc-counter]');
+
+    items.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'sc-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', '第' + (i+1) + '件');
+      d.addEventListener('click', () => go(i));
+      dotsEl.appendChild(d);
+    });
+
+    function go(n) {
+      cur = n;
+      const it = items[cur];
+      imgEl.style.opacity = '0';
+      setTimeout(() => {
+        imgEl.src = it.img;
+        imgEl.alt = it.alt;
+        imgEl.style.opacity = '1';
+      }, 180);
+      const badge = infoEl.querySelector('.showcase-badge');
+      if (badge) { badge.textContent = it.badge || ''; badge.style.display = it.badge ? '' : 'none'; }
+      infoEl.querySelector('.showcase-cat').textContent   = it.cat;
+      infoEl.querySelector('.showcase-name').textContent  = it.name;
+      infoEl.querySelector('.showcase-desc').textContent  = it.desc;
+      const salesEl = infoEl.querySelector('.showcase-sales');
+      if (salesEl) salesEl.innerHTML = '已售 <em>' + it.salesCount + '</em>';
+      infoEl.querySelector('.showcase-price').textContent = it.price;
+      infoEl.querySelector('.showcase-link').href         = it.href;
+      dotsEl.querySelectorAll('.sc-dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+      const pad = n => String(n).padStart(2,'0');
+      if (counterEl) counterEl.textContent = pad(cur+1) + ' / ' + pad(items.length);
+    }
+
+    prevBtn.addEventListener('click', () => { resetTimer(); if (cur > 0) go(cur - 1); else go(items.length - 1); });
+    nextBtn.addEventListener('click', () => { resetTimer(); go((cur + 1) % items.length); });
+
+    // 5s 自动轮播
+    let timer = setInterval(() => go((cur + 1) % items.length), 5000);
+    function resetTimer() { clearInterval(timer); timer = setInterval(() => go((cur + 1) % items.length), 5000); }
+    // 鼠标悬停暂停
+    el.addEventListener('mouseenter', () => clearInterval(timer));
+    el.addEventListener('mouseleave', () => { timer = setInterval(() => go((cur + 1) % items.length), 5000); });
+
+    go(0);
+  }
+</script>
+
+<!-- 文房雅器 -->
+<div class="cat-section">
+  <div class="cat-label">
+    <div class="cat-label-left">
+      <span class="cat-label-en">Wenfang</span>
+      <span class="cat-label-text">文房雅器</span>
+      <span class="cat-label-line"><span></span></span>
+    </div>
+  </div>
+  <div class="showcase" data-showcase>
+    <button class="sc-btn sc-prev" aria-label="上一件">&#8249;</button>
+    <button class="sc-btn sc-next" aria-label="下一件">&#8250;</button>
+    <div class="showcase-img-side">
+      <img src="uploads/product1.jpg" alt="方城黄石砚" data-sc-img>
+      <div class="sc-dots" data-sc-dots></div>
+    </div>
+    <div class="showcase-info" data-sc-info>
+      <span class="showcase-badge">镇店之宝</span>
+      <h2 class="showcase-name">方城黄石砚</h2>
+      <div class="showcase-cat">Inkstone · 手工制砚</div>
+      <p class="showcase-desc">取方城本地黄石，质地细腻温润，发墨快而不损毫。一方砚台，承载千年文房风雅，适合书房陈设与藏家入门首选。</p>
+      <div class="showcase-sales">已售 <em>2,300+</em></div>
+      <div class="showcase-foot">
+        <span class="showcase-price">¥399 – 980</span>
+        <a class="showcase-link" href="detail-product1.html">查看详情 →</a>
+      </div>
+    </div>
+    <div class="sc-counter" data-sc-counter>01 / 03</div>
+  </div>
+</div>
+<script>
+(function(){
+  const sets = [
+    {
+      img:'uploads/product1.jpg',alt:'方城黄石砚',
+      badge:'镇店之宝',cat:'Inkstone · 手工制砚',
+      name:'方城黄石砚',
+      desc:'取方城本地黄石，质地细腻温润，发墨快而不损毫。一方砚台，承载千年文房风雅，适合书房陈设与藏家入门首选。',
+      salesCount:'2,300+',price:'¥399 – 980',href:'detail-product1.html'
+    },
+    {
+      img:'uploads/product-ink.jpg',alt:'手作墨锭',
+      badge:'',cat:'Studio · 墨锭',
+      name:'手作墨锭',
+      desc:'松烟入料，细研慢制，与砚台成套陈列，为文房礼盒增添完整度。',
+      salesCount:'1,050+',price:'¥98 – 268',href:'detail-ink.html'
+    },
+    {
+      img:'uploads/product-brush.jpg',alt:'羊毫长锋毛笔',
+      badge:'',cat:'Brush · 毛笔',
+      name:'羊毫长锋毛笔',
+      desc:'锋颖圆润、含墨饱满，适合行书与草书，与砚台礼盒配套销售。',
+      salesCount:'780+',price:'¥68 – 188',href:'detail-brush.html'
+    }
+  ];
+  initShowcase(document.querySelectorAll('[data-showcase]')[0], sets);
+})();
+</script>
+
+<!-- 地方美食 -->
+<div class="cat-section">
+  <div class="cat-label">
+    <div class="cat-label-left">
+      <span class="cat-label-en">Local Taste</span>
+      <span class="cat-label-text">地方美食</span>
+      <span class="cat-label-line"><span></span></span>
+    </div>
+  </div>
+  <div class="showcase" data-showcase>
+    <button class="sc-btn sc-prev" aria-label="上一件">&#8249;</button>
+    <button class="sc-btn sc-next" aria-label="下一件">&#8250;</button>
+    <div class="showcase-img-side">
+      <img src="uploads/product-guokui.jpg" alt="方城锅盔" data-sc-img>
+      <div class="sc-dots" data-sc-dots></div>
+    </div>
+    <div class="showcase-info" data-sc-info>
+      <h2 class="showcase-name">方城锅盔</h2>
+      <div class="showcase-cat">Taste · 面食</div>
+      <p class="showcase-desc">外脆内韧、麦香浓郁，地方烟火气代表。真空密封，适合家庭分享与本地伴手礼。</p>
+      <div class="showcase-sales">已售 <em>5,800+</em></div>
+      <div class="showcase-foot">
+        <span class="showcase-price">¥39 – 128</span>
+        <a class="showcase-link" href="detail-guokui.html">查看详情 →</a>
+      </div>
+    </div>
+    <div class="sc-counter" data-sc-counter>01 / 03</div>
+  </div>
+</div>
+<script>
+(function(){
+  const sets = [
+    {
+      img:'uploads/product-guokui.jpg',alt:'方城锅盔',
+      badge:'',cat:'Taste · 面食',
+      name:'方城锅盔',
+      desc:'外脆内韧、麦香浓郁，地方烟火气代表。真空密封，适合家庭分享与本地伴手礼。',
+      salesCount:'5,800+',price:'¥39 – 128',href:'detail-guokui.html'
+    },
+    {
+      img:'uploads/pack-food.jpg',alt:'方城年糕礼盒',
+      badge:'',cat:'Taste · 糕点',
+      name:'方城年糕礼盒',
+      desc:'选用本地糯米，软糯香甜，节庆馈赠首选，精心礼盒包装，颜值与口感兼备。',
+      salesCount:'3,200+',price:'¥68 – 168',href:'detail-niangao.html'
+    },
+    {
+      img:'uploads/product-mushroom.jpg',alt:'方城酱叶',
+      badge:'',cat:'Taste · 酱腌',
+      name:'方城酱叶',
+      desc:'独特腌制工艺，咸鲜适口，下饭佐餐皆宜。小批量生产，保留地道风味。',
+      salesCount:'2,400+',price:'¥28 – 88',href:'detail-jiangye.html'
+    }
+  ];
+  initShowcase(document.querySelectorAll('[data-showcase]')[1], sets);
+})();
+</script>
+
+<!-- 养生滋补 -->
+<div class="cat-section">
+  <div class="cat-label">
+    <div class="cat-label-left">
+      <span class="cat-label-en">Wellness</span>
+      <span class="cat-label-text">养生滋补</span>
+      <span class="cat-label-line"><span></span></span>
+    </div>
+  </div>
+  <div class="showcase" data-showcase>
+    <button class="sc-btn sc-prev" aria-label="上一件">&#8249;</button>
+    <button class="sc-btn sc-next" aria-label="下一件">&#8250;</button>
+    <div class="showcase-img-side">
+      <img src="uploads/product-danshen.jpg" alt="方城丹参" data-sc-img>
+      <div class="sc-dots" data-sc-dots></div>
+    </div>
+    <div class="showcase-info" data-sc-info>
+      <span class="showcase-badge">道地药材</span>
+      <h2 class="showcase-name">方城丹参</h2>
+      <div class="showcase-cat">Wellness · 本草</div>
+      <p class="showcase-desc">方城地处浅山丘陵，土壤与气候造就道地药材产区。丹参色泽鲜红、有效成分含量高，适合长辈健康关怀与养生礼赠。</p>
+      <div class="showcase-sales">已售 <em>1,900+</em></div>
+      <div class="showcase-foot">
+        <span class="showcase-price">¥168 – 368</span>
+        <a class="showcase-link" href="detail-danshen.html">查看详情 →</a>
+      </div>
+    </div>
+    <div class="sc-counter" data-sc-counter>01 / 02</div>
+  </div>
+</div>
+<script>
+(function(){
+  const sets = [
+    {
+      img:'uploads/product-danshen.jpg',alt:'方城丹参',
+      badge:'道地药材',cat:'Wellness · 本草',
+      name:'方城丹参',
+      desc:'方城地处浅山丘陵，土壤与气候造就道地药材产区。丹参色泽鲜红、有效成分含量高，适合长辈健康关怀与养生礼赠。',
+      salesCount:'1,900+',price:'¥168 – 368',href:'detail-danshen.html'
+    },
+    {
+      img:'uploads/pack-health.jpg',alt:'黄芪礼盒',
+      badge:'',cat:'Wellness · 本草',
+      name:'黄芪礼盒',
+      desc:'补气固表，质地饱满。与丹参搭配成双草礼盒，适合长辈节庆馈赠。',
+      salesCount:'1,200+',price:'¥138 – 298',href:'detail-huangqi.html'
+    }
+  ];
+  initShowcase(document.querySelectorAll('[data-showcase]')[2], sets);
+})();
+</script>
+
+<!-- 工艺收藏 -->
+<div class="cat-section" style="padding-bottom:80px;">
+  <div class="cat-label">
+    <div class="cat-label-left">
+      <span class="cat-label-en">Craft &amp; Art</span>
+      <span class="cat-label-text">工艺收藏</span>
+      <span class="cat-label-line"><span></span></span>
+    </div>
+  </div>
+  <div class="showcase" data-showcase>
+    <button class="sc-btn sc-prev" aria-label="上一件">&#8249;</button>
+    <button class="sc-btn sc-next" aria-label="下一件">&#8250;</button>
+    <div class="showcase-img-side">
+      <img src="uploads/product-shihou.jpg" alt="石猴手作" data-sc-img>
+      <div class="sc-dots" data-sc-dots></div>
+    </div>
+    <div class="showcase-info" data-sc-info>
+      <h2 class="showcase-name">石猴手作</h2>
+      <div class="showcase-cat">Craft · 手作</div>
+      <p class="showcase-desc">方城独有民俗工艺，手工捏制，每只形态各异，适合桌面摆件与文化纪念礼。</p>
+      <div class="showcase-sales">已售 <em>860+</em></div>
+      <div class="showcase-foot">
+        <span class="showcase-price">¥299 – 680</span>
+        <a class="showcase-link" href="detail-shihou.html">查看详情 →</a>
+      </div>
+    </div>
+    <div class="sc-counter" data-sc-counter>01 / 03</div>
+  </div>
+</div>
+<script>
+(function(){
+  const sets = [
+    {
+      img:'uploads/product-shihou.jpg',alt:'石猴手作',
+      badge:'',cat:'Craft · 手作',
+      name:'石猴手作',
+      desc:'方城独有民俗工艺，手工捏制，每只形态各异，适合桌面摆件与文化纪念礼。',
+      salesCount:'860+',price:'¥299 – 680',href:'detail-shihou.html',
+      rating:4.8,
+      comments:['每只表情都不一样超可爱','手工感极强，摆桌上有范儿','买了三只，每只形态各异','送孩子当玩具也喜欢','方城独有，别处买不到']
+    },
+    {
+      img:'uploads/product-silk.jpg',alt:'丝织雅礼',
+      badge:'',cat:'Gift · 丝织',
+      name:'丝织雅礼',
+      desc:'本地丝织工艺，图案取材方城风物，轻量高质感，可进入企业礼赠定制组合。',
+      salesCount:'540+',price:'¥218 – 480',href:'detail-silk.html',
+      rating:4.6,
+      comments:['图案很有地方特色','质感轻薄但高档','送外地朋友作纪念品很合适']
+    },
+    {
+      img:'uploads/auction1.jpg',alt:'黄石砚收藏级',
+      badge:'珍藏推荐',cat:'Collect · 珍藏',
+      name:'黄石砚·收藏级',
+      desc:'名家手工雕刻，石质温润、纹理天成，附鉴定证书，适合商务礼赠与文化空间陈设。',
+      salesCount:'320+',price:'¥1,280 – 3,800',href:'detail-inkstone-premium.html',
+      rating:4.9,
+      comments:['附证书有收藏价值','雕工精细叹为观止','作为商务礼品太有面了','石质温润手感极佳','实物比图片更惊艳']
+    }
+  ];
+  initShowcase(document.querySelectorAll('[data-showcase]')[3], sets);
+})();
+</script>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <strong>方城特产百珍坊</strong>
+      河南方城 · 风物精选 · Fangcheng Selected
+    </div>
+    <nav class="footer-links">
+      <a href="index.html">首页</a>
+      <a href="baizhen-collection.html">百珍荟萃</a>
+      <a href="auction.html">珍品竞拍</a>
+      <a href="contact.html">联系我们</a>
+    </nav>
+  </div>
+</footer>
+
+  <footer class="footer">
+    <div class="shell footer-grid">
+      <div>
+        <h2>方城特产百珍坊</h2>
+        <p>一屏看清方城风物四大方向：文房雅器、方城美食、养生滋补、工艺收藏；更多故事、礼盒、竞拍和合作咨询进入独立页面细看。</p>
+      </div>
+      <div>
+        <h4>商品品类</h4>
+        <a href="cat-wenfang.html">文房雅器</a>
+        <a href="cat-meishi.html">方城美食</a>
+        <a href="cat-yangsheng.html">养生滋补</a>
+        <a href="cat-gongyi.html">工艺收藏</a>
+      </div>
+      <div>
+        <h4>功能页面</h4>
+        <a href="auction.html">珍品竞拍</a>
+        <a href="custom-gift.html">礼盒定制</a>
+        <a href="brand-story.html">品牌故事</a>
+        <a href="member-center.html">会员中心</a>
+        <a href="contact.html">联系合作</a>
+      </div>
+    </div>
+  </footer>
+
+
+
+<script>
+</script>
+<!-- 个人中心侧边栏 -->
+  <div class="profile-overlay" id="profileOverlay"></div>
+  <aside class="profile-sidebar" id="profileSidebar">
+    <div class="profile-sidebar-header">
+      <span>个人中心</span>
+      <div class="profile-close" id="profileClose">✕</div>
+    </div>
+    <div class="profile-user-block">
+      <label class="profile-avatar-large" for="avatarUpload" title="点击更换头像">
+        <img src="" alt="头像" id="sidebarAvatarImg" style="display:none">
+        <svg id="sidebarAvatarIcon" width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="rgba(255,249,237,.5)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,249,237,.35)"/></svg>
+      </label>
+      <input type="file" id="avatarUpload" class="profile-upload-input" accept="image/*">
+      <div class="profile-username" id="profileUsername">访客</div>
+      <div class="profile-tag">方城特产百珍坊会员</div>
+    </div>
+    <!-- 主菜单面板 -->
+    <div class="profile-panel active" id="panelMain">
+      <nav class="profile-menu">
+                <a href="member-center.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          个人中心
+        </a>
+<a href="#" id="menuAccount">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          我的账户
+        </a>
+        <a href="#" id="menuOrders">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          我的订单
+        </a>
+        <a href="member-center.html#collection">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          我的收藏
+        </a>
+        <a href="custom-gift.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M12 8V21M3 13h18"/><path d="M12 8c0-2.5-2-4-4-2s0 4 4 4m0-4c0-2.5 2-4 4-2s0 4-4 4"/></svg>
+          礼盒定制
+        </a>
+        <a href="contact.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          联系合作
+        </a>
+      </nav>
+    </div>
+
+    <!-- 账户子面板 -->
+    <div class="profile-panel" id="panelAccount">
+      <div class="profile-panel-back" id="accountBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        返回
+      </div>
+      <div class="account-balance-card">
+        <small>账户余额</small>
+        <div class="account-balance-amount"><span>¥</span><span id="balanceNum">0.00</span></div>
+      </div>
+      <div class="account-section-title">快速充值</div>
+      <div class="topup-grid">
+        <div class="topup-btn" data-val="50">¥ 50</div>
+        <div class="topup-btn" data-val="100">¥ 100</div>
+        <div class="topup-btn" data-val="200">¥ 200</div>
+        <div class="topup-btn" data-val="500">¥ 500</div>
+      </div>
+      <div class="topup-custom">
+        <span>¥</span>
+        <input type="text" id="topupCustom" placeholder="自定义金额">
+      </div>
+      <button class="topup-confirm" id="topupConfirm">确认充值</button>
+      <div class="account-section-title">账户信息</div>
+      <div class="account-info-list">
+        <div class="account-info-row"><span>会员等级</span><strong>普通会员</strong></div>
+        <div class="account-info-row"><span>累计消费</span><strong id="totalSpend">¥ 0.00</strong></div>
+        <div class="account-info-row"><span>优惠券</span><strong>0 张</strong></div>
+        <div class="account-info-row"><span>积分</span><strong id="pointsNum">0</strong></div>
+      </div>
+    </div>
+
+    <!-- 订单子面板 -->
+    <div class="profile-panel" id="panelOrders">
+      <div class="profile-panel-back" id="ordersBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        返回
+      </div>
+      <div class="account-section-title">我的订单</div>
+      <div class="account-info-list" style="padding:0 20px;">
+        <div class="account-info-row"><span>待付款</span><strong>0</strong></div>
+        <div class="account-info-row"><span>待发货</span><strong>0</strong></div>
+        <div class="account-info-row"><span>待收货</span><strong>0</strong></div>
+        <div class="account-info-row"><span>已完成</span><strong>0</strong></div>
+        <div class="account-info-row"><span>退款/售后</span><strong>0</strong></div>
+      </div>
+      <div class="account-section-title" style="margin-top:8px;">最近订单</div>
+      <div class="order-card">
+        <div class="order-card-header">
+          <small>订单号 FC20240617001</small>
+          <span class="order-status delivering">配送中</span>
+        </div>
+        <div class="order-product-row">
+          <img src="uploads/product1.jpg" alt="方城黄石砚">
+          <div class="order-product-info">
+            <h4>方城黄石砚</h4>
+            <span>数量 × 1</span>
+          </div>
+          <span class="order-product-price">¥ 399</span>
+        </div>
+        <div class="order-logistics">
+          <div class="order-logistics-title">物流跟踪</div>
+          <div class="logistics-track">
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>包裹已签收</p>
+                <small>2024-06-17 &nbsp;14:32</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>派送中 — 快递员已取件</p>
+                <small>2024-06-17 &nbsp;09:05</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>已到达 南阳 转运中心</p>
+                <small>2024-06-16 &nbsp;22:41</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>商家已发货</p>
+                <small>2024-06-15 &nbsp;16:18</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>订单已下单，等待商家处理</p>
+                <small>2024-06-15 &nbsp;10:03</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+<script>
+    (function() {
+      const overlay = document.getElementById('profileOverlay');
+      const sidebar = document.getElementById('profileSidebar');
+      const navAvatar = document.getElementById('navAvatar');
+      const closeBtn = document.getElementById('profileClose');
+      const avatarUpload = document.getElementById('avatarUpload');
+      const navAvatarImg = document.getElementById('navAvatarImg');
+      const navAvatarIcon = document.getElementById('navAvatarIcon');
+      const sidebarAvatarImg = document.getElementById('sidebarAvatarImg');
+      const sidebarAvatarIcon = document.getElementById('sidebarAvatarIcon');
+
+      function openSidebar() {
+        overlay.classList.add('open');
+        sidebar.classList.add('open');
+      }
+      function closeSidebar() {
+        overlay.classList.remove('open');
+        sidebar.classList.remove('open');
+      }
+
+      navAvatar.addEventListener('click', openSidebar);
+      navAvatar.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openSidebar(); });
+      closeBtn.addEventListener('click', closeSidebar);
+      overlay.addEventListener('click', closeSidebar);
+
+      // 头像上传
+      avatarUpload.addEventListener('change', function() {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const src = e.target.result;
+          // 更新导航头像
+          navAvatarImg.src = src;
+          navAvatarImg.style.display = 'block';
+          navAvatarIcon.style.display = 'none';
+          // 更新侧边栏头像
+          sidebarAvatarImg.src = src;
+          sidebarAvatarImg.style.display = 'block';
+          sidebarAvatarIcon.style.display = 'none';
+          // 本地持久化
+          try { localStorage.setItem('baizhenfang_avatar', src); } catch(e) {}
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // 恢复已保存头像
+      try {
+        const saved = localStorage.getItem('baizhenfang_avatar');
+        if (saved) {
+          navAvatarImg.src = saved;
+          navAvatarImg.style.display = 'block';
+          navAvatarIcon.style.display = 'none';
+          sidebarAvatarImg.src = saved;
+          sidebarAvatarImg.style.display = 'block';
+          sidebarAvatarIcon.style.display = 'none';
+        }
+      } catch(e) {}
+
+      // 面板切换
+      const panelMain = document.getElementById('panelMain');
+      const panelAccount = document.getElementById('panelAccount');
+      const panelOrders = document.getElementById('panelOrders');
+      const menuAccount = document.getElementById('menuAccount');
+      const menuOrders = document.getElementById('menuOrders');
+      const accountBack = document.getElementById('accountBack');
+      const ordersBack = document.getElementById('ordersBack');
+
+      function showPanel(panel) {
+        panelMain.classList.remove('active');
+        panelAccount.classList.remove('active');
+        panelOrders.classList.remove('active');
+        panel.classList.add('active');
+      }
+
+      menuAccount.addEventListener('click', function(e) { e.preventDefault(); showPanel(panelAccount); });
+      menuOrders.addEventListener('click', function(e) { e.preventDefault(); showPanel(panelOrders); });
+      accountBack.addEventListener('click', function() { showPanel(panelMain); });
+      ordersBack.addEventListener('click', function() { showPanel(panelMain); });
+
+      // 关闭时重置到主面板
+      function closeSidebarFull() {
+        overlay.classList.remove('open');
+        sidebar.classList.remove('open');
+        setTimeout(() => showPanel(panelMain), 350);
+      }
+      closeBtn.removeEventListener('click', closeSidebar);
+      overlay.removeEventListener('click', closeSidebar);
+      closeBtn.addEventListener('click', closeSidebarFull);
+      overlay.addEventListener('click', closeSidebarFull);
+
+      // 余额与充值
+      const balanceNum = document.getElementById('balanceNum');
+      const topupCustom = document.getElementById('topupCustom');
+      const topupConfirm = document.getElementById('topupConfirm');
+      const topupBtns = document.querySelectorAll('.topup-btn');
+
+      let balance = 0;
+      try { balance = parseFloat(localStorage.getItem('baizhenfang_balance') || '0'); } catch(e) {}
+      balanceNum.textContent = balance.toFixed(2);
+
+      let selectedAmount = 0;
+      topupBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          topupBtns.forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedAmount = parseFloat(this.dataset.val);
+          topupCustom.value = '';
+        });
+      });
+      topupCustom.addEventListener('input', function() {
+        topupBtns.forEach(b => b.classList.remove('selected'));
+        selectedAmount = 0;
+      });
+
+      topupConfirm.addEventListener('click', function() {
+        const custom = parseFloat(topupCustom.value);
+        const amount = custom > 0 ? custom : selectedAmount;
+        if (!amount || amount <= 0) return;
+        balance += amount;
+        balanceNum.textContent = balance.toFixed(2);
+        try { localStorage.setItem('baizhenfang_balance', balance.toString()); } catch(e) {}
+        topupBtns.forEach(b => b.classList.remove('selected'));
+        topupCustom.value = '';
+        selectedAmount = 0;
+        topupConfirm.textContent = '充值成功 ✓';
+        setTimeout(() => { topupConfirm.textContent = '确认充值'; }, 1500);
+      });
+    })();
+  </script>
+</body>
+</html>

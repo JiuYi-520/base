@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>养生滋补 - 方城特产百珍坊</title>
+  <style>
+    :root{--ink:#171411;--paper:#F6F0E6;--paper-deep:#E8DCC8;--clay:#A85F3D;--gold:#B9975B;--pine:#596C58;--cream:#FFF9ED;--smoke:#766D61;--line:rgba(23,20,17,.14);--line-dark:rgba(246,240,230,.18);--shadow:0 28px 70px rgba(36,24,15,.16);--serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;--sans:"Noto Serif SC","Songti SC","STSong",serif;--latin:"Playfair Display", "Cormorant Garamond","Georgia",serif;}
+    *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{min-height:100vh;color:var(--ink);background:radial-gradient(circle at 10% 8%,rgba(185,151,91,.18),transparent 31%),radial-gradient(circle at 92% 10%,rgba(89,108,88,.16),transparent 30%),linear-gradient(122deg,#fff9ed 0%,var(--paper) 48%,#eadbc4 100%);font-family:var(--serif);overflow-x:hidden}body::before{content:"";position:fixed;inset:0;z-index:30;pointer-events:none;opacity:.2;background-image:linear-gradient(rgba(23,20,17,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(23,20,17,.03) 1px,transparent 1px);background-size:38px 38px;mix-blend-mode:multiply}a{color:inherit;text-decoration:none}img{display:block;max-width:100%}.number,.price,.count,.meta-number{font-variant-numeric:tabular-nums lining-nums;font-feature-settings:"tnum" 1,"lnum" 1}.shell{width:min(1240px,calc(100vw - 48px));margin:0 auto}
+        /* ── NAV ── */.nav-cta{min-height:42px;display:inline-flex;align-items:center;justify-content:center;padding:0 17px;border:1px solid rgba(185,151,91,.5);color:var(--gold);background:rgba(246,240,230,.07);font-family:var(--sans);font-weight:900;letter-spacing:2px;white-space:nowrap}
+    .hero{position:relative;padding:52px 0 44px;overflow:hidden}.hero::before{content:"WELLNESS";position:absolute;left:-3vw;bottom:-7px;color:rgba(23,20,17,.045);font-family:var(--latin);font-size:clamp(84px,16vw,230px);font-weight:700;letter-spacing:14px;line-height:.8}.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:center}.hero-copy{grid-column:1/span 5}.kicker{display:inline-flex;align-items:center;gap:14px;color:var(--pine);font-family:var(--sans);font-size:13px;font-weight:900;letter-spacing:4px}.kicker::before{content:"";width:46px;height:1px;background:var(--pine)}h1{margin-top:24px;font-size:clamp(52px,6.4vw,92px);line-height:.96;letter-spacing:8px;font-weight:900}.headline-note{display:block;margin-top:12px;color:transparent;-webkit-text-stroke:1px rgba(23,20,17,.55);font-family:var(--latin);font-size:clamp(32px,4vw,60px);letter-spacing:5px;text-transform:uppercase}.lead{margin-top:26px;color:#5f5449;font-size:17px;line-height:2;letter-spacing:1px}.hero-actions{display:flex;flex-wrap:wrap;gap:15px;margin-top:32px}.btn{min-height:52px;display:inline-flex;align-items:center;justify-content:center;padding:0 24px;border:1px solid transparent;font-family:var(--sans);font-weight:900;letter-spacing:2px;transition:transform .25s ease,box-shadow .25s ease,background .25s ease}.btn-primary{background:var(--ink);color:var(--cream);box-shadow:15px 15px 0 rgba(89,108,88,.16)}.btn-primary:hover{transform:translate(-2px,-2px);box-shadow:20px 20px 0 rgba(89,108,88,.19)}.btn-ghost{border-color:rgba(23,20,17,.24);background:rgba(255,249,237,.44)}.btn-ghost:hover{transform:translateY(-3px);background:rgba(255,249,237,.8)}
+    .gallery{grid-column:6/span 7;display:grid;grid-template-columns:1fr 180px;gap:16px;min-height:560px}.gallery-main{position:relative;overflow:hidden;background:var(--ink);box-shadow:var(--shadow)}.gallery-slide{position:absolute;inset:0;opacity:0;transition:opacity .7s ease}.gallery-slide.active{opacity:1}.gallery-slide .bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(.95) contrast(1.05)}.gallery-main::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,20,17,.1) 0%,rgba(23,20,17,.82) 100%)}.gallery-caption{position:absolute;left:30px;right:30px;bottom:28px;z-index:2;color:var(--cream)}.gallery-caption small{color:var(--gold);font-family:var(--latin);letter-spacing:4px;text-transform:uppercase}.gallery-caption h2{margin-top:8px;font-size:34px;letter-spacing:5px}.gallery-caption p{margin-top:10px;color:rgba(255,249,237,.7);line-height:1.8}.gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:38px;height:38px;border:1px solid rgba(255,249,237,.34);background:rgba(23,20,17,.34);color:var(--cream);cursor:pointer}.gallery-arrow:hover{border-color:var(--gold);color:var(--gold)}.gallery-arrow.prev{left:14px}.gallery-arrow.next{right:14px}.thumbs{display:grid;gap:14px}.thumb{position:relative;overflow:hidden;background-size:cover;background-position:center;cursor:pointer;border:1px solid rgba(23,20,17,.12);opacity:.68;transition:opacity .25s ease,transform .25s ease,border-color .25s ease}.thumb::after{content:"";position:absolute;inset:0;background:rgba(23,20,17,.48)}.thumb span{position:absolute;left:13px;right:13px;bottom:12px;z-index:1;color:var(--cream);font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:2px}.thumb.active,.thumb:hover{opacity:1;transform:translateX(-4px);border-color:var(--gold)}.thumb.active::after,.thumb:hover::after{background:rgba(23,20,17,.18)}
+    .stats{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,249,237,.42)}.stat{padding:23px 28px;border-right:1px solid var(--line)}.stat:last-child{border-right:0}.stat strong{display:block;min-width:82px;font-family:var(--latin);font-size:40px;line-height:.95;color:var(--pine);letter-spacing:.5px}.stat span{display:block;margin-top:8px;color:var(--smoke);font-family:var(--sans);font-size:13px;letter-spacing:3px}.section{padding:78px 0;position:relative}.section-title{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:end;margin-bottom:32px}.section-title .number{color:var(--gold);font-family:var(--latin);font-size:18px;letter-spacing:5px;text-transform:uppercase}.section-title h2{margin-top:9px;font-size:clamp(34px,4vw,58px);line-height:1.05;letter-spacing:5px}.section-title p{max-width:520px;color:var(--smoke);font-family:var(--sans);line-height:1.9;letter-spacing:1px}.story-panel{display:grid;grid-template-columns:1fr .82fr;gap:26px;align-items:stretch}.story-copy{padding:36px;border:1px solid var(--line);background:rgba(255,249,237,.54);box-shadow:12px 12px 0 rgba(23,20,17,.045)}.story-copy p{font-family:var(--sans);color:#4f453b;font-size:15px;line-height:2.1;letter-spacing:.8px;text-align:justify}.story-copy p+p{margin-top:16px}.craft-list{display:grid;gap:14px}.craft-card{padding:24px;background:var(--ink);color:var(--cream);border:1px solid rgba(185,151,91,.22)}.craft-card small{color:var(--gold);font-family:var(--latin);letter-spacing:4px;text-transform:uppercase}.craft-card h3{margin-top:8px;font-size:22px;letter-spacing:3px}.craft-card p{margin-top:9px;color:rgba(255,249,237,.65);font-family:var(--sans);font-size:14px;line-height:1.8}.filter-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}.filter-left{display:flex;gap:10px;flex-wrap:wrap}.filter-btn{min-height:38px;padding:0 16px;border:1px solid rgba(23,20,17,.16);background:rgba(255,249,237,.52);color:var(--ink);cursor:pointer;font-family:var(--sans);letter-spacing:1px}.filter-btn:hover,.filter-btn.active{background:var(--ink);border-color:var(--ink);color:var(--cream)}.filter-right{color:var(--smoke);font-family:var(--sans);font-size:14px;letter-spacing:2px}.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.pcard{position:relative;display:block;overflow:hidden;background:rgba(255,249,237,.64);border:1px solid rgba(23,20,17,.14);transition:transform .28s ease,box-shadow .28s ease,background .28s ease}.pcard:hover{transform:translateY(-6px);box-shadow:18px 18px 0 rgba(23,20,17,.08);background:rgba(255,249,237,.88)}.pcard-img{position:relative;aspect-ratio:1/1;background-size:cover;background-position:center;overflow:hidden}.pcard-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(23,20,17,.45) 100%);opacity:.75}.badge{position:absolute;top:12px;right:12px;z-index:1;padding:4px 10px;background:var(--pine);color:var(--cream);font-family:var(--sans);font-size:12px;font-weight:900;letter-spacing:2px}.pcard-body{padding:18px}.pcard small{color:var(--gold);font-family:var(--latin);font-size:12px;letter-spacing:3px;text-transform:uppercase}.pcard h3{min-height:58px;margin-top:9px;font-size:19px;line-height:1.45;letter-spacing:2px}.price{margin-top:14px;color:var(--pine);font-family:var(--latin);font-size:26px;font-weight:700;letter-spacing:.5px}.pcard em{display:block;margin-top:8px;color:var(--smoke);font-family:var(--sans);font-style:normal;font-size:13px;line-height:1.65}.gift-panel{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px;align-items:center;padding:28px;border:1px solid var(--line);background:rgba(23,20,17,.88);color:var(--cream);box-shadow:var(--shadow)}.gift-panel img{width:100%;height:330px;object-fit:cover}.gift-panel h2{font-size:38px;letter-spacing:5px}.gift-panel p{margin-top:15px;color:rgba(255,249,237,.68);font-family:var(--sans);line-height:1.9}.gift-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.gift-tags span{border:1px solid rgba(185,151,91,.36);color:var(--gold);padding:7px 12px;font-family:var(--sans);font-size:13px;letter-spacing:2px}.footer{padding:50px 0;color:var(--cream);background:var(--ink)}.footer-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:28px;align-items:start}.footer h2{font-size:35px;letter-spacing:6px}.footer p{margin-top:14px;max-width:510px;color:rgba(255,249,237,.62);font-family:var(--sans);line-height:1.9}.footer h4{color:var(--gold);letter-spacing:3px}.footer a,.footer span{display:block;margin-top:13px;color:rgba(255,249,237,.64);font-family:var(--sans);font-size:14px;letter-spacing:1px}.footer a:hover{color:var(--gold)}
+    @keyframes riseIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}.hero-copy,.gallery,.stat,.story-panel,.pcard,.gift-panel{animation:riseIn .75s ease both}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}@media(max-width:1040px){.hero-copy,.gallery{grid-column:1/-1}.gallery{min-height:520px}.story-panel,.gift-panel{grid-template-columns:1fr}.product-grid{grid-template-columns:repeat(2,1fr)}.footer-grid{grid-template-columns:1fr}}@media(max-width:680px){.shell{width:min(100% - 28px,1240px)}.nav-cta{display:none}h1{letter-spacing:4px}.gallery{grid-template-columns:1fr;min-height:auto}.gallery-main{height:410px}.thumbs{grid-template-columns:repeat(4,1fr);height:88px}.thumb span{font-size:11px;letter-spacing:1px}.stats,.section-title{grid-template-columns:1fr}.stat{border-right:0;border-bottom:1px solid var(--line)}.filter-bar{align-items:flex-start;flex-direction:column}.product-grid{grid-template-columns:1fr}.gift-panel img{height:240px}}
+      /* 个人中心侧边栏 */
+
+    .topbar {
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 60;
+
+      border-bottom: 1px solid var(--line-dark);
+
+      background: rgba(23, 20, 17, .91);
+
+      color: var(--cream);
+
+      backdrop-filter: blur(18px);
+
+    }
+
+    .nav {
+
+      min-height: 76px;
+
+      display: grid;
+
+      grid-template-columns: auto 1fr auto;
+
+      align-items: center;
+
+      gap: 28px;
+
+    }
+
+    .brand { display: flex; align-items: center; gap: 14px; min-width: max-content; color: var(--cream); text-decoration: none; }
+
+    .brand-mark {
+
+      position: relative;
+
+      width: 48px;
+
+      height: 48px;
+
+      border-radius: 50%;
+
+      overflow: hidden;
+
+      flex-shrink: 0;
+
+      box-shadow: 0 0 0 2px rgba(185,151,91,.45), 0 0 14px rgba(185,151,91,.15);
+
+    }
+
+    .brand-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .brand-mark::after { display: none; }
+
+    .brand strong { display: block; font-size: 21px; letter-spacing: 5px; font-weight: 900; }
+
+    .brand span span { display: block; margin-top: 3px; color: rgba(255,249,237,.58); font-family: var(--latin); font-size: 12px; letter-spacing: 4px; text-transform: uppercase; }
+
+    .navlinks { display: flex; justify-content: center; gap: 24px; color: rgba(255,249,237,.74); font-size: 14px; letter-spacing: 2px; }
+
+    .navlinks a { position: relative; white-space: nowrap; transition: color .25s ease; text-decoration: none; color: inherit; }
+
+    .navlinks a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -12px; height: 1px; background: var(--gold); transition: right .25s ease; }
+
+    .navlinks a:hover { color: var(--gold); }
+
+    .navlinks a:hover::after { right: 0; }
+
+    .nav-avatar {
+
+      width: 42px;
+
+      height: 42px;
+
+      border-radius: 50%;
+
+      border: 2px solid rgba(185,151,91,.6);
+
+      overflow: hidden;
+
+      cursor: pointer;
+
+      flex-shrink: 0;
+
+      background: rgba(185,151,91,.18);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      transition: border-color .2s;
+
+    }
+
+    .nav-avatar:hover { border-color: var(--gold); }
+
+    .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .nav-avatar-placeholder {
+
+      width: 22px;
+
+      height: 22px;
+
+      fill: rgba(255,249,237,.6);
+
+    }
+
+    /* 个人中心侧边栏 */
+
+    .profile-overlay {
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 200;
+
+      background: rgba(23,20,17,.45);
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: opacity .3s ease;
+
+    }
+
+    .profile-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .profile-sidebar {
+
+      position: fixed;
+
+      top: 0;
+
+      right: 0;
+
+      bottom: 0;
+
+      width: 320px;
+
+      z-index: 201;
+
+      background: #1c1812;
+
+      border-left: 1px solid rgba(185,151,91,.2);
+
+      display: flex;
+
+      flex-direction: column;
+
+      transform: translateX(100%);
+
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+
+      overflow-y: auto;
+
+    }
+
+    .profile-sidebar.open { transform: translateX(0); }
+
+    .profile-sidebar-header {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 22px 24px 18px;
+
+      border-bottom: 1px solid rgba(185,151,91,.15);
+
+    }
+
+    .profile-sidebar-header span {
+
+      color: var(--gold);
+
+      font-size: 15px;
+
+      letter-spacing: 3px;
+
+      font-weight: 900;
+
+    }
+
+    .profile-close {
+
+      width: 32px;
+
+      height: 32px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      cursor: pointer;
+
+      color: rgba(255,249,237,.5);
+
+      font-size: 20px;
+
+      border-radius: 4px;
+
+      transition: color .2s;
+
+    }
+
+    .profile-close:hover { color: var(--gold); }
+
+    .profile-user-block {
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 32px 24px 24px;
+
+      border-bottom: 1px solid rgba(185,151,91,.1);
+
+    }
+
+    .profile-avatar-large {
+
+      width: 80px;
+
+      height: 80px;
+
+      border-radius: 50%;
+
+      border: 2px solid rgba(185,151,91,.5);
+
+      overflow: hidden;
+
+      background: rgba(185,151,91,.15);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      cursor: pointer;
+
+      position: relative;
+
+    }
+
+    .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
+
+    .profile-avatar-large:hover::after {
+
+      content: "更换头像";
+
+      position: absolute;
+
+      inset: 0;
+
+      background: rgba(23,20,17,.6);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      color: var(--gold);
+
+      font-size: 12px;
+
+      letter-spacing: 1px;
+
+      border-radius: 50%;
+
+    }
+
+    .profile-username {
+
+      color: var(--cream);
+
+      font-size: 16px;
+
+      letter-spacing: 2px;
+
+      font-weight: 700;
+
+    }
+
+    .profile-tag {
+
+      color: rgba(255,249,237,.42);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+    }
+
+    .profile-upload-input { display: none; }
+
+    .profile-menu {
+
+      display: flex;
+
+      flex-direction: column;
+
+      padding: 16px 0;
+
+    }
+
+    .profile-menu a {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
+      padding: 14px 24px;
+
+      color: rgba(255,249,237,.7);
+
+      font-size: 14px;
+
+      letter-spacing: 1px;
+
+      transition: background .2s, color .2s;
+
+      border-left: 2px solid transparent;
+
+      text-decoration: none;
+
+    }
+
+    .profile-menu a:hover {
+
+      background: rgba(185,151,91,.08);
+
+      color: var(--gold);
+
+      border-left-color: var(--gold);
+
+    }
+
+    .profile-menu a svg { opacity: .6; flex-shrink: 0; }
+
+
+
+    /* 账户子面板 */
+
+    .profile-panel { display: none; flex-direction: column; flex: 1; }
+
+    .profile-panel.active { display: flex; }
+
+    .profile-panel-back {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      padding: 14px 24px;
+
+      color: rgba(255,249,237,.5);
+
+      font-size: 13px;
+
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      border-bottom: 1px solid rgba(185,151,91,.1);
+
+      transition: color .2s;
+
+    }
+
+    .profile-panel-back:hover { color: var(--gold); }
+
+    .account-balance-card {
+
+      margin: 20px 20px 0;
+
+      padding: 20px;
+
+      background: linear-gradient(135deg, rgba(185,151,91,.18), rgba(185,151,91,.06));
+
+      border: 1px solid rgba(185,151,91,.25);
+
+      border-radius: 4px;
+
+    }
+
+    .account-balance-card small {
+
+      display: block;
+
+      color: rgba(255,249,237,.45);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 8px;
+
+    }
+
+    .account-balance-amount {
+
+      font-size: 32px;
+
+      color: var(--gold);
+
+      font-weight: 700;
+
+      font-family: var(--latin);
+
+      letter-spacing: 1px;
+
+    }
+
+    .account-balance-amount span {
+
+      font-size: 14px;
+
+      margin-right: 4px;
+
+      opacity: .7;
+
+    }
+
+    .account-section-title {
+
+      padding: 20px 20px 10px;
+
+      color: rgba(255,249,237,.4);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+    }
+
+    .topup-grid {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 8px;
+
+      padding: 0 20px;
+
+    }
+
+    .topup-btn {
+
+      padding: 10px 0;
+
+      text-align: center;
+
+      border: 1px solid rgba(185,151,91,.25);
+
+      color: rgba(255,249,237,.7);
+
+      font-size: 14px;
+
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      background: rgba(185,151,91,.06);
+
+      border-radius: 2px;
+
+      transition: background .2s, color .2s, border-color .2s;
+
+    }
+
+    .topup-btn:hover { background: rgba(185,151,91,.18); color: var(--gold); border-color: rgba(185,151,91,.5); }
+
+    .topup-btn.selected { background: rgba(185,151,91,.22); color: var(--gold); border-color: var(--gold); }
+
+    .topup-custom {
+
+      margin: 10px 20px 0;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 0;
+
+      border: 1px solid rgba(185,151,91,.2);
+
+    }
+
+    .topup-custom span {
+
+      padding: 0 12px;
+
+      color: rgba(255,249,237,.4);
+
+      font-size: 14px;
+
+      background: rgba(185,151,91,.08);
+
+      height: 38px;
+
+      display: flex;
+
+      align-items: center;
+
+      border-right: 1px solid rgba(185,151,91,.2);
+
+    }
+
+    .topup-custom input {
+
+      flex: 1;
+
+      height: 38px;
+
+      background: transparent;
+
+      border: none;
+
+      outline: none;
+
+      color: var(--cream);
+
+      font-size: 14px;
+
+      padding: 0 12px;
+
+      font-family: var(--serif);
+
+    }
+
+    .topup-custom input::placeholder { color: rgba(255,249,237,.25); }
+
+    .topup-confirm {
+
+      margin: 14px 20px 20px;
+
+      width: calc(100% - 40px);
+
+      padding: 12px 0;
+
+      background: var(--gold);
+
+      color: var(--ink);
+
+      font-size: 14px;
+
+      font-weight: 900;
+
+      letter-spacing: 3px;
+
+      border: none;
+
+      cursor: pointer;
+
+      transition: opacity .2s;
+
+    }
+
+    .topup-confirm:hover { opacity: .85; }
+
+    .account-info-list {
+
+      padding: 0 20px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 0;
+
+    }
+
+    .account-info-row {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      padding: 12px 0;
+
+      border-bottom: 1px solid rgba(185,151,91,.08);
+
+      font-size: 13px;
+
+      color: rgba(255,249,237,.6);
+
+    }
+
+    .account-info-row:last-child { border-bottom: none; }
+
+    .account-info-row strong { color: rgba(255,249,237,.85); font-weight: 400; }
+
+
+
+    /* 订单卡片 */
+
+    .order-card {
+
+      margin: 0 20px 12px;
+
+      border: 1px solid rgba(185,151,91,.18);
+
+      background: rgba(185,151,91,.05);
+
+    }
+
+    .order-card-header {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      padding: 10px 14px;
+
+      border-bottom: 1px solid rgba(185,151,91,.12);
+
+    }
+
+    .order-card-header small { color: rgba(255,249,237,.35); font-size: 11px; letter-spacing: 1px; }
+
+    .order-status { font-size: 12px; letter-spacing: 1px; }
+
+    .order-status.delivering { color: #7eb8a4; }
+
+    .order-status.done { color: rgba(255,249,237,.4); }
+
+    .order-status.pending { color: var(--gold); }
+
+    .order-product-row {
+
+      display: flex;
+
+      gap: 12px;
+
+      padding: 12px 14px;
+
+      align-items: center;
+
+      border-bottom: 1px solid rgba(185,151,91,.08);
+
+    }
+
+    .order-product-row img {
+
+      width: 52px;
+
+      height: 52px;
+
+      object-fit: cover;
+
+      flex-shrink: 0;
+
+      opacity: .9;
+
+    }
+
+    .order-product-info { flex: 1; min-width: 0; }
+
+    .order-product-info h4 { color: rgba(255,249,237,.85); font-size: 13px; font-weight: 400; letter-spacing: 1px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .order-product-info span { color: rgba(255,249,237,.35); font-size: 12px; }
+
+    .order-product-price { color: var(--gold); font-size: 14px; font-family: var(--latin); flex-shrink: 0; }
+
+    .order-logistics {
+
+      padding: 12px 14px;
+
+    }
+
+    .order-logistics-title { color: rgba(255,249,237,.35); font-size: 11px; letter-spacing: 2px; margin-bottom: 10px; }
+
+    .logistics-track { display: flex; flex-direction: column; gap: 0; position: relative; }
+
+    .logistics-track::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: rgba(185,151,91,.2); }
+
+    .logistics-step { display: flex; gap: 14px; align-items: flex-start; position: relative; padding-bottom: 10px; }
+
+    .logistics-step:last-child { padding-bottom: 0; }
+
+    .logistics-dot { width: 11px; height: 11px; border-radius: 50%; border: 1px solid rgba(185,151,91,.4); background: #1c1812; flex-shrink: 0; margin-top: 2px; position: relative; z-index: 1; }
+
+    .logistics-step.active .logistics-dot { background: var(--gold); border-color: var(--gold); }
+
+    .logistics-step-body {}
+
+    .logistics-step-body p { font-size: 12px; color: rgba(255,249,237,.65); letter-spacing: .5px; margin-bottom: 2px; }
+
+    .logistics-step-body small { font-size: 11px; color: rgba(255,249,237,.3); }
+  </style>
+
+<style id="num-feature-fix">
+  /* 让数字字体（--latin）使用整齐的等宽 lining 数字 */
+  body { font-feature-settings: "kern" 1, "liga" 1; }
+  [class*="num"], [class*="price"], [class*="amount"], [class*="bid"],
+  .number, strong, .au-history-amt, .mc-card-num em, .au-detail-cat,
+  .mc-progress-head strong, .mc-stat-body strong, .au-time-box strong,
+  .au-cal-date strong, .au-stat strong, .mc-points-now > div strong,
+  .mc-coupon-l strong, .mc-os-num, .mc-tool-dot, .mc-points-list .add,
+  .mc-points-list .sub, .au-price-now strong, .au-history-rank {
+    font-feature-settings: "tnum" 1, "lnum" 1, "ss01" 1;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+</style>
+
+  <link rel="stylesheet" href="site-fixes.css">
+</head>
+<body>
+  <header class="topbar">
+
+    <div class="shell nav">
+
+      <a class="brand" href="index.html" aria-label="方城特产百珍坊首页">
+
+        <span class="brand-mark"><img src="uploads/logo.png" alt="百珍坊logo"></span>
+
+        <span>
+
+          <strong>方城特产百珍坊</strong>
+
+          <span>Fangcheng Selected</span>
+
+        </span>
+
+      </a>
+
+      <nav class="navlinks" aria-label="主导航">
+        <a href="index.html">首页</a>
+        <a href="baizhen-collection.html">百珍荟萃</a>
+        <a href="auction.html">拍卖中心</a>
+      </nav>
+
+
+
+          <div class="nav-avatar" id="navAvatar" role="button" aria-label="个人中心" tabindex="0">
+
+      <img src="" alt="头像" id="navAvatarImg" style="display:none">
+
+      <svg class="nav-avatar-placeholder" id="navAvatarIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="rgba(255,249,237,.6)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,249,237,.5)"/></svg>
+
+    </div>
+
+    </div>
+
+  </header>
+
+  <!-- NAV -->
+<main>
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <span class="kicker">伏牛山麓 · 药食同源</span>
+          <h1>养生滋补<br>温和日常的东方调理</h1>
+          <span class="headline-note">Wellness</span>
+          <p class="lead">养生页不做夸张功效承诺，而是强调产地、食材、日常饮用/食用场景和礼赠关怀。丹参、黄金菌等单品以"温和长期使用"的方式呈现。</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#products">查看滋补品</a>
+            <a class="btn btn-ghost" href="auction.html">加入会员</a>
+          </div>
+        </div>
+        <div class="gallery" id="galleryMain">
+          <div class="gallery-main">
+            <div class="gallery-slide active"><div class="bg" style="background-image:url(./uploads/cat-yangsheng.jpg)"></div></div>
+            <div class="gallery-slide"><div class="bg" style="background-image:url(./uploads/product-danshen.jpg)"></div></div>
+            <div class="gallery-slide"><div class="bg" style="background-image:url(./uploads/product-mushroom.jpg)"></div></div>
+            <div class="gallery-slide"><div class="bg" style="background-image:url(./uploads/product-pear.jpg)"></div></div>
+            <div class="gallery-caption">
+              <small>Selected Wellness</small>
+              <h2>丹参、菌菇、梨膏</h2>
+              <p>从地方药食资源延展到家庭日常养护。</p>
+            </div>
+            <button class="gallery-arrow prev" onclick="galleryPrev()" aria-label="上一张">&#8249;</button>
+            <button class="gallery-arrow next" onclick="galleryNext()" aria-label="下一张">&#8250;</button>
+          </div>
+          <div class="thumbs">
+            <div class="thumb active" onclick="galleryGo(0)" style="background-image:url(./uploads/cat-yangsheng.jpg)"><span>养生总览</span></div>
+            <div class="thumb" onclick="galleryGo(1)" style="background-image:url(./uploads/product-danshen.jpg)"><span>丹参茶</span></div>
+            <div class="thumb" onclick="galleryGo(2)" style="background-image:url(./uploads/product-mushroom.jpg)"><span>黄金菌</span></div>
+            <div class="thumb" onclick="galleryGo(3)" style="background-image:url(./uploads/product-pear.jpg)"><span>梨果滋润</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="shell stats" aria-label="品类关键数据">
+      <div class="stat"><strong class="meta-number">4</strong><span>款重点单品</span></div>
+      <div class="stat"><strong class="meta-number">150g</strong><span>菌菇规格</span></div>
+      <div class="stat"><strong class="meta-number">128</strong><span>元丹参茶</span></div>
+      <div class="stat"><strong class="meta-number">48h</strong><span>常温发货</span></div>
+    </div>
+    <section class="section">
+      <div class="shell">
+        <div class="section-title">
+          <div>
+            <span class="number">Chapter 01</span>
+            <h2>把养生讲得克制可信</h2>
+          </div>
+          <p>页面不夸大疗效，改用产地、食材、冲泡/烹饪方式和送礼场景建立信任。</p>
+        </div>
+        <div class="story-panel">
+          <div class="story-copy">
+            <p>方城地处伏牛山南麓，山地物产和中原农耕共同形成"药食同源"的生活方式。丹参适合做茶饮礼盒，黄金菌适合家庭煲汤与节令滋补，梨果类产品则可承接秋冬润养场景。</p>
+            <p>新版视觉用松石绿作为隐性强调色，避免医疗感，用"东方调理、日常照护、长辈礼赠"的语言，让养生品类更稳重可信。</p>
+          </div>
+          <div class="craft-list">
+            <div class="craft-card">
+              <small>Origin</small>
+              <h3>山麓产地</h3>
+              <p>突出伏牛山麓、自然晾晒和地方农产基础。</p>
+            </div>
+            <div class="craft-card">
+              <small>Routine</small>
+              <h3>日常使用</h3>
+              <p>茶饮、煲汤、鲜食，强调长期、温和、方便。</p>
+            </div>
+            <div class="craft-card">
+              <small>Care</small>
+              <h3>长辈礼赠</h3>
+              <p>包装表达关怀而不是堆砌功效，适合家庭送礼。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="products">
+      <div class="shell">
+        <div class="section-title">
+          <div>
+            <span class="number">Chapter 02</span>
+            <h2>代表单品</h2>
+          </div>
+          <p>保留真实已有详情页入口，避免跳到不存在页面。</p>
+        </div>
+        <div class="filter-bar">
+          <div class="filter-left">
+            <button class="filter-btn active" onclick="filterProducts('all',this)">全部</button>
+            <button class="filter-btn" onclick="filterProducts('茶饮',this)">茶饮</button>
+            <button class="filter-btn" onclick="filterProducts('食用菌',this)">食用菌</button>
+            <button class="filter-btn" onclick="filterProducts('鲜果',this)">鲜果</button>
+            <button class="filter-btn" onclick="filterProducts('蜂蜜',this)">蜂蜜</button>
+          </div>
+          <div class="filter-right count">共 4 款商品</div>
+        </div>
+        <div class="product-grid">
+          <a href="detail-danshen.html" class="pcard" data-category="茶饮">
+            <div class="pcard-img" style="background-image:url(./uploads/product-danshen.jpg)"><span class="badge">养生</span></div>
+            <div class="pcard-body">
+              <small>Danshen</small>
+              <h3>方城丹参茶 · 养心安神</h3>
+              <div class="price">¥128</div>
+              <em>适合长辈礼赠和日常茶饮场景，包装稳重。</em>
+            </div>
+          </a>
+
+          <a href="detail-mushroom.html" class="pcard" data-category="食用菌">
+            <div class="pcard-img" style="background-image:url(./uploads/product-mushroom.jpg)"><span class="badge">山珍</span></div>
+            <div class="pcard-body">
+              <small>Mushroom</small>
+              <h3>方城干制黄金菌 · 150g</h3>
+              <div class="price">¥68</div>
+              <em>适合煲汤、炖菜和家庭滋补，口感鲜香。</em>
+            </div>
+          </a>
+
+          <a href="detail-pear.html" class="pcard" data-category="鲜果">
+            <div class="pcard-img" style="background-image:url(./uploads/product-pear.jpg)"></div>
+            <div class="pcard-body">
+              <small>Pear</small>
+              <h3>方城黄金梨 · 5斤装</h3>
+              <div class="price">¥58</div>
+              <em>汁水丰盈，承接秋冬润养和家庭鲜食。</em>
+            </div>
+          </a>
+
+          <a href="detail-product4.html" class="pcard" data-category="蜂蜜">
+            <div class="pcard-img" style="background-image:url(./uploads/product4.jpg)"><span class="badge">生态</span></div>
+            <div class="pcard-body">
+              <small>Wild Honey</small>
+              <h3>方城山野封坛蜂蜜 · 500ml</h3>
+              <div class="price">¥128</div>
+              <em>伏牛山区封坛蜂蜜，百花合酿，适合直接食用与长辈礼赠。</em>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="shell">
+        <div class="gift-panel">
+          <img src="./uploads/pack-health.jpg" alt="养生滋补礼盒包装">
+          <div>
+            <span class="kicker">Gift Package</span>
+            <h2>养生礼盒，表达长期照顾</h2>
+            <p>礼盒区将丹参、菌菇、梨果等温和品类组合呈现，适合父母长辈、客户探访和节令问候。包装语言克制，强调长期照护而非短期疗效。</p>
+            <div class="gift-tags">
+              <span>防潮密封</span>
+              <span>长辈礼赠</span>
+              <span>节令滋补</span>
+              <span>企业定制</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    var galleryIndex=0;
+    var gallerySlides=document.querySelectorAll('.gallery-slide');
+    var galleryThumbs=document.querySelectorAll('.thumb');
+    var galleryTotal=gallerySlides.length;
+    var galleryTimer=null;
+    function galleryShow(idx){gallerySlides.forEach(function(s,i){s.classList.toggle('active',i===idx)});galleryThumbs.forEach(function(t,i){t.classList.toggle('active',i===idx)});galleryIndex=idx}
+    function galleryNext(){galleryShow((galleryIndex+1)%galleryTotal)}
+    function galleryPrev(){galleryShow((galleryIndex-1+galleryTotal)%galleryTotal)}
+    function galleryGo(idx){galleryShow(idx);galleryResetTimer()}
+    function galleryResetTimer(){if(galleryTimer)clearInterval(galleryTimer);galleryTimer=setInterval(galleryNext,5000)}
+    galleryResetTimer();
+    var gallery=document.getElementById('galleryMain');
+    if(gallery){gallery.addEventListener('mouseenter',function(){if(galleryTimer)clearInterval(galleryTimer)});gallery.addEventListener('mouseleave',galleryResetTimer)}
+    function filterProducts(category,btn){
+      document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
+      btn.classList.add('active');
+      var visible=0;
+      document.querySelectorAll('.pcard').forEach(function(card){var show=category==='all'||card.dataset.category===category;card.style.display=show?'':'none';if(show)visible++});
+      document.querySelector('.filter-right').textContent=category==='all'?'共 '+visible+' 款商品':'"'+category+'" 共 '+visible+' 款';
+    }
+  </script>
+  <script>var galleryIndex=0;var gallerySlides=document.querySelectorAll('.gallery-slide');var galleryThumbs=document.querySelectorAll('.thumb');var galleryTotal=gallerySlides.length;var galleryTimer=null;function galleryShow(idx){gallerySlides.forEach(function(s,i){s.classList.toggle('active',i===idx)});galleryThumbs.forEach(function(t,i){t.classList.toggle('active',i===idx)});galleryIndex=idx}function galleryNext(){galleryShow((galleryIndex+1)%galleryTotal)}function galleryPrev(){galleryShow((galleryIndex-1+galleryTotal)%galleryTotal)}function galleryGo(idx){galleryShow(idx);galleryResetTimer()}function galleryResetTimer(){if(galleryTimer)clearInterval(galleryTimer);galleryTimer=setInterval(galleryNext,5000)}galleryResetTimer();var gallery=document.getElementById('galleryMain');if(gallery){gallery.addEventListener('mouseenter',function(){if(galleryTimer)clearInterval(galleryTimer)});gallery.addEventListener('mouseleave',galleryResetTimer)}function filterProducts(category,btn){document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');var visible=0;document.querySelectorAll('.pcard').forEach(function(card){var show=category==='all'||card.dataset.category===category;card.style.display=show?'':'none';if(show)visible++});document.querySelector('.filter-right').textContent=category==='all'?'鍏?'+visible+' 娆惧晢鍝?:'鈥?+category+'鈥?鍏?'+visible+' 娆?}</script>
+
+  <footer class="footer">
+    <div class="shell footer-grid">
+      <div>
+        <h2>方城特产百珍坊</h2>
+        <p>一屏看清方城风物四大方向：文房雅器、方城美食、养生滋补、工艺收藏；更多故事、礼盒、竞拍和合作咨询进入独立页面细看。</p>
+      </div>
+      <div>
+        <h4>商品品类</h4>
+        <a href="cat-wenfang.html">文房雅器</a>
+        <a href="cat-meishi.html">方城美食</a>
+        <a href="cat-yangsheng.html">养生滋补</a>
+        <a href="cat-gongyi.html">工艺收藏</a>
+      </div>
+      <div>
+        <h4>功能页面</h4>
+        <a href="auction.html">珍品竞拍</a>
+        <a href="custom-gift.html">礼盒定制</a>
+        <a href="brand-story.html">品牌故事</a>
+        <a href="member-center.html">会员中心</a>
+        <a href="contact.html">联系合作</a>
+      </div>
+    </div>
+  </footer>
+
+
+
+<script>
+</script>
+<!-- 个人中心侧边栏 -->
+  <div class="profile-overlay" id="profileOverlay"></div>
+  <aside class="profile-sidebar" id="profileSidebar">
+    <div class="profile-sidebar-header">
+      <span>个人中心</span>
+      <div class="profile-close" id="profileClose">✕</div>
+    </div>
+    <div class="profile-user-block">
+      <label class="profile-avatar-large" for="avatarUpload" title="点击更换头像">
+        <img src="" alt="头像" id="sidebarAvatarImg" style="display:none">
+        <svg id="sidebarAvatarIcon" width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="rgba(255,249,237,.5)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,249,237,.35)"/></svg>
+      </label>
+      <input type="file" id="avatarUpload" class="profile-upload-input" accept="image/*">
+      <div class="profile-username" id="profileUsername">访客</div>
+      <div class="profile-tag">方城特产百珍坊会员</div>
+    </div>
+    <!-- 主菜单面板 -->
+    <div class="profile-panel active" id="panelMain">
+      <nav class="profile-menu">
+                <a href="member-center.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          个人中心
+        </a>
+<a href="#" id="menuAccount">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          我的账户
+        </a>
+        <a href="#" id="menuOrders">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          我的订单
+        </a>
+        <a href="member-center.html#collection">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          我的收藏
+        </a>
+        <a href="custom-gift.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M12 8V21M3 13h18"/><path d="M12 8c0-2.5-2-4-4-2s0 4 4 4m0-4c0-2.5 2-4 4-2s0 4-4 4"/></svg>
+          礼盒定制
+        </a>
+        <a href="contact.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          联系合作
+        </a>
+      </nav>
+    </div>
+
+    <!-- 账户子面板 -->
+    <div class="profile-panel" id="panelAccount">
+      <div class="profile-panel-back" id="accountBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        返回
+      </div>
+      <div class="account-balance-card">
+        <small>账户余额</small>
+        <div class="account-balance-amount"><span>¥</span><span id="balanceNum">0.00</span></div>
+      </div>
+      <div class="account-section-title">快速充值</div>
+      <div class="topup-grid">
+        <div class="topup-btn" data-val="50">¥ 50</div>
+        <div class="topup-btn" data-val="100">¥ 100</div>
+        <div class="topup-btn" data-val="200">¥ 200</div>
+        <div class="topup-btn" data-val="500">¥ 500</div>
+      </div>
+      <div class="topup-custom">
+        <span>¥</span>
+        <input type="text" id="topupCustom" placeholder="自定义金额">
+      </div>
+      <button class="topup-confirm" id="topupConfirm">确认充值</button>
+      <div class="account-section-title">账户信息</div>
+      <div class="account-info-list">
+        <div class="account-info-row"><span>会员等级</span><strong>普通会员</strong></div>
+        <div class="account-info-row"><span>累计消费</span><strong id="totalSpend">¥ 0.00</strong></div>
+        <div class="account-info-row"><span>优惠券</span><strong>0 张</strong></div>
+        <div class="account-info-row"><span>积分</span><strong id="pointsNum">0</strong></div>
+      </div>
+    </div>
+
+    <!-- 订单子面板 -->
+    <div class="profile-panel" id="panelOrders">
+      <div class="profile-panel-back" id="ordersBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        返回
+      </div>
+      <div class="account-section-title">我的订单</div>
+      <div class="account-info-list" style="padding:0 20px;">
+        <div class="account-info-row"><span>待付款</span><strong>0</strong></div>
+        <div class="account-info-row"><span>待发货</span><strong>0</strong></div>
+        <div class="account-info-row"><span>待收货</span><strong>0</strong></div>
+        <div class="account-info-row"><span>已完成</span><strong>0</strong></div>
+        <div class="account-info-row"><span>退款/售后</span><strong>0</strong></div>
+      </div>
+      <div class="account-section-title" style="margin-top:8px;">最近订单</div>
+      <div class="order-card">
+        <div class="order-card-header">
+          <small>订单号 FC20240617001</small>
+          <span class="order-status delivering">配送中</span>
+        </div>
+        <div class="order-product-row">
+          <img src="uploads/product1.jpg" alt="方城黄石砚">
+          <div class="order-product-info">
+            <h4>方城黄石砚</h4>
+            <span>数量 × 1</span>
+          </div>
+          <span class="order-product-price">¥ 399</span>
+        </div>
+        <div class="order-logistics">
+          <div class="order-logistics-title">物流跟踪</div>
+          <div class="logistics-track">
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>包裹已签收</p>
+                <small>2024-06-17 &nbsp;14:32</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>派送中 — 快递员已取件</p>
+                <small>2024-06-17 &nbsp;09:05</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>已到达 南阳 转运中心</p>
+                <small>2024-06-16 &nbsp;22:41</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>商家已发货</p>
+                <small>2024-06-15 &nbsp;16:18</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>订单已下单，等待商家处理</p>
+                <small>2024-06-15 &nbsp;10:03</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+<script>
+    (function() {
+      const overlay = document.getElementById('profileOverlay');
+      const sidebar = document.getElementById('profileSidebar');
+      const navAvatar = document.getElementById('navAvatar');
+      const closeBtn = document.getElementById('profileClose');
+      const avatarUpload = document.getElementById('avatarUpload');
+      const navAvatarImg = document.getElementById('navAvatarImg');
+      const navAvatarIcon = document.getElementById('navAvatarIcon');
+      const sidebarAvatarImg = document.getElementById('sidebarAvatarImg');
+      const sidebarAvatarIcon = document.getElementById('sidebarAvatarIcon');
+
+      function openSidebar() {
+        overlay.classList.add('open');
+        sidebar.classList.add('open');
+      }
+      function closeSidebar() {
+        overlay.classList.remove('open');
+        sidebar.classList.remove('open');
+      }
+
+      navAvatar.addEventListener('click', openSidebar);
+      navAvatar.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openSidebar(); });
+      closeBtn.addEventListener('click', closeSidebar);
+      overlay.addEventListener('click', closeSidebar);
+
+      // 头像上传
+      avatarUpload.addEventListener('change', function() {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const src = e.target.result;
+          // 更新导航头像
+          navAvatarImg.src = src;
+          navAvatarImg.style.display = 'block';
+          navAvatarIcon.style.display = 'none';
+          // 更新侧边栏头像
+          sidebarAvatarImg.src = src;
+          sidebarAvatarImg.style.display = 'block';
+          sidebarAvatarIcon.style.display = 'none';
+          // 本地持久化
+          try { localStorage.setItem('baizhenfang_avatar', src); } catch(e) {}
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // 恢复已保存头像
+      try {
+        const saved = localStorage.getItem('baizhenfang_avatar');
+        if (saved) {
+          navAvatarImg.src = saved;
+          navAvatarImg.style.display = 'block';
+          navAvatarIcon.style.display = 'none';
+          sidebarAvatarImg.src = saved;
+          sidebarAvatarImg.style.display = 'block';
+          sidebarAvatarIcon.style.display = 'none';
+        }
+      } catch(e) {}
+
+      // 面板切换
+      const panelMain = document.getElementById('panelMain');
+      const panelAccount = document.getElementById('panelAccount');
+      const panelOrders = document.getElementById('panelOrders');
+      const menuAccount = document.getElementById('menuAccount');
+      const menuOrders = document.getElementById('menuOrders');
+      const accountBack = document.getElementById('accountBack');
+      const ordersBack = document.getElementById('ordersBack');
+
+      function showPanel(panel) {
+        panelMain.classList.remove('active');
+        panelAccount.classList.remove('active');
+        panelOrders.classList.remove('active');
+        panel.classList.add('active');
+      }
+
+      menuAccount.addEventListener('click', function(e) { e.preventDefault(); showPanel(panelAccount); });
+      menuOrders.addEventListener('click', function(e) { e.preventDefault(); showPanel(panelOrders); });
+      accountBack.addEventListener('click', function() { showPanel(panelMain); });
+      ordersBack.addEventListener('click', function() { showPanel(panelMain); });
+
+      // 关闭时重置到主面板
+      function closeSidebarFull() {
+        overlay.classList.remove('open');
+        sidebar.classList.remove('open');
+        setTimeout(() => showPanel(panelMain), 350);
+      }
+      closeBtn.removeEventListener('click', closeSidebar);
+      overlay.removeEventListener('click', closeSidebar);
+      closeBtn.addEventListener('click', closeSidebarFull);
+      overlay.addEventListener('click', closeSidebarFull);
+
+      // 余额与充值
+      const balanceNum = document.getElementById('balanceNum');
+      const topupCustom = document.getElementById('topupCustom');
+      const topupConfirm = document.getElementById('topupConfirm');
+      const topupBtns = document.querySelectorAll('.topup-btn');
+
+      let balance = 0;
+      try { balance = parseFloat(localStorage.getItem('baizhenfang_balance') || '0'); } catch(e) {}
+      balanceNum.textContent = balance.toFixed(2);
+
+      let selectedAmount = 0;
+      topupBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          topupBtns.forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedAmount = parseFloat(this.dataset.val);
+          topupCustom.value = '';
+        });
+      });
+      topupCustom.addEventListener('input', function() {
+        topupBtns.forEach(b => b.classList.remove('selected'));
+        selectedAmount = 0;
+      });
+
+      topupConfirm.addEventListener('click', function() {
+        const custom = parseFloat(topupCustom.value);
+        const amount = custom > 0 ? custom : selectedAmount;
+        if (!amount || amount <= 0) return;
+        balance += amount;
+        balanceNum.textContent = balance.toFixed(2);
+        try { localStorage.setItem('baizhenfang_balance', balance.toString()); } catch(e) {}
+        topupBtns.forEach(b => b.classList.remove('selected'));
+        topupCustom.value = '';
+        selectedAmount = 0;
+        topupConfirm.textContent = '充值成功 ✓';
+        setTimeout(() => { topupConfirm.textContent = '确认充值'; }, 1500);
+      });
+    })();
+  </script>
+</body>
+</html>

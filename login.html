@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录 / 注册 - 方城百珍坊</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #B9975B;
+      --ink: #171411;
+      --cream: #FFF9ED;
+      --paper: #F6F0E6;
+      --clay: #A85F3D;
+      --smoke: #766D61;
+      --line: #E8E0D4;
+      --latin: 'Playfair Display', 'Georgia', serif;
+      --serif: 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--serif);
+      background: linear-gradient(135deg, var(--ink) 0%, #2b1e14 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .login-wrap {
+      width: 100%;
+      max-width: 440px;
+    }
+    .login-brand {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .login-brand h1 {
+      font-family: var(--latin);
+      font-size: 28px;
+      letter-spacing: 6px;
+      color: var(--gold);
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .login-brand p {
+      color: rgba(255,249,237,.45);
+      font-size: 13px;
+      letter-spacing: 3px;
+    }
+
+    /* ── 角色切换（顶层：用户 / 商家）── */
+    .role-switch {
+      display: flex;
+      gap: 0;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(185,151,91,.3);
+    }
+    .role-btn {
+      flex: 1;
+      padding: 11px 0;
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: rgba(255,249,237,.45);
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      font-family: var(--serif);
+      transition: background .2s, color .2s;
+    }
+    .role-btn + .role-btn {
+      border-left: 1px solid rgba(185,151,91,.3);
+    }
+    .role-btn.active {
+      background: rgba(185,151,91,.18);
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .role-btn:hover:not(.active) {
+      background: rgba(185,151,91,.07);
+      color: rgba(255,249,237,.7);
+    }
+
+    .login-box {
+      background: #1c1812;
+      border: 1px solid rgba(185,151,91,.25);
+      border-radius: 6px;
+      padding: 40px 36px;
+      box-shadow: 0 40px 80px rgba(0,0,0,.5);
+    }
+
+    /* ── 角色面板 ── */
+    .role-panel { display: none; }
+    .role-panel.active { display: block; }
+
+    /* ── 用户侧 tabs（登录 / 注册）── */
+    .tab-row {
+      display: flex;
+      border-bottom: 1px solid rgba(185,151,91,.15);
+      margin-bottom: 32px;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px 0;
+      font-size: 14px;
+      letter-spacing: 3px;
+      color: rgba(255,249,237,.4);
+      cursor: pointer;
+      position: relative;
+      transition: color .2s;
+    }
+    .tab::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform .25s;
+    }
+    .tab.active { color: var(--gold); }
+    .tab.active::after { transform: scaleX(1); }
+
+    .form-panel { display: none; }
+    .form-panel.active { display: block; }
+
+    /* ── 商家侧标题 ── */
+    .merchant-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .merchant-header .mh-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(185,151,91,.15);
+      border: 1px solid rgba(185,151,91,.35);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+    .merchant-header h3 {
+      font-size: 16px;
+      letter-spacing: 4px;
+      color: var(--cream);
+      margin-bottom: 4px;
+    }
+    .merchant-header p {
+      font-size: 12px;
+      color: rgba(255,249,237,.35);
+      letter-spacing: 1.5px;
+    }
+
+    /* ── 公共表单 ── */
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: rgba(255,249,237,.5);
+      margin-bottom: 8px;
+    }
+    .form-group input {
+      width: 100%;
+      height: 46px;
+      background: rgba(255,249,237,.05);
+      border: 1px solid rgba(185,151,91,.2);
+      border-radius: 3px;
+      color: var(--cream);
+      font-family: var(--serif);
+      font-size: 14px;
+      padding: 0 14px;
+      outline: none;
+      transition: border-color .2s, background .2s;
+    }
+    .form-group input:focus {
+      border-color: var(--gold);
+      background: rgba(185,151,91,.06);
+    }
+    .form-group input::placeholder { color: rgba(255,249,237,.2); }
+
+    .phone-row { display: flex; gap: 10px; }
+    .phone-row input:first-child { flex: 1; }
+    .sms-btn {
+      width: 110px;
+      height: 46px;
+      background: rgba(185,151,91,.12);
+      border: 1px solid rgba(185,151,91,.3);
+      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      font-family: var(--serif);
+      cursor: pointer;
+      transition: background .2s;
+      flex-shrink: 0;
+    }
+    .sms-btn:hover { background: rgba(185,151,91,.22); }
+    .sms-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    .btn-submit {
+      width: 100%;
+      height: 50px;
+      background: linear-gradient(135deg, var(--gold), #d4b876);
+      border: none;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      font-family: var(--serif);
+      cursor: pointer;
+      border-radius: 3px;
+      margin-top: 8px;
+      transition: opacity .2s, transform .15s;
+    }
+    .btn-submit:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-submit:active { transform: translateY(0); }
+
+    .err-msg {
+      display: none;
+      background: rgba(168,95,61,.15);
+      border: 1px solid rgba(168,95,61,.3);
+      color: #e88862;
+      font-size: 13px;
+      letter-spacing: 1px;
+      padding: 10px 14px;
+      border-radius: 3px;
+      margin-bottom: 16px;
+    }
+    .ok-msg {
+      display: none;
+      background: rgba(107,155,135,.12);
+      border: 1px solid rgba(107,155,135,.3);
+      color: #7ec4ac;
+      font-size: 13px;
+      letter-spacing: 1px;
+      padding: 10px 14px;
+      border-radius: 3px;
+      margin-bottom: 16px;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 24px;
+      color: rgba(255,249,237,.35);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--gold); }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+      color: rgba(255,249,237,.2);
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(185,151,91,.12);
+    }
+
+    /* ── 商家注册提示 ── */
+    .merchant-tip {
+      margin-top: 20px;
+      padding: 14px;
+      background: rgba(185,151,91,.07);
+      border: 1px solid rgba(185,151,91,.18);
+      border-radius: 3px;
+      font-size: 12px;
+      color: rgba(255,249,237,.4);
+      letter-spacing: 1px;
+      line-height: 1.8;
+      text-align: center;
+    }
+    .merchant-tip a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .merchant-tip a:hover { text-decoration: underline; }
+  </style>
+  <link rel="stylesheet" href="site-fixes.css">
+</head>
+<body>
+  <div class="login-wrap">
+    <div class="login-brand">
+      <h1>方城百珍坊</h1>
+      <p id="brandSub">FANGCHENG SELECTED · 会员登录</p>
+    </div>
+
+    <!-- 角色切换 -->
+    <div class="role-switch">
+      <button class="role-btn active" id="roleBtnUser" onclick="switchRole('user')">👤 用户登录</button>
+      <button class="role-btn" id="roleBtnMerchant" onclick="switchRole('merchant')">🏪 商家登录</button>
+    </div>
+
+    <div class="login-box">
+
+      <!-- ═══════════ 用户面板 ═══════════ -->
+      <div class="role-panel active" id="roleUser">
+        <div class="tab-row">
+          <div class="tab active" id="tabLogin" onclick="switchTab('login')">登 录</div>
+          <div class="tab" id="tabReg" onclick="switchTab('reg')">注 册</div>
+        </div>
+
+        <!-- 用户登录 -->
+        <div class="form-panel active" id="panelLogin">
+          <div class="err-msg" id="loginErr"></div>
+          <div class="form-group">
+            <label>手机号 / 用户名</label>
+            <input type="text" id="loginAccount" placeholder="请输入手机号或用户名">
+          </div>
+          <div class="form-group">
+            <label>密码</label>
+            <input type="password" id="loginPwd" placeholder="请输入密码">
+          </div>
+          <button class="btn-submit" onclick="doLogin()">登 录</button>
+          <div class="divider">或</div>
+          <div style="text-align:center;color:rgba(255,249,237,.35);font-size:12px;letter-spacing:1px;">
+            还没有账号？<span style="color:var(--gold);cursor:pointer;" onclick="switchTab('reg')">立即注册</span>
+          </div>
+        </div>
+
+        <!-- 用户注册 -->
+        <div class="form-panel" id="panelReg">
+          <div class="err-msg" id="regErr"></div>
+          <div class="ok-msg" id="regOk">注册成功！正在跳转...</div>
+          <div class="form-group">
+            <label>用户名（昵称）</label>
+            <input type="text" id="regName" placeholder="2-12个字，支持中文">
+          </div>
+          <div class="form-group">
+            <label>手机号</label>
+            <div class="phone-row">
+              <input type="tel" id="regPhone" placeholder="请输入11位手机号" maxlength="11">
+              <button class="sms-btn" id="smsBtn" onclick="sendSms()">获取验证码</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>验证码</label>
+            <input type="text" id="regCode" placeholder="请输入6位验证码" maxlength="6">
+          </div>
+          <div class="form-group">
+            <label>登录密码</label>
+            <input type="password" id="regPwd" placeholder="6-20位，含字母和数字">
+          </div>
+          <div class="form-group">
+            <label>确认密码</label>
+            <input type="password" id="regPwd2" placeholder="再次输入密码">
+          </div>
+          <button class="btn-submit" onclick="doRegister()">注 册</button>
+          <div style="text-align:center;margin-top:16px;color:rgba(255,249,237,.35);font-size:12px;letter-spacing:1px;">
+            已有账号？<span style="color:var(--gold);cursor:pointer;" onclick="switchTab('login')">立即登录</span>
+          </div>
+        </div>
+      </div><!-- /roleUser -->
+
+      <!-- ═══════════ 商家面板 ═══════════ -->
+      <div class="role-panel" id="roleMerchant">
+        <div class="merchant-header">
+          <div class="mh-icon">🏪</div>
+          <h3>商家管理后台</h3>
+          <p>MERCHANT MANAGEMENT CENTER</p>
+        </div>
+        <div class="err-msg" id="mLoginErr"></div>
+        <div class="ok-msg" id="mLoginOk">验证成功，正在进入后台...</div>
+        <div class="form-group">
+          <label>店铺账号</label>
+          <input type="text" id="mLoginAccount" placeholder="请输入店铺账号">
+        </div>
+        <div class="form-group">
+          <label>登录密码</label>
+          <input type="password" id="mLoginPwd" placeholder="请输入密码">
+        </div>
+        <button class="btn-submit" onclick="doMerchantLogin()">进入后台</button>
+        <div class="merchant-tip">
+          演示账号：<strong style="color:var(--gold);">baizhenfang</strong> &nbsp;密码：<strong style="color:var(--gold);">admin888</strong><br>
+          如需申请商家入驻，请<a href="index.html">联系平台运营</a>
+        </div>
+      </div><!-- /roleMerchant -->
+
+    </div><!-- /login-box -->
+
+    <a href="index.html" class="back-link">← 返回首页</a>
+  </div>
+
+<script>
+(function() {
+  /* ── 若已登录，直接跳转 ── */
+  try {
+    if (localStorage.getItem('bz_logged') === '1') {
+      window.location.href = 'member-center.html';
+    }
+    if (localStorage.getItem('bz_merchant_logged') === '1') {
+      window.location.href = 'merchant.html';
+    }
+  } catch(e) {}
+
+  /* ══════════════════════════════════════
+     角色切换（用户 / 商家）
+  ══════════════════════════════════════ */
+  window.switchRole = function(role) {
+    var isUser = role === 'user';
+    document.getElementById('roleBtnUser').classList.toggle('active', isUser);
+    document.getElementById('roleBtnMerchant').classList.toggle('active', !isUser);
+    document.getElementById('roleUser').classList.toggle('active', isUser);
+    document.getElementById('roleMerchant').classList.toggle('active', !isUser);
+    document.getElementById('brandSub').textContent = isUser
+      ? 'FANGCHENG SELECTED · 会员登录'
+      : 'FANGCHENG SELECTED · 商家后台';
+  };
+
+  /* ══════════════════════════════════════
+     用户侧：tab 切换
+  ══════════════════════════════════════ */
+  window.switchTab = function(t) {
+    document.getElementById('tabLogin').classList.toggle('active', t === 'login');
+    document.getElementById('tabReg').classList.toggle('active', t === 'reg');
+    document.getElementById('panelLogin').classList.toggle('active', t === 'login');
+    document.getElementById('panelReg').classList.toggle('active', t === 'reg');
+  };
+
+  /* ══════════════════════════════════════
+     用户工具函数
+  ══════════════════════════════════════ */
+  function genMemberId() {
+    var now = new Date();
+    var y = now.getFullYear();
+    var m = String(now.getMonth() + 1).padStart(2, '0');
+    var d = String(now.getDate()).padStart(2, '0');
+    var rnd = String(Math.floor(Math.random() * 900) + 100);
+    return 'BZ' + y + m + d + rnd;
+  }
+  function todayStr() {
+    var now = new Date();
+    return now.getFullYear() + '.' +
+      String(now.getMonth() + 1).padStart(2, '0') + '.' +
+      String(now.getDate()).padStart(2, '0');
+  }
+  function getUsers() {
+    try { return JSON.parse(localStorage.getItem('bz_users') || '[]'); } catch(e) { return []; }
+  }
+  function saveUsers(arr) {
+    try { localStorage.setItem('bz_users', JSON.stringify(arr)); } catch(e) {}
+  }
+  function showErr(id, msg) {
+    var el = document.getElementById(id);
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+  function hideMsg(id) {
+    var el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  }
+
+  /* ── 用户登录 ── */
+  window.doLogin = function() {
+    hideMsg('loginErr');
+    var account = document.getElementById('loginAccount').value.trim();
+    var pwd = document.getElementById('loginPwd').value;
+    if (!account || !pwd) { showErr('loginErr', '请输入账号和密码'); return; }
+    var users = getUsers();
+    var user = users.find(function(u) {
+      return (u.phone === account || u.username === account) && u.password === pwd;
+    });
+    if (!user) { showErr('loginErr', '账号或密码错误，请检查后重试'); return; }
+    try {
+      localStorage.setItem('bz_logged', '1');
+      localStorage.setItem('bz_current_uid', user.uid);
+    } catch(e) {}
+    window.location.href = 'member-center.html';
+  };
+
+  /* ── 验证码 ── */
+  var _smsCode = '';
+  window.sendSms = function() {
+    var phone = document.getElementById('regPhone').value.trim();
+    if (!/^1[3-9]\d{9}$/.test(phone)) {
+      showErr('regErr', '请输入正确的11位手机号');
+      return;
+    }
+    _smsCode = String(Math.floor(100000 + Math.random() * 900000));
+    console.log('[百珍坊] 验证码：' + _smsCode);
+    document.getElementById('regCode').value = _smsCode;
+    var btn = document.getElementById('smsBtn');
+    var count = 60;
+    btn.disabled = true;
+    btn.textContent = count + 's后重发';
+    var t = setInterval(function() {
+      count--;
+      btn.textContent = count + 's后重发';
+      if (count <= 0) {
+        clearInterval(t);
+        btn.disabled = false;
+        btn.textContent = '获取验证码';
+      }
+    }, 1000);
+  };
+
+  /* ── 用户注册 ── */
+  window.doRegister = function() {
+    hideMsg('regErr');
+    var name  = document.getElementById('regName').value.trim();
+    var phone = document.getElementById('regPhone').value.trim();
+    var code  = document.getElementById('regCode').value.trim();
+    var pwd   = document.getElementById('regPwd').value;
+    var pwd2  = document.getElementById('regPwd2').value;
+
+    if (!name || name.length < 2 || name.length > 12) { showErr('regErr', '用户名需为 2-12 个字符'); return; }
+    if (!/^1[3-9]\d{9}$/.test(phone))                  { showErr('regErr', '请输入正确的手机号');       return; }
+    if (!_smsCode || code !== _smsCode)                 { showErr('regErr', '验证码不正确，请重新获取'); return; }
+    if (!pwd || pwd.length < 6 || pwd.length > 20)     { showErr('regErr', '密码需为 6-20 位');         return; }
+    if (pwd !== pwd2)                                   { showErr('regErr', '两次密码输入不一致');       return; }
+
+    var users = getUsers();
+    if (users.find(function(u) { return u.phone === phone; })) {
+      showErr('regErr', '该手机号已注册，请直接登录'); return;
+    }
+
+    var uid = 'u_' + Date.now();
+    var newUser = {
+      uid: uid, username: name, phone: phone, password: pwd,
+      memberId: genMemberId(), registerDate: todayStr(),
+      tier: '青铜', tierIndex: 0, growth: 50, points: 50,
+      balance: 0, totalSpend: 0, orderCount: 0,
+      favoriteCount: 0, couponCount: 1, avatar: null,
+      coupons: [{ discount: 20, condition: 199, name: '新人专享礼', desc: '首单立减 ¥20', expiry: '30天内有效' }],
+      orders: [], favorites: [], addresses: [],
+      pointsLog: [{ title: '新用户注册奖励', date: todayStr().slice(5), add: 50, sub: 0 }]
+    };
+    users.push(newUser);
+    saveUsers(users);
+    try {
+      localStorage.setItem('bz_logged', '1');
+      localStorage.setItem('bz_current_uid', uid);
+    } catch(e) {}
+    document.getElementById('regOk').style.display = 'block';
+    setTimeout(function() { window.location.href = 'member-center.html'; }, 1200);
+  };
+
+  /* ══════════════════════════════════════
+     商家登录
+  ══════════════════════════════════════ */
+
+  /* 初始化默认商家账号（若不存在）*/
+  function initMerchants() {
+    try {
+      var list = JSON.parse(localStorage.getItem('bz_merchants') || '[]');
+      if (list.length === 0) {
+        list = [{
+          mid: 'm_001',
+          account: 'baizhenfang',
+          password: 'admin888',
+          shopName: '方城百珍坊官方旗舰店',
+          shopDesc: '专注方城黄石砚，传承千年砚文化',
+          logo: null,
+          registerDate: '2024.01.01',
+          status: 'active'
+        }];
+        localStorage.setItem('bz_merchants', JSON.stringify(list));
+      }
+    } catch(e) {}
+  }
+  initMerchants();
+
+  function getMerchants() {
+    try { return JSON.parse(localStorage.getItem('bz_merchants') || '[]'); } catch(e) { return []; }
+  }
+
+  window.doMerchantLogin = function() {
+    hideMsg('mLoginErr');
+    var account = document.getElementById('mLoginAccount').value.trim();
+    var pwd     = document.getElementById('mLoginPwd').value;
+    if (!account || !pwd) { showErr('mLoginErr', '请输入店铺账号和密码'); return; }
+
+    var merchants = getMerchants();
+    var merchant  = merchants.find(function(m) {
+      return m.account === account && m.password === pwd;
+    });
+    if (!merchant) { showErr('mLoginErr', '账号或密码错误，请检查后重试'); return; }
+    if (merchant.status !== 'active') { showErr('mLoginErr', '该商家账号已被停用，请联系平台'); return; }
+
+    try {
+      localStorage.setItem('bz_merchant_logged', '1');
+      localStorage.setItem('bz_current_merchant_uid', merchant.mid);
+    } catch(e) {}
+
+    document.getElementById('mLoginOk').style.display = 'block';
+    setTimeout(function() { window.location.href = 'merchant.html'; }, 900);
+  };
+
+  /* ── 回车提交 ── */
+  document.addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter') return;
+    var userActive = document.getElementById('roleUser').classList.contains('active');
+    if (userActive) {
+      var panel = document.querySelector('#roleUser .form-panel.active');
+      if (panel && panel.id === 'panelLogin') doLogin();
+      else doRegister();
+    } else {
+      doMerchantLogin();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绠＄悊鍛樼櫥褰?- 鏂瑰煄鐧剧弽鍧?/title>
+<style>
+:root{--primary:#171411;--accent:#B9975B;--bg:#F6F0E6;--text:#2b241e;--muted:#766D61;--clay:#A85F3D;--pine:#596C58;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Serif SC','Songti SC','STSong','SimSun',serif;background:linear-gradient(135deg,var(--primary),#2b241e);min-height:100vh;display:flex;align-items:center;justify-content:center;}
+.login-box{background:#fff;border-radius:16px;padding:48px 40px;width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+.login-header{text-align:center;margin-bottom:36px;}
+.login-header .logo-icon{width:56px;height:56px;background:linear-gradient(135deg,#b89b5b,#d4b876);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:var(--primary);margin:0 auto 16px;}
+.login-header h1{font-size:24px;font-weight:700;color:var(--primary);letter-spacing:2px;}
+.login-header p{font-size:13px;color:var(--muted);margin-top:8px;}
+.form-group{margin-bottom:20px;}
+.form-group label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.form-group input{width:100%;padding:12px 16px;border:1px solid #e0dcd6;border-radius:8px;font-size:14px;transition:all .3s;outline:none;font-family:inherit;}
+.form-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(184,155,91,0.1);}
+.btn-login{width:100%;padding:14px;background:linear-gradient(135deg,#b89b5b,#d4b876);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s;}
+.btn-login:hover{box-shadow:0 4px 16px rgba(184,155,91,0.4);transform:translateY(-2px);}
+.error-msg{color:#e74c3c;font-size:13px;margin-top:12px;text-align:center;display:none;}
+.back-link{display:block;text-align:center;margin-top:24px;color:var(--muted);font-size:13px;text-decoration:none;transition:color .3s;}
+.back-link:hover{color:var(--accent);}
+</style>
+
+<style id="num-feature-fix">
+  /* 让数字字体（--latin）使用整齐的等宽 lining 数字 */
+  body { font-feature-settings: "kern" 1, "liga" 1; }
+  [class*="num"], [class*="price"], [class*="amount"], [class*="bid"],
+  .number, strong, .au-history-amt, .mc-card-num em, .au-detail-cat,
+  .mc-progress-head strong, .mc-stat-body strong, .au-time-box strong,
+  .au-cal-date strong, .au-stat strong, .mc-points-now > div strong,
+  .mc-coupon-l strong, .mc-os-num, .mc-tool-dot, .mc-points-list .add,
+  .mc-points-list .sub, .au-price-now strong, .au-history-rank {
+    font-feature-settings: "tnum" 1, "lnum" 1, "ss01" 1;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+</style>
+
+  <link rel="stylesheet" href="site-fixes.css">
+</head>
+<body>
+
+<div class="login-box">
+  <div class="login-header">
+    <div class="logo-icon">鐝?/div>
+    <h1>鐧剧弽鍧婄鐞嗗悗鍙?/h1>
+    <p>璇疯緭鍏ョ鐞嗗憳璐﹀彿瀵嗙爜鐧诲綍</p>
+  </div>
+
+  <form id="loginForm" onsubmit="return doLogin(event)">
+    <div class="form-group">
+      <label>鐢ㄦ埛鍚?/label>
+      <input type="text" id="username" placeholder="璇疯緭鍏ョ鐞嗗憳鐢ㄦ埛鍚? value="admin">
+    </div>
+    <div class="form-group">
+      <label>瀵嗙爜</label>
+      <input type="password" id="password" placeholder="璇疯緭鍏ュ瘑鐮? value="baizhenfang2024">
+    </div>
+    <button type="submit" class="btn-login">鐧?褰?/button>
+    <div class="error-msg" id="errorMsg">鐢ㄦ埛鍚嶆垨瀵嗙爜閿欒</div>
+  </form>
+
+  <a href="index.html" class="back-link">鈫?杩斿洖棣栭〉</a>
+</div>
+
+<script>
+// 妫€鏌ユ槸鍚﹀凡鐧诲綍
+if(localStorage.getItem('adminLoggedIn') === 'true'){
+  window.location.href = 'index.html';
+}
+
+function doLogin(e){
+  e.preventDefault();
+  var username = document.getElementById('username').value.trim();
+  var password = document.getElementById('password').value.trim();
+
+  // 榛樿绠＄悊鍛樿处鍙?  if(username === 'admin' && password === 'baizhenfang2024'){
+    localStorage.setItem('adminLoggedIn', 'true');
+    localStorage.setItem('adminUser', username);
+    window.location.href = 'index.html';
+  }else{
+    document.getElementById('errorMsg').style.display = 'block';
+  }
+  return false;
+}
+</script>
+
+</body>
+</html>
+

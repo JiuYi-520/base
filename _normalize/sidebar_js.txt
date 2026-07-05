@@ -1,0 +1,131 @@
+<script>
+    (function() {
+      const overlay = document.getElementById('profileOverlay');
+      const sidebar = document.getElementById('profileSidebar');
+      const navAvatar = document.getElementById('navAvatar');
+      const closeBtn = document.getElementById('profileClose');
+      const avatarUpload = document.getElementById('avatarUpload');
+      const navAvatarImg = document.getElementById('navAvatarImg');
+      const navAvatarIcon = document.getElementById('navAvatarIcon');
+      const sidebarAvatarImg = document.getElementById('sidebarAvatarImg');
+      const sidebarAvatarIcon = document.getElementById('sidebarAvatarIcon');
+
+      function openSidebar() {
+        overlay.classList.add('open');
+        sidebar.classList.add('open');
+      }
+      function closeSidebar() {
+        overlay.classList.remove('open');
+        sidebar.classList.remove('open');
+      }
+
+      navAvatar.addEventListener('click', openSidebar);
+      navAvatar.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openSidebar(); });
+      closeBtn.addEventListener('click', closeSidebar);
+      overlay.addEventListener('click', closeSidebar);
+
+      // 头像上传
+      avatarUpload.addEventListener('change', function() {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const src = e.target.result;
+          // 更新导航头像
+          navAvatarImg.src = src;
+          navAvatarImg.style.display = 'block';
+          navAvatarIcon.style.display = 'none';
+          // 更新侧边栏头像
+          sidebarAvatarImg.src = src;
+          sidebarAvatarImg.style.display = 'block';
+          sidebarAvatarIcon.style.display = 'none';
+          // 本地持久化
+          try { localStorage.setItem('baizhenfang_avatar', src); } catch(e) {}
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // 恢复已保存头像
+      try {
+        const saved = localStorage.getItem('baizhenfang_avatar');
+        if (saved) {
+          navAvatarImg.src = saved;
+          navAvatarImg.style.display = 'block';
+          navAvatarIcon.style.display = 'none';
+          sidebarAvatarImg.src = saved;
+          sidebarAvatarImg.style.display = 'block';
+          sidebarAvatarIcon.style.display = 'none';
+        }
+      } catch(e) {}
+
+      // 面板切换
+      const panelMain = document.getElementById('panelMain');
+      const panelAccount = document.getElementById('panelAccount');
+      const panelOrders = document.getElementById('panelOrders');
+      const menuAccount = document.getElementById('menuAccount');
+      const menuOrders = document.getElementById('menuOrders');
+      const accountBack = document.getElementById('accountBack');
+      const ordersBack = document.getElementById('ordersBack');
+
+      function showPanel(panel) {
+        panelMain.classList.remove('active');
+        panelAccount.classList.remove('active');
+        panelOrders.classList.remove('active');
+        panel.classList.add('active');
+      }
+
+      menuAccount.addEventListener('click', function(e) { e.preventDefault(); showPanel(panelAccount); });
+      menuOrders.addEventListener('click', function(e) { e.preventDefault(); showPanel(panelOrders); });
+      accountBack.addEventListener('click', function() { showPanel(panelMain); });
+      ordersBack.addEventListener('click', function() { showPanel(panelMain); });
+
+      // 关闭时重置到主面板
+      function closeSidebarFull() {
+        overlay.classList.remove('open');
+        sidebar.classList.remove('open');
+        setTimeout(() => showPanel(panelMain), 350);
+      }
+      closeBtn.removeEventListener('click', closeSidebar);
+      overlay.removeEventListener('click', closeSidebar);
+      closeBtn.addEventListener('click', closeSidebarFull);
+      overlay.addEventListener('click', closeSidebarFull);
+
+      // 余额与充值
+      const balanceNum = document.getElementById('balanceNum');
+      const topupCustom = document.getElementById('topupCustom');
+      const topupConfirm = document.getElementById('topupConfirm');
+      const topupBtns = document.querySelectorAll('.topup-btn');
+
+      let balance = 0;
+      try { balance = parseFloat(localStorage.getItem('baizhenfang_balance') || '0'); } catch(e) {}
+      balanceNum.textContent = balance.toFixed(2);
+
+      let selectedAmount = 0;
+      topupBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          topupBtns.forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedAmount = parseFloat(this.dataset.val);
+          topupCustom.value = '';
+        });
+      });
+      topupCustom.addEventListener('input', function() {
+        topupBtns.forEach(b => b.classList.remove('selected'));
+        selectedAmount = 0;
+      });
+
+      topupConfirm.addEventListener('click', function() {
+        const custom = parseFloat(topupCustom.value);
+        const amount = custom > 0 ? custom : selectedAmount;
+        if (!amount || amount <= 0) return;
+        balance += amount;
+        balanceNum.textContent = balance.toFixed(2);
+        try { localStorage.setItem('baizhenfang_balance', balance.toString()); } catch(e) {}
+        topupBtns.forEach(b => b.classList.remove('selected'));
+        topupCustom.value = '';
+        selectedAmount = 0;
+        topupConfirm.textContent = '充值成功 ✓';
+        setTimeout(() => { topupConfirm.textContent = '确认充值'; }, 1500);
+      });
+    })();
+  </script>

@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>方城特产百珍坊 - 方城风物高级商城</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #171411;
+      --paper: #F6F0E6;
+      --paper-deep: #E8DCC8;
+      --clay: #A85F3D;
+      --gold: #B9975B;
+      --pine: #596C58;
+      --cream: #FFF9ED;
+      --smoke: #766D61;
+      --mist: rgba(255, 249, 237, .68);
+      --line: rgba(23, 20, 17, .14);
+      --line-dark: rgba(246, 240, 230, .18);
+      --shadow: 0 30px 80px rgba(36, 24, 15, .16);
+      --serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+      --latin: "Playfair Display", "Cormorant Garamond", "Georgia", serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 5%, rgba(185,151,91,.2), transparent 28%),
+        radial-gradient(circle at 93% 12%, rgba(89,108,88,.18), transparent 34%),
+        linear-gradient(122deg, #fff9ed 0%, var(--paper) 48%, #eadbc4 100%);
+      font-family: var(--serif);
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      pointer-events: none;
+      opacity: .23;
+      background-image:
+        linear-gradient(rgba(23,20,17,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23,20,17,.03) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mix-blend-mode: multiply;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 41;
+      pointer-events: none;
+      opacity: .08;
+      background-image:
+        radial-gradient(circle at 18% 22%, #171411 0 1px, transparent 1px),
+        radial-gradient(circle at 78% 64%, #171411 0 1px, transparent 1px);
+      background-size: 19px 17px, 23px 29px;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    .number, .stat strong, .price, .auction-price, .timeline b {
+      font-variant-numeric: tabular-nums lining-nums;
+      font-feature-settings: "tnum" 1, "lnum" 1;
+    }
+    .shell { width: min(1240px, calc(100vw - 48px)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      border-bottom: 1px solid var(--line-dark);
+      background: rgba(23, 20, 17, .91);
+      color: var(--cream);
+      backdrop-filter: blur(18px);
+    }
+    .nav {
+      min-height: 76px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 28px;
+    }
+    .brand { display: flex; align-items: center; gap: 14px; min-width: max-content; color: var(--cream); text-decoration: none; }
+    .brand-mark {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px rgba(185,151,91,.45), 0 0 14px rgba(185,151,91,.15);
+    }
+    .brand-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .brand-mark::after { display: none; }
+    .brand strong { display: block; font-size: 21px; letter-spacing: 5px; font-weight: 900; }
+    .brand span span { display: block; margin-top: 3px; color: rgba(255,249,237,.58); font-family: var(--latin); font-size: 12px; letter-spacing: 4px; text-transform: uppercase; }
+    .navlinks { display: flex; justify-content: center; gap: 24px; color: rgba(255,249,237,.74); font-size: 14px; letter-spacing: 2px; }
+    .navlinks a { position: relative; white-space: nowrap; transition: color .25s ease; text-decoration: none; color: inherit; }
+    .navlinks a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -12px; height: 1px; background: var(--gold); transition: right .25s ease; }
+    .navlinks a:hover { color: var(--gold); }
+    .navlinks a:hover::after { right: 0; }
+    .nav-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid rgba(185,151,91,.6);
+      overflow: hidden;
+      cursor: pointer;
+      flex-shrink: 0;
+      background: rgba(185,151,91,.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color .2s;
+    }
+    .nav-avatar:hover { border-color: var(--gold); }
+    .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .nav-avatar-placeholder {
+      width: 22px;
+      height: 22px;
+      fill: rgba(255,249,237,.6);
+    }
+
+    /* 个人中心侧边栏 */
+    .profile-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(23,20,17,.45);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    .profile-overlay.open { opacity: 1; pointer-events: auto; }
+    .profile-sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 320px;
+      z-index: 201;
+      background: #1c1812;
+      border-left: 1px solid rgba(185,151,91,.2);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      overflow-y: auto;
+    }
+    .profile-sidebar.open { transform: translateX(0); }
+    .profile-sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 24px 18px;
+      border-bottom: 1px solid rgba(185,151,91,.15);
+    }
+    .profile-sidebar-header span {
+      color: var(--gold);
+      font-size: 15px;
+      letter-spacing: 3px;
+      font-weight: 900;
+    }
+    .profile-close {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: rgba(255,249,237,.5);
+      font-size: 20px;
+      border-radius: 4px;
+      transition: color .2s;
+    }
+    .profile-close:hover { color: var(--gold); }
+    .profile-user-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 32px 24px 24px;
+      border-bottom: 1px solid rgba(185,151,91,.1);
+    }
+    .profile-avatar-large {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid rgba(185,151,91,.5);
+      overflow: hidden;
+      background: rgba(185,151,91,.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+    }
+    .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
+    .profile-avatar-large:hover::after {
+      content: "更换头像";
+      position: absolute;
+      inset: 0;
+      background: rgba(23,20,17,.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: 1px;
+      border-radius: 50%;
+    }
+    .profile-username {
+      color: var(--cream);
+      font-size: 16px;
+      letter-spacing: 2px;
+      font-weight: 700;
+    }
+    .profile-tag {
+      color: rgba(255,249,237,.42);
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+    .profile-upload-input { display: none; }
+    .profile-menu {
+      display: flex;
+      flex-direction: column;
+      padding: 16px 0;
+    }
+    .profile-menu a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 24px;
+      color: rgba(255,249,237,.7);
+      font-size: 14px;
+      letter-spacing: 1px;
+      transition: background .2s, color .2s;
+      border-left: 2px solid transparent;
+      text-decoration: none;
+    }
+    .profile-menu a:hover {
+      background: rgba(185,151,91,.08);
+      color: var(--gold);
+      border-left-color: var(--gold);
+    }
+    .profile-menu a svg { opacity: .6; flex-shrink: 0; }
+
+    /* 账户子面板 */
+    .profile-panel { display: none; flex-direction: column; flex: 1; }
+    .profile-panel.active { display: flex; }
+    .profile-panel-back {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 24px;
+      color: rgba(255,249,237,.5);
+      font-size: 13px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(185,151,91,.1);
+      transition: color .2s;
+    }
+    .profile-panel-back:hover { color: var(--gold); }
+    .account-balance-card {
+      margin: 20px 20px 0;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(185,151,91,.18), rgba(185,151,91,.06));
+      border: 1px solid rgba(185,151,91,.25);
+      border-radius: 4px;
+    }
+    .account-balance-card small {
+      display: block;
+      color: rgba(255,249,237,.45);
+      font-size: 12px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .account-balance-amount {
+      font-size: 32px;
+      color: var(--gold);
+      font-weight: 700;
+      font-family: var(--latin);
+      letter-spacing: 1px;
+    }
+    .account-balance-amount span {
+      font-size: 14px;
+      margin-right: 4px;
+      opacity: .7;
+    }
+    .account-section-title {
+      padding: 20px 20px 10px;
+      color: rgba(255,249,237,.4);
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+    .topup-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 0 20px;
+    }
+    .topup-btn {
+      padding: 10px 0;
+      text-align: center;
+      border: 1px solid rgba(185,151,91,.25);
+      color: rgba(255,249,237,.7);
+      font-size: 14px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      background: rgba(185,151,91,.06);
+      border-radius: 2px;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .topup-btn:hover { background: rgba(185,151,91,.18); color: var(--gold); border-color: rgba(185,151,91,.5); }
+    .topup-btn.selected { background: rgba(185,151,91,.22); color: var(--gold); border-color: var(--gold); }
+    .topup-custom {
+      margin: 10px 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid rgba(185,151,91,.2);
+    }
+    .topup-custom span {
+      padding: 0 12px;
+      color: rgba(255,249,237,.4);
+      font-size: 14px;
+      background: rgba(185,151,91,.08);
+      height: 38px;
+      display: flex;
+      align-items: center;
+      border-right: 1px solid rgba(185,151,91,.2);
+    }
+    .topup-custom input {
+      flex: 1;
+      height: 38px;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--cream);
+      font-size: 14px;
+      padding: 0 12px;
+      font-family: var(--serif);
+    }
+    .topup-custom input::placeholder { color: rgba(255,249,237,.25); }
+    .topup-confirm {
+      margin: 14px 20px 20px;
+      width: calc(100% - 40px);
+      padding: 12px 0;
+      background: var(--gold);
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      border: none;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .topup-confirm:hover { opacity: .85; }
+    .account-info-list {
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .account-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(185,151,91,.08);
+      font-size: 13px;
+      color: rgba(255,249,237,.6);
+    }
+    .account-info-row:last-child { border-bottom: none; }
+    .account-info-row strong { color: rgba(255,249,237,.85); font-weight: 400; }
+
+    /* 订单卡片 */
+    .order-card {
+      margin: 0 20px 12px;
+      border: 1px solid rgba(185,151,91,.18);
+      background: rgba(185,151,91,.05);
+    }
+    .order-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(185,151,91,.12);
+    }
+    .order-card-header small { color: rgba(255,249,237,.35); font-size: 11px; letter-spacing: 1px; }
+    .order-status { font-size: 12px; letter-spacing: 1px; }
+    .order-status.delivering { color: #7eb8a4; }
+    .order-status.done { color: rgba(255,249,237,.4); }
+    .order-status.pending { color: var(--gold); }
+    .order-product-row {
+      display: flex;
+      gap: 12px;
+      padding: 12px 14px;
+      align-items: center;
+      border-bottom: 1px solid rgba(185,151,91,.08);
+    }
+    .order-product-row img {
+      width: 52px;
+      height: 52px;
+      object-fit: cover;
+      flex-shrink: 0;
+      opacity: .9;
+    }
+    .order-product-info { flex: 1; min-width: 0; }
+    .order-product-info h4 { color: rgba(255,249,237,.85); font-size: 13px; font-weight: 400; letter-spacing: 1px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .order-product-info span { color: rgba(255,249,237,.35); font-size: 12px; }
+    .order-product-price { color: var(--gold); font-size: 14px; font-family: var(--latin); flex-shrink: 0; }
+    .order-logistics {
+      padding: 12px 14px;
+    }
+    .order-logistics-title { color: rgba(255,249,237,.35); font-size: 11px; letter-spacing: 2px; margin-bottom: 10px; }
+    .logistics-track { display: flex; flex-direction: column; gap: 0; position: relative; }
+    .logistics-track::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: rgba(185,151,91,.2); }
+    .logistics-step { display: flex; gap: 14px; align-items: flex-start; position: relative; padding-bottom: 10px; }
+    .logistics-step:last-child { padding-bottom: 0; }
+    .logistics-dot { width: 11px; height: 11px; border-radius: 50%; border: 1px solid rgba(185,151,91,.4); background: #1c1812; flex-shrink: 0; margin-top: 2px; position: relative; z-index: 1; }
+    .logistics-step.active .logistics-dot { background: var(--gold); border-color: var(--gold); }
+    .logistics-step-body {}
+    .logistics-step-body p { font-size: 12px; color: rgba(255,249,237,.65); letter-spacing: .5px; margin-bottom: 2px; }
+    .logistics-step-body small { font-size: 11px; color: rgba(255,249,237,.3); }
+
+    .hero {
+      position: relative;
+      padding: 72px 0 64px;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "FANGCHENG";
+      position: absolute;
+      left: -4vw;
+      bottom: -2px;
+      color: rgba(23,20,17,.045);
+      font-family: var(--latin);
+      font-size: clamp(86px, 17vw, 245px);
+      font-weight: 700;
+      letter-spacing: 14px;
+      line-height: .8;
+    }
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+      align-items: center;
+    }
+    .hero-copy { grid-column: 1 / span 6; padding-top: 24px; }
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--clay);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 4px;
+    }
+    .kicker::before { content: ""; width: 46px; height: 1px; background: var(--clay); }
+    h1 {
+      margin-top: 25px;
+      font-size: clamp(32px, 4vw, 50px);
+      line-height: 1.1;
+      letter-spacing: 2px;
+      font-weight: 900;
+    }
+    .headline-note {
+      display: block;
+      margin-top: 12px;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(23,20,17,.55);
+      font-family: var(--latin);
+      font-size: clamp(34px, 4vw, 62px);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+    }
+    .lead {
+      width: min(590px, 100%);
+      margin-top: 28px;
+      color: #5f5449;
+      font-size: 17px;
+      line-height: 2;
+      letter-spacing: 1px;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 34px; }
+    .btn {
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 24px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-weight: 900;
+      letter-spacing: 2px;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+    .btn-primary { background: var(--ink); color: var(--cream); box-shadow: 15px 15px 0 rgba(168,95,61,.14); }
+    .btn-primary:hover { transform: translate(-2px, -2px); box-shadow: 20px 20px 0 rgba(168,95,61,.17); }
+    .btn-ghost { border-color: rgba(23,20,17,.24); color: var(--ink); background: rgba(255,249,237,.43); }
+    .btn-ghost:hover { transform: translateY(-3px); background: rgba(255,249,237,.78); }
+
+    .hero-gallery { grid-column: 7 / span 6; position: relative; min-height: 630px; }
+    .hero-photo { position: absolute; overflow: hidden; background: #d8c7ad; box-shadow: var(--shadow); }
+    .hero-photo img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.95) contrast(1.04); transition: transform .8s ease; }
+    .hero-photo:hover img { transform: scale(1.055); }
+    .hero-photo.main { right: 3%; top: 0; width: 74%; height: 420px; }
+    .hero-photo.side { left: 0; bottom: 72px; width: 44%; height: 270px; border: 14px solid var(--paper); }
+    .hero-photo.small { right: 0; bottom: 0; width: 39%; height: 218px; }
+    .vertical-seal {
+      position: absolute;
+      right: 8%;
+      top: 350px;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 74px;
+      min-height: 170px;
+      padding: 14px 0;
+      background: var(--clay);
+      color: var(--cream);
+      box-shadow: 12px 12px 0 rgba(23,20,17,.12);
+      writing-mode: vertical-rl;
+      letter-spacing: 6px;
+      font-weight: 900;
+    }
+    .curator-note {
+      position: absolute;
+      left: 11%;
+      top: 18px;
+      z-index: 3;
+      width: 190px;
+      padding: 16px;
+      color: var(--cream);
+      background: rgba(23,20,17,.88);
+      border: 1px solid rgba(185,151,91,.32);
+      box-shadow: 12px 12px 0 rgba(185,151,91,.2);
+    }
+    .curator-note small { display: block; color: var(--gold); font-family: var(--latin); letter-spacing: 3px; text-transform: uppercase; }
+    .curator-note span { display: block; margin-top: 8px; line-height: 1.65; font-size: 13px; color: rgba(255,249,237,.76); }
+
+    .stats {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,249,237,.42);
+    }
+    .stat { padding: 24px 28px; border-right: 1px solid var(--line); }
+    .stat:last-child { border-right: 0; }
+    .stat strong { display: block; min-width: 82px; font-family: var(--latin); font-size: 42px; line-height: .95; color: var(--clay); letter-spacing: .5px; }
+    .stat span { display: block; margin-top: 8px; color: var(--smoke); font-size: 13px; letter-spacing: 3px; }
+
+    .section { padding: 92px 0 102px; position: relative; }
+    .section-title {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 36px;
+    }
+    .section-title .number { color: var(--gold); font-family: var(--latin); font-size: 18px; letter-spacing: 5px; text-transform: uppercase; }
+    .section-title h2 { margin-top: 9px; font-size: clamp(34px, 4vw, 58px); line-height: 1.05; letter-spacing: 5px; }
+    .section-title p { max-width: 500px; color: var(--smoke); line-height: 1.9; letter-spacing: 1px; }
+
+    .category-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+    .category {
+      position: relative;
+      min-height: 390px;
+      overflow: hidden;
+      color: var(--cream);
+      background: var(--ink);
+      box-shadow: 0 0 0 rgba(23,20,17,0);
+      transition: transform .28s ease, box-shadow .28s ease;
+    }
+    .category:nth-child(even) { transform: translateY(34px); }
+    .category:hover { transform: translateY(-6px); box-shadow: 18px 18px 0 rgba(23,20,17,.08); }
+    .category:nth-child(even):hover { transform: translateY(24px); }
+    .category img { width: 100%; height: 100%; object-fit: cover; opacity: .72; transition: transform .8s ease, opacity .4s ease; }
+    .category:hover img { transform: scale(1.06); opacity: .86; }
+    .category::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 18%, rgba(23,20,17,.86) 100%); }
+    .category-info { position: absolute; left: 24px; right: 24px; bottom: 24px; z-index: 1; }
+    .category-info small { color: var(--gold); font-family: var(--latin); font-size: 13px; letter-spacing: 4px; text-transform: uppercase; }
+    .category-info h3 { margin-top: 9px; font-size: 29px; letter-spacing: 4px; }
+    .category-info p { margin-top: 10px; color: rgba(255,249,237,.72); line-height: 1.75; font-size: 14px; }
+    .category-info span { display: inline-flex; margin-top: 18px; color: var(--gold); font-size: 13px; font-weight: 900; letter-spacing: 3px; }
+
+    .feature-layout {
+      display: grid;
+      grid-template-columns: .78fr 1.22fr;
+      gap: 22px;
+      align-items: start;
+    }
+    .editorial-panel {
+      position: sticky;
+      top: 104px;
+      min-height: 560px;
+      padding: 34px;
+      color: var(--cream);
+      background: var(--ink);
+      overflow: hidden;
+    }
+    .editorial-panel::before {
+      content: "SELECTED";
+      position: absolute;
+      left: -22px;
+      bottom: 20px;
+      color: rgba(255,249,237,.07);
+      font-family: var(--latin);
+      font-size: 88px;
+      letter-spacing: 8px;
+      transform: rotate(-90deg);
+      transform-origin: left bottom;
+    }
+    .editorial-panel img { width: 100%; height: 270px; object-fit: cover; filter: saturate(.92) contrast(1.05); }
+    .editorial-panel h3 { margin-top: 26px; font-size: 38px; line-height: 1.1; letter-spacing: 5px; }
+    .editorial-panel p { margin-top: 18px; color: rgba(255,249,237,.68); line-height: 1.9; }
+    .editorial-panel a { margin-top: 26px; display: inline-flex; color: var(--gold); font-weight: 900; letter-spacing: 3px; }
+    .editorial-slide { position: absolute; inset: 0; padding: 34px; opacity: 0; transition: opacity .6s ease; pointer-events: none; }
+    .editorial-slide.active { opacity: 1; pointer-events: auto; }
+    .editorial-slide img { width: 100%; height: 270px; object-fit: cover; filter: saturate(.92) contrast(1.05); }
+    .editorial-slide h3 { margin-top: 26px; font-size: 38px; line-height: 1.1; letter-spacing: 5px; color: var(--cream); }
+    .editorial-slide p { margin-top: 18px; color: rgba(255,249,237,.68); line-height: 1.9; }
+    .editorial-slide a { margin-top: 26px; display: inline-flex; color: var(--gold); font-weight: 900; letter-spacing: 3px; }
+    .editorial-dots { position: absolute; bottom: 18px; right: 24px; display: flex; gap: 6px; z-index: 2; }
+    .editorial-dots span { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,249,237,.3); cursor: pointer; transition: background .3s; }
+    .editorial-dots span.active { background: var(--gold); }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .product-card {
+      position: relative;
+      min-height: 390px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,249,237,.56);
+      transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+    }
+    .product-card:nth-child(2), .product-card:nth-child(5) { transform: translateY(30px); }
+    .product-card:hover { transform: translateY(-6px); background: rgba(255,249,237,.9); box-shadow: 16px 16px 0 rgba(168,95,61,.1); }
+    .product-card:nth-child(2):hover, .product-card:nth-child(5):hover { transform: translateY(20px); }
+    .product-card img { width: 100%; height: 220px; object-fit: cover; background: var(--paper-deep); }
+    .product-meta { padding: 18px 4px 4px; }
+    .product-meta small { color: var(--clay); font-family: var(--latin); letter-spacing: 3px; text-transform: uppercase; }
+    .product-meta h3 { margin-top: 8px; font-size: 22px; letter-spacing: 2px; }
+    .product-meta p { margin-top: 9px; min-height: 48px; color: var(--smoke); line-height: 1.7; font-size: 14px; }
+    .product-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; }
+    .price { color: var(--clay); font-family: var(--latin); font-size: 24px; font-weight: 700; }
+    .product-foot span:last-child { color: var(--pine); font-size: 13px; font-weight: 900; letter-spacing: 2px; }
+
+    .auction-section {
+      color: var(--cream);
+      background:
+        linear-gradient(105deg, rgba(23,20,17,.96), rgba(23,20,17,.88)),
+        url("uploads/auction1.jpg") center/cover;
+    }
+    .auction-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 36px;
+      align-items: center;
+    }
+    .auction-copy .section-title { grid-template-columns: 1fr; margin-bottom: 20px; }
+    .auction-copy .section-title p { color: rgba(255,249,237,.68); }
+    .auction-copy h2 { color: var(--cream); }
+    .auction-price { margin-top: 30px; color: var(--gold); font-family: var(--latin); font-size: clamp(44px, 6vw, 86px); line-height: .9; }
+    .auction-copy p { color: rgba(255,249,237,.7); line-height: 1.9; }
+    .timeline {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid rgba(246,240,230,.18);
+    }
+    .timeline div { padding: 20px; border-right: 1px solid rgba(246,240,230,.18); }
+    .timeline div:last-child { border-right: 0; }
+    .timeline b { display: block; color: var(--gold); font-family: var(--latin); font-size: 26px; }
+    .timeline span { display: block; margin-top: 8px; color: rgba(255,249,237,.58); font-size: 13px; letter-spacing: 2px; }
+    .auction-lot {
+      position: relative;
+      min-height: 560px;
+      background: rgba(255,249,237,.06);
+      border: 1px solid rgba(185,151,91,.34);
+      padding: 24px;
+      transform: rotate(1.5deg);
+      box-shadow: 28px 28px 0 rgba(185,151,91,.08);
+    }
+    .auction-lot img { width: 100%; height: 440px; object-fit: cover; filter: saturate(.92); }
+    .lot-label {
+      position: absolute;
+      left: -18px;
+      top: 42px;
+      padding: 14px 20px;
+      background: var(--clay);
+      color: var(--cream);
+      font-weight: 900;
+      letter-spacing: 3px;
+      box-shadow: 10px 10px 0 rgba(0,0,0,.18);
+    }
+    .auction-lot h3 { margin-top: 20px; font-size: 30px; letter-spacing: 4px; }
+    .auction-lot p { margin-top: 10px; color: rgba(255,249,237,.66); line-height: 1.8; }
+
+    .gift-layout {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+    .gift-mosaic {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: 190px 160px 190px;
+      gap: 16px;
+    }
+    .gift-mosaic img { width: 100%; height: 100%; object-fit: cover; box-shadow: var(--shadow); }
+    .gift-mosaic img:nth-child(1) { grid-column: 1 / span 7; grid-row: 1 / span 2; }
+    .gift-mosaic img:nth-child(2) { grid-column: 8 / span 5; grid-row: 1 / span 1; }
+    .gift-mosaic img:nth-child(3) { grid-column: 7 / span 6; grid-row: 2 / span 2; }
+    .gift-mosaic img:nth-child(4) { grid-column: 2 / span 5; grid-row: 3 / span 1; }
+    .gift-copy {
+      padding: 42px;
+      border: 1px solid var(--line);
+      background: rgba(255,249,237,.62);
+      position: relative;
+      overflow: hidden;
+    }
+    .gift-copy::after {
+      content: "GIFT";
+      position: absolute;
+      right: -12px;
+      bottom: -8px;
+      color: rgba(23,20,17,.055);
+      font-family: var(--latin);
+      font-size: 118px;
+      line-height: .8;
+      letter-spacing: 8px;
+    }
+    .gift-copy h2 { font-size: clamp(34px, 4vw, 56px); line-height: 1.08; letter-spacing: 5px; }
+    .gift-copy p { margin-top: 20px; color: var(--smoke); line-height: 1.95; }
+    .gift-list { position: relative; z-index: 1; margin-top: 26px; display: grid; gap: 13px; }
+    .gift-list a {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+    .gift-list span { color: var(--clay); }
+
+    .trust-band {
+      padding: 0 0 96px;
+    }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--line);
+      background: rgba(255,249,237,.48);
+    }
+    .trust-item { min-height: 190px; padding: 28px; border-right: 1px solid var(--line); }
+    .trust-item:last-child { border-right: 0; }
+    .trust-item small { color: var(--gold); font-family: var(--latin); font-size: 24px; letter-spacing: 3px; }
+    .trust-item h3 { margin-top: 18px; font-size: 22px; letter-spacing: 3px; }
+    .trust-item p { margin-top: 12px; color: var(--smoke); line-height: 1.8; font-size: 14px; }
+
+    .final-cta {
+      padding: 74px 0;
+      color: var(--cream);
+      background: var(--pine);
+      overflow: hidden;
+      position: relative;
+    }
+    .final-cta::before {
+      content: "BAIZHENFANG";
+      position: absolute;
+      right: -2vw;
+      top: 10px;
+      color: rgba(255,249,237,.08);
+      font-family: var(--latin);
+      font-size: clamp(60px, 12vw, 180px);
+      letter-spacing: 12px;
+    }
+    .cta-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: end; }
+    .final-cta h2 { font-size: clamp(38px, 5vw, 72px); line-height: 1.06; letter-spacing: 6px; }
+    .final-cta p { margin-top: 18px; max-width: 700px; color: rgba(255,249,237,.72); line-height: 1.9; }
+    .cta-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: flex-end; }
+    .cta-actions .btn-primary { background: var(--gold); color: var(--ink); box-shadow: 14px 14px 0 rgba(23,20,17,.14); }
+    .cta-actions .btn-ghost { color: var(--cream); border-color: rgba(255,249,237,.38); background: rgba(255,249,237,.08); }
+
+    .plain-links {
+      margin-top: 76px;
+      padding: 24px 0 0;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      align-items: center;
+      color: var(--smoke);
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+    .plain-links strong { color: var(--ink); letter-spacing: 3px; }
+    .plain-links a {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 14px;
+      border: 1px solid rgba(23,20,17,.16);
+      background: rgba(255,249,237,.48);
+      transition: transform .24s ease, background .24s ease;
+    }
+    .plain-links a:hover { transform: translateY(-3px); background: rgba(255,249,237,.86); }
+
+    .footer { padding: 50px 0; color: var(--cream); background: var(--ink); }
+    .footer-grid { display: grid; grid-template-columns: 1.2fr .8fr .8fr; gap: 28px; align-items: start; }
+    .footer h2 { font-size: 35px; letter-spacing: 6px; }
+    .footer p { margin-top: 14px; max-width: 510px; color: rgba(255,249,237,.62); line-height: 1.9; }
+    .footer h4 { color: var(--gold); letter-spacing: 3px; }
+    .footer a, .footer span { display: block; margin-top: 13px; color: rgba(255,249,237,.64); font-size: 14px; letter-spacing: 1px; }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-copy, .hero-photo, .vertical-seal, .curator-note, .stat, .category, .product-card, .editorial-panel, .auction-copy, .auction-lot, .gift-copy, .gift-mosaic, .trust-item { animation: riseIn .8s ease both; }
+    .hero-photo.main { animation-delay: .08s; }
+    .hero-photo.side { animation-delay: .16s; }
+    .hero-photo.small { animation-delay: .24s; }
+    .category:nth-child(2), .product-card:nth-child(2), .trust-item:nth-child(2) { animation-delay: .08s; }
+    .category:nth-child(3), .product-card:nth-child(3), .trust-item:nth-child(3) { animation-delay: .16s; }
+    .category:nth-child(4), .product-card:nth-child(4), .trust-item:nth-child(4) { animation-delay: .24s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; scroll-behavior: auto !important; transition: none !important; }
+    }
+    @media (max-width: 1080px) {
+      .nav { grid-template-columns: 1fr auto; padding: 14px 0; }
+      .navlinks { grid-column: 1 / -1; justify-content: flex-start; overflow-x: auto; padding-bottom: 10px; }
+      .hero-copy, .hero-gallery { grid-column: 1 / -1; }
+      .hero-gallery { min-height: 560px; }
+      .category-strip, .product-grid, .trust-grid { grid-template-columns: repeat(2, 1fr); }
+      .feature-layout, .auction-grid, .gift-layout, .cta-grid { grid-template-columns: 1fr; }
+      .editorial-panel { position: relative; top: auto; min-height: auto; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .trust-item:nth-child(2) { border-right: 0; }
+      .trust-item { border-bottom: 1px solid var(--line); }
+      .trust-item:nth-child(3), .trust-item:nth-child(4) { border-bottom: 0; }
+      .cta-actions { justify-content: flex-start; }
+    }
+    @media (max-width: 680px) {
+      .shell { width: min(100% - 28px, 1240px); }
+      .nav-cta { display: none; }
+      .hero { padding-top: 38px; }
+      h1 { letter-spacing: 4px; }
+      .hero-gallery { min-height: 500px; }
+      .hero-photo.main { width: 86%; height: 320px; }
+      .hero-photo.side { width: 56%; height: 210px; }
+      .hero-photo.small { width: 48%; height: 170px; }
+      .vertical-seal { top: 270px; }
+      .curator-note { left: 0; width: 170px; }
+      .stats, .category-strip, .section-title, .product-grid, .timeline, .trust-grid { grid-template-columns: 1fr; }
+      .stat { border-right: 0; border-bottom: 1px solid var(--line); }
+      .category, .category:nth-child(even), .category:hover, .category:nth-child(even):hover, .product-card, .product-card:nth-child(2), .product-card:nth-child(5), .product-card:hover, .product-card:nth-child(2):hover, .product-card:nth-child(5):hover, .auction-lot { transform: none; }
+      .category { min-height: 320px; }
+      .auction-lot { min-height: auto; }
+      .auction-lot img { height: 300px; }
+      .timeline div, .trust-item { border-right: 0; border-bottom: 1px solid rgba(23,20,17,.14); }
+      .timeline div:last-child, .trust-item:last-child { border-bottom: 0; }
+      .gift-mosaic { grid-template-columns: 1fr; grid-template-rows: repeat(4, 180px); }
+      .gift-mosaic img:nth-child(n) { grid-column: auto; grid-row: auto; }
+      .plain-links { align-items: stretch; }
+      .plain-links a { width: 100%; }
+    }
+  </style>
+
+<style id="num-feature-fix">
+  /* 让数字字体（--latin）使用整齐的等宽 lining 数字 */
+  body { font-feature-settings: "kern" 1, "liga" 1; }
+  [class*="num"], [class*="price"], [class*="amount"], [class*="bid"],
+  .number, strong, .au-history-amt, .mc-card-num em, .au-detail-cat,
+  .mc-progress-head strong, .mc-stat-body strong, .au-time-box strong,
+  .au-cal-date strong, .au-stat strong, .mc-points-now > div strong,
+  .mc-coupon-l strong, .mc-os-num, .mc-tool-dot, .mc-points-list .add,
+  .mc-points-list .sub, .au-price-now strong, .au-history-rank {
+    font-feature-settings: "tnum" 1, "lnum" 1, "ss01" 1;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+</style>
+
+  <link rel="stylesheet" href="site-fixes.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="#top" aria-label="方城特产百珍坊首页">
+        <span class="brand-mark"><img src="uploads/logo.png" alt="百珍坊logo"></span>
+        <span>
+          <strong>方城特产百珍坊</strong>
+          <span>Fangcheng Selected</span>
+        </span>
+      </a>
+      <nav class="navlinks" aria-label="主导航">
+        <a class="active" href="#top">首页</a>
+        <a href="baizhen-collection.html">百珍荟萃</a>
+        <a href="auction.html">拍卖中心</a>
+      </nav>
+
+          <div class="nav-avatar" id="navAvatar" role="button" aria-label="个人中心" tabindex="0">
+      <img src="" alt="头像" id="navAvatarImg" style="display:none">
+      <svg class="nav-avatar-placeholder" id="navAvatarIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="rgba(255,249,237,.6)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,249,237,.5)"/></svg>
+    </div>
+    <!-- Task B1: 购物车按钮 -->
+    <button class="nav-cart-btn" aria-label="购物车" title="购物车">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="nav-cart-count" id="navCartCount">0</span>
+    </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <span class="kicker">河南方城 · 风物入口</span>
+          <h1>方城风物精选<br>文房·美食·养生·收藏</h1>
+          <p class="lead">从书房案头、地方餐桌、日常滋补到工艺收藏，方城特产百珍坊把风物整理成可浏览、可购买、可竞拍、可定制的高端商城入口。</p>
+        </div>
+        <div class="hero-gallery" aria-label="方城特产百珍坊主视觉">
+<figure class="hero-photo main"><img src="uploads/banner1.jpg" alt="方城特产礼盒主视觉"></figure>
+          <figure class="hero-photo side"><img src="uploads/cat-meishi.jpg" alt="方城美食分类"></figure>
+          <figure class="hero-photo small"><img src="uploads/stone-qingshi.jpg" alt="方城黄石砚"></figure>
+        </div>
+      </div>
+    </section>
+
+    <div class="shell stats" aria-label="首页导览数据">
+      <div class="stat"><strong>4</strong><span>大商品品类</span></div>
+      <div class="stat"><strong>12</strong><span>款重点单品</span></div>
+      <div class="stat"><strong>3</strong><span>条礼赠场景</span></div>
+      <div class="stat"><strong>1</strong><span>个桌面商城入口</span></div>
+    </div>
+
+    <section id="categories" class="section">
+      <div class="shell">
+        <div class="section-title">
+          <div>
+            <span class="number">Chapter 01</span>
+            <h2>品类</h2>
+          </div>
+        </div>
+        <div class="category-strip">
+          <a class="category" href="cat-wenfang.html" aria-label="进入文房雅器品类页">
+            <img src="uploads/cat-wenfang.jpg" alt="文房雅器分类">
+            <div class="category-info"><small>Studio</small><h3>文房雅器</h3><p>黄石砚、墨锭、毛笔，适合书房陈设、收藏和商务雅礼。</p></div>
+          </a>
+          <a class="category" href="cat-meishi.html" aria-label="进入方城美食品类页">
+            <img src="uploads/cat-meishi.jpg" alt="方城美食分类">
+            <div class="category-info"><small>Taste</small><h3>方城美食</h3><p>烩面、锅盔、花生与风味礼盒，突出地方烟火气。</p></div>
+          </a>
+          <a class="category" href="cat-yangsheng.html" aria-label="进入养生滋补品类页">
+            <img src="uploads/cat-yangsheng.jpg" alt="养生滋补分类">
+            <div class="category-info"><small>Wellness</small><h3>养生滋补</h3><p>丹参、香菇、梨膏，更适合长辈、家庭和换季常备。</p></div>
+          </a>
+          <a class="category" href="cat-gongyi.html" aria-label="进入工艺收藏品类页">
+            <img src="uploads/cat-gongyi.jpg" alt="工艺收藏分类">
+            <div class="category-info"><small>Craft</small><h3>工艺收藏</h3><p>石猴、玉件和地方手作，让礼物更有纪念感。</p></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="featured" class="section">
+      <div class="shell">
+        <div class="section-title">
+          <div>
+            <span class="number">Chapter 02</span>
+            <h2>本周精选</h2>
+          </div>
+        </div>
+        <div class="feature-layout">
+          <aside class="editorial-panel">
+            <div class="editorial-slide active">
+              <img src="uploads/product1.jpg" alt="方城黄石砚">
+              <h3>方城黄石砚</h3>
+              <p>石质温润，适合书房陈设与收藏入门。</p>
+              <a href="detail-product1.html">查看详情 →</a>
+            </div>
+            <div class="editorial-slide">
+              <img src="uploads/product-ink.jpg" alt="手作墨锭">
+              <h3>手作墨锭</h3>
+              <p>与砚台成套陈列，提升文房礼盒完整度。</p>
+              <a href="detail-ink.html">查看详情 →</a>
+            </div>
+            <div class="editorial-slide">
+              <img src="uploads/product-guokui.jpg" alt="方城锅盔">
+              <h3>方城锅盔</h3>
+              <p>地方烟火气代表，适合家庭分享与伴手礼。</p>
+              <a href="detail-guokui.html">查看详情 →</a>
+            </div>
+            <div class="editorial-slide">
+              <img src="uploads/product-danshen.jpg" alt="方城丹参">
+              <h3>方城丹参</h3>
+              <p>面向长辈与养生场景的稳重型礼品。</p>
+              <a href="detail-danshen.html">查看详情 →</a>
+            </div>
+            <div class="editorial-slide">
+              <img src="uploads/product-shihou.jpg" alt="石猴手作">
+              <h3>石猴手作</h3>
+              <p>小型工艺收藏，适合桌面摆件和纪念礼。</p>
+              <a href="detail-shihou.html">查看详情 →</a>
+            </div>
+            <div class="editorial-slide">
+              <img src="uploads/product-silk.jpg" alt="丝织雅礼">
+              <h3>丝织雅礼</h3>
+              <p>轻量高质感礼品，可进入企业礼赠组合。</p>
+              <a href="detail-silk.html">查看详情 →</a>
+            </div>
+            <div class="editorial-dots">
+              <span class="active" data-idx="0"></span>
+              <span data-idx="1"></span>
+              <span data-idx="2"></span>
+              <span data-idx="3"></span>
+              <span data-idx="4"></span>
+              <span data-idx="5"></span>
+            </div>
+          </aside>
+          <div class="product-grid">
+            <a class="product-card" href="detail-product1.html">
+              <img src="uploads/product1.jpg" alt="黄石砚精品">
+              <div class="product-meta"><small>Inkstone</small><h3>方城黄石砚</h3><p>石质温润，适合书房陈设与收藏入门。</p><div class="product-foot"><span class="price">¥ 399</span><span>查看详情</span></div></div>
+            </a>
+            <a class="product-card" href="detail-ink.html">
+              <img src="uploads/product-ink.jpg" alt="手作墨锭">
+              <div class="product-meta"><small>Studio</small><h3>手作墨锭</h3><p>与砚台成套陈列，提升文房礼盒完整度。</p><div class="product-foot"><span class="price">¥ 128</span><span>查看详情</span></div></div>
+            </a>
+            <a class="product-card" href="detail-guokui.html">
+              <img src="uploads/product-guokui.jpg" alt="方城锅盔">
+              <div class="product-meta"><small>Taste</small><h3>方城锅盔</h3><p>地方烟火气代表，适合家庭分享与伴手礼。</p><div class="product-foot"><span class="price">¥ 39</span><span>查看详情</span></div></div>
+            </a>
+            <a class="product-card" href="detail-danshen.html">
+              <img src="uploads/product-danshen.jpg" alt="方城丹参">
+              <div class="product-meta"><small>Wellness</small><h3>方城丹参</h3><p>面向长辈与养生场景的稳重型礼品。</p><div class="product-foot"><span class="price">¥ 168</span><span>查看详情</span></div></div>
+            </a>
+            <a class="product-card" href="detail-shihou.html">
+              <img src="uploads/product-shihou.jpg" alt="石猴工艺品">
+              <div class="product-meta"><small>Craft</small><h3>石猴手作</h3><p>小型工艺收藏，适合桌面摆件和纪念礼。</p><div class="product-foot"><span class="price">¥ 299</span><span>查看详情</span></div></div>
+            </a>
+            <a class="product-card" href="detail-silk.html">
+              <img src="uploads/product-silk.jpg" alt="丝织礼品">
+              <div class="product-meta"><small>Gift</small><h3>丝织雅礼</h3><p>轻量高质感礼品，可进入企业礼赠组合。</p><div class="product-foot"><span class="price">¥ 218</span><span>查看详情</span></div></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="auction" class="section auction-section">
+      <div class="shell auction-grid">
+        <div class="auction-copy">
+          <div class="section-title">
+            <div>
+              <span class="number">Chapter 03</span>
+              <h2>珍品竞拍入口</h2>
+            </div>
+            <p>把拍卖从孤立页面拉回首页运营位，突出当前标的、起拍价、倒计时与参与路径。</p>
+          </div>
+          <div class="auction-price">¥ 1,280</div>
+          <p>当前展示为竞拍演示入口，适合后续接入真实竞价、保证金、出价记录与成交通知。</p>
+          <div class="timeline" aria-label="竞拍节奏">
+            <div><b>18:00</b><span>今日开拍</span></div>
+            <div><b>24H</b><span>限时竞价</span></div>
+            <div><b>12</b><span>重点拍品</span></div>
+          </div>
+          <div class="hero-actions"><a class="btn btn-primary" href="auction.html">进入竞拍大厅</a><a class="btn btn-ghost" href="detail-product1.html">查看拍品详情</a></div>
+        </div>
+        <a class="auction-lot" href="auction.html" aria-label="进入珍品竞拍">
+          <span class="lot-label">正在展拍</span>
+          <img src="uploads/auction1.jpg" alt="黄石砚竞拍拍品">
+          <h3>黄石砚收藏级拍品</h3>
+          <p>以地方石材与手工制砚为核心卖点，适合收藏、商务礼赠和文化空间陈设。</p>
+        </a>
+      </div>
+    </section>
+
+    <section id="gift" class="section">
+      <div class="shell gift-layout">
+        <div class="gift-mosaic" aria-label="礼盒定制素材展示">
+          <img src="uploads/pack-craft.jpg" alt="工艺收藏礼盒">
+          <img src="uploads/pack-food.jpg" alt="方城美食礼盒">
+          <img src="uploads/pack-health.jpg" alt="养生滋补礼盒">
+          <img src="uploads/pack-silk.jpg" alt="丝织礼盒">
+        </div>
+        <div class="gift-copy">
+          <span class="kicker">企业礼赠 · 场景组合</span>
+          <h2>从单品购买<br>升级为整套心意</h2>
+          <p>礼盒定制承接企业采购、节庆送礼、长辈关怀和文化纪念。首页先展示组合能力，详情页再承接规格、预算与咨询。</p>
+          <div class="gift-list">
+            <a href="custom-gift.html"><strong>商务雅礼</strong><span>文房 + 工艺</span></a>
+            <a href="custom-gift.html"><strong>节庆伴手礼</strong><span>美食 + 包装</span></a>
+            <a href="contact.html"><strong>企业批量采购</strong><span>联系合作</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-band">
+      <div class="shell trust-grid" aria-label="商城服务承诺">
+        <div class="trust-item"><small>01</small><h3>本地风物精选</h3><p>围绕方城风物建立商品心智，减少杂乱 SKU 带来的选择成本。</p></div>
+        <div class="trust-item"><small>02</small><h3>礼盒场景清晰</h3><p>从个人购买、家庭分享到企业礼赠，都有可延展的组合路径。</p></div>
+        <div class="trust-item"><small>03</small><h3>竞拍边界明确</h3><p>当前为演示体验，后续可接入真实身份、保证金和竞价一致性。</p></div>
+        <div class="trust-item"><small>04</small><h3>桌面端一致体验</h3><p>静态站与 Windows 客户端首页保持一致，便于打包交付和线下演示。</p></div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="shell cta-grid">
+        <div>
+          <h2>把方城风物<br>带进下一份礼物里</h2>
+          <p>继续浏览商品、进入拍卖，或提交礼盒合作需求。方城特产百珍坊首页现在既能展示品牌，也能引导真实交易链路。</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="cat-wenfang.html">从文房开始</a>
+          <a class="btn btn-ghost" href="contact.html">联系合作</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="plain-links" aria-label="其他页面入口">
+          <strong>继续了解：</strong>
+          <a href="auction.html">珍品竞拍</a>
+          <a href="custom-gift.html">礼盒定制</a>
+          <a href="brand-story.html">品牌故事</a>
+          <a href="member-center.html">会员中心</a>
+          <a href="contact.html">联系合作</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<!-- 个人中心侧边栏 -->
+  <div class="profile-overlay" id="profileOverlay"></div>
+  <aside class="profile-sidebar" id="profileSidebar">
+    <div class="profile-sidebar-header">
+      <span>个人中心</span>
+      <div class="profile-close" id="profileClose">✕</div>
+    </div>
+    <div class="profile-user-block">
+      <label class="profile-avatar-large" for="avatarUpload" title="点击更换头像">
+        <img src="" alt="头像" id="sidebarAvatarImg" style="display:none">
+        <svg id="sidebarAvatarIcon" width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="rgba(255,249,237,.5)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,249,237,.35)"/></svg>
+      </label>
+      <input type="file" id="avatarUpload" class="profile-upload-input" accept="image/*">
+      <div class="profile-username" id="profileUsername">访客</div>
+      <div class="profile-tag">方城特产百珍坊会员</div>
+    </div>
+    <!-- 主菜单面板 -->
+    <div class="profile-panel active" id="panelMain">
+      <nav class="profile-menu">
+                <a href="member-center.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          个人中心
+        </a>
+<a href="#" id="menuAccount">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          我的账户
+        </a>
+        <a href="#" id="menuOrders">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          我的订单
+        </a>
+        <a href="member-center.html#collection">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          我的收藏
+        </a>
+        <a href="custom-gift.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M12 8V21M3 13h18"/><path d="M12 8c0-2.5-2-4-4-2s0 4 4 4m0-4c0-2.5 2-4 4-2s0 4-4 4"/></svg>
+          礼盒定制
+        </a>
+        <a href="contact.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          联系合作
+        </a>
+      </nav>
+    </div>
+
+    <!-- 账户子面板 -->
+    <div class="profile-panel" id="panelAccount">
+      <div class="profile-panel-back" id="accountBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        返回
+      </div>
+      <div class="account-balance-card">
+        <small>账户余额</small>
+        <div class="account-balance-amount"><span>¥</span><span id="balanceNum">0.00</span></div>
+      </div>
+      <div class="account-section-title">快速充值</div>
+      <div class="topup-grid">
+        <div class="topup-btn" data-val="50">¥ 50</div>
+        <div class="topup-btn" data-val="100">¥ 100</div>
+        <div class="topup-btn" data-val="200">¥ 200</div>
+        <div class="topup-btn" data-val="500">¥ 500</div>
+      </div>
+      <div class="topup-custom">
+        <span>¥</span>
+        <input type="text" id="topupCustom" placeholder="自定义金额">
+      </div>
+      <button class="topup-confirm" id="topupConfirm">确认充值</button>
+      <div class="account-section-title">账户信息</div>
+      <div class="account-info-list">
+        <div class="account-info-row"><span>会员等级</span><strong>普通会员</strong></div>
+        <div class="account-info-row"><span>累计消费</span><strong id="totalSpend">¥ 0.00</strong></div>
+        <div class="account-info-row"><span>优惠券</span><strong>0 张</strong></div>
+        <div class="account-info-row"><span>积分</span><strong id="pointsNum">0</strong></div>
+      </div>
+    </div>
+
+    <!-- 订单子面板 -->
+    <div class="profile-panel" id="panelOrders">
+      <div class="profile-panel-back" id="ordersBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        返回
+      </div>
+      <div class="account-section-title">我的订单</div>
+      <div class="account-info-list" style="padding:0 20px;">
+        <div class="account-info-row"><span>待付款</span><strong>0</strong></div>
+        <div class="account-info-row"><span>待发货</span><strong>0</strong></div>
+        <div class="account-info-row"><span>待收货</span><strong>0</strong></div>
+        <div class="account-info-row"><span>已完成</span><strong>0</strong></div>
+        <div class="account-info-row"><span>退款/售后</span><strong>0</strong></div>
+      </div>
+      <div class="account-section-title" style="margin-top:8px;">最近订单</div>
+      <div class="order-card">
+        <div class="order-card-header">
+          <small>订单号 FC20240617001</small>
+          <span class="order-status delivering">配送中</span>
+        </div>
+        <div class="order-product-row">
+          <img src="uploads/product1.jpg" alt="方城黄石砚">
+          <div class="order-product-info">
+            <h4>方城黄石砚</h4>
+            <span>数量 × 1</span>
+          </div>
+          <span class="order-product-price">¥ 399</span>
+        </div>
+        <div class="order-logistics">
+          <div class="order-logistics-title">物流跟踪</div>
+          <div class="logistics-track">
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>包裹已签收</p>
+                <small>2024-06-17 &nbsp;14:32</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>派送中 — 快递员已取件</p>
+                <small>2024-06-17 &nbsp;09:05</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>已到达 南阳 转运中心</p>
+                <small>2024-06-16 &nbsp;22:41</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>商家已发货</p>
+                <small>2024-06-15 &nbsp;16:18</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>订单已下单，等待商家处理</p>
+                <small>2024-06-15 &nbsp;10:03</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <footer class="footer">
+    <div class="shell footer-grid">
+      <div>
+        <h2>方城特产百珍坊</h2>
+        <p>一屏看清方城风物四大方向：文房雅器、方城美食、养生滋补、工艺收藏；更多故事、礼盒、竞拍和合作咨询进入独立页面细看。</p>
+      </div>
+      <div>
+        <h4>商品品类</h4>
+        <a href="cat-wenfang.html">文房雅器</a>
+        <a href="cat-meishi.html">方城美食</a>
+        <a href="cat-yangsheng.html">养生滋补</a>
+        <a href="cat-gongyi.html">工艺收藏</a>
+      </div>
+      <div>
+        <h4>功能页面</h4>
+        <a href="auction.html">珍品竞拍</a>
+        <a href="custom-gift.html">礼盒定制</a>
+        <a href="brand-story.html">品牌故事</a>
+        <a href="member-center.html">会员中心</a>
+        <a href="contact.html">联系合作</a>
+      </div>
+    </div>
+  </footer>
+
+<script>
+    (function() {
+      const overlay = document.getElementById('profileOverlay');
+      const sidebar = document.getElementById('profileSidebar');
+      const navAvatar = document.getElementById('navAvatar');
+      const closeBtn = document.getElementById('profileClose');
+      const avatarUpload = document.getElementById('avatarUpload');
+      const navAvatarImg = document.getElementById('navAvatarImg');
+      const navAvatarIcon = document.getElementById('navAvatarIcon');
+      const sidebarAvatarImg = document.getElementById('sidebarAvatarImg');
+      const sidebarAvatarIcon = document.getElementById('sidebarAvatarIcon');
+
+      function openSidebar() {
+        overlay.classList.add('open');
+        sidebar.classList.add('open');
+      }
+      function closeSidebar() {
+        overlay.classList.remove('open');
+        sidebar.classList.remove('open');
+      }
+
+      navAvatar.addEventListener('click', openSidebar);
+      navAvatar.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openSidebar(); });
+      closeBtn.addEventListener('click', closeSidebar);
+      overlay.addEventListener('click', closeSidebar);
+
+      // 头像上传
+      avatarUpload.addEventListener('change', function() {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const src = e.target.result;
+          // 更新导航头像
+          navAvatarImg.src = src;
+          navAvatarImg.style.display = 'block';
+          navAvatarIcon.style.display = 'none';
+          // 更新侧边栏头像
+          sidebarAvatarImg.src = src;
+          sidebarAvatarImg.style.display = 'block';
+          sidebarAvatarIcon.style.display = 'none';
+          // 本地持久化
+          try { localStorage.setItem('baizhenfang_avatar', src); } catch(e) {}
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // 恢复已保存头像
+      try {
+        const saved = localStorage.getItem('baizhenfang_avatar');
+        if (saved) {
+          navAvatarImg.src = saved;
+          navAvatarImg.style.display = 'block';
+          navAvatarIcon.style.display = 'none';
+          sidebarAvatarImg.src = saved;
+          sidebarAvatarImg.style.display = 'block';
+          sidebarAvatarIcon.style.display = 'none';
+        }
+      } catch(e) {}
+
+      // 面板切换
+      const panelMain = document.getElementById('panelMain');
+      const panelAccount = document.getElementById('panelAccount');
+      const panelOrders = document.getElementById('panelOrders');
+      const menuAccount = document.getElementById('menuAccount');
+      const menuOrders = document.getElementById('menuOrders');
+      const accountBack = document.getElementById('accountBack');
+      const ordersBack = document.getElementById('ordersBack');
+
+      function showPanel(panel) {
+        panelMain.classList.remove('active');
+        panelAccount.classList.remove('active');
+        panelOrders.classList.remove('active');
+        panel.classList.add('active');
+      }
+
+      menuAccount.addEventListener('click', function(e) { e.preventDefault(); showPanel(panelAccount); });
+      menuOrders.addEventListener('click', function(e) { e.preventDefault(); showPanel(panelOrders); });
+      accountBack.addEventListener('click', function() { showPanel(panelMain); });
+      ordersBack.addEventListener('click', function() { showPanel(panelMain); });
+
+      // 关闭时重置到主面板
+      function closeSidebarFull() {
+        overlay.classList.remove('open');
+        sidebar.classList.remove('open');
+        setTimeout(() => showPanel(panelMain), 350);
+      }
+      closeBtn.removeEventListener('click', closeSidebar);
+      overlay.removeEventListener('click', closeSidebar);
+      closeBtn.addEventListener('click', closeSidebarFull);
+      overlay.addEventListener('click', closeSidebarFull);
+
+      // 余额与充值
+      const balanceNum = document.getElementById('balanceNum');
+      const topupCustom = document.getElementById('topupCustom');
+      const topupConfirm = document.getElementById('topupConfirm');
+      const topupBtns = document.querySelectorAll('.topup-btn');
+
+      let balance = 0;
+      try { balance = parseFloat(localStorage.getItem('baizhenfang_balance') || '0'); } catch(e) {}
+      balanceNum.textContent = balance.toFixed(2);
+
+      let selectedAmount = 0;
+      topupBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          topupBtns.forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedAmount = parseFloat(this.dataset.val);
+          topupCustom.value = '';
+        });
+      });
+      topupCustom.addEventListener('input', function() {
+        topupBtns.forEach(b => b.classList.remove('selected'));
+        selectedAmount = 0;
+      });
+
+      topupConfirm.addEventListener('click', function() {
+        const custom = parseFloat(topupCustom.value);
+        const amount = custom > 0 ? custom : selectedAmount;
+        if (!amount || amount <= 0) return;
+        balance += amount;
+        balanceNum.textContent = balance.toFixed(2);
+        try { localStorage.setItem('baizhenfang_balance', balance.toString()); } catch(e) {}
+        topupBtns.forEach(b => b.classList.remove('selected'));
+        topupCustom.value = '';
+        selectedAmount = 0;
+        topupConfirm.textContent = '充值成功 ✓';
+        setTimeout(() => { topupConfirm.textContent = '确认充值'; }, 1500);
+      });
+    })();
+  </script>
+  <!-- Task B1/D1: 购物车 + 磨砂玻璃导航 -->
+  <script src="cart.js"></script>
+</body>
+</html>

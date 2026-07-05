@@ -1,0 +1,14 @@
+# 系统与编辑器临时文件
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.tmp
+*.log
+
+# 本地运行产物
+__pycache__/
+*.pyc
+.cache/
+dogfood-output/
+

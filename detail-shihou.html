@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鏂瑰煄鐭抽洉鐚?- 鏂瑰煄鐧剧弽鍧?/title>
+<style>
+:root{--primary:#171411;--accent:#B9975B;--bg:#F6F0E6;--text:#2b241e;--muted:#766D61;--clay:#A85F3D;--pine:#596C58;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Serif SC','Songti SC','STSong','SimSun',serif;background:var(--bg);color:var(--text);font-variant-numeric:tabular-nums lining-nums;font-feature-settings:'tnum' 1,'lnum' 1;}
+.header{background:var(--primary);padding:0 32px;box-shadow:0 2px 12px rgba(0,0,0,0.15);position:sticky;top:0;z-index:1000;}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#b89b5b,#d4b876);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--primary);}
+.logo-title{font-size:20px;font-weight:700;color:#fff;letter-spacing:2px;}
+.back-btn{color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;display:flex;align-items:center;gap:6px;transition:color .3s;}
+.back-btn:hover{color:#d4b876;}
+
+/* ============ 澶у浘灞曠ず鍖?============ */
+.gallery{background:#1a1a2e;padding:24px 24px 0;}
+.gallery-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr;gap:16px;}
+.gallery-main{width:100%;aspect-ratio:4/3;border-radius:12px;background-size:cover;background-position:center;cursor:pointer;transition:transform .3s;}
+.gallery-main:hover{transform:scale(1.01);}
+.gallery-thumbs{display:flex;flex-direction:column;gap:12px;}
+.thumb{width:100%;flex:1;border-radius:8px;background-size:cover;background-position:center;cursor:pointer;opacity:.7;transition:all .3s;border:2px solid transparent;}
+.thumb:hover,.thumb.active{opacity:1;border-color:var(--accent);}
+
+/* ============ 鍟嗗搧淇℃伅鍖?============ */
+.info-wrap{max-width:900px;margin:0 auto;padding:32px 24px 16px;}
+.breadcrumb{font-size:13px;color:var(--muted);margin-bottom:20px;}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color .3s;}
+.breadcrumb a:hover{color:var(--primary);}
+
+.product-title{font-size:30px;font-weight:700;color:var(--primary);margin-bottom:8px;letter-spacing:2px;}
+.product-subtitle{font-size:14px;color:var(--muted);margin-bottom:20px;}
+
+/* ============ 浠嬬粛鍖?============ */
+.desc-section{max-width:900px;margin:0 auto;padding:0 24px 24px;}
+.desc-title{font-size:18px;font-weight:700;color:var(--primary);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.desc-title::before{content:'';width:4px;height:18px;background:var(--accent);border-radius:2px;}
+.desc-content{font-size:15px;line-height:2.2;color:#555;}
+.desc-content p{margin-bottom:12px;text-indent:2em;}
+.highlight-box{background:rgba(184,155,91,0.08);border-left:3px solid var(--accent);padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0;font-size:14px;color:#666;line-height:1.8;}
+
+/* ============ 灞炴€у尯锛堝搧绫?鍖呰绛夛級 ============ */
+.attr-section{max-width:900px;margin:0 auto;padding:0 24px 32px;}
+.attr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.attr-card{background:#fff;border:1px solid #e8e4de;border-radius:12px;padding:18px;text-align:center;transition:all .3s;}
+.attr-card:hover{box-shadow:0 4px 12px rgba(26,60,110,0.06);border-color:var(--accent);}
+.attr-icon{font-size:22px;margin-bottom:6px;}
+.attr-label{font-size:12px;color:var(--muted);margin-bottom:4px;}
+.attr-value{font-size:14px;font-weight:600;color:var(--text);}
+
+/* ============ 鍒嗗壊绾?============ */
+.section-divider{max-width:900px;margin:0 auto;padding:0 24px;}
+.section-divider hr{border:none;height:1px;background:linear-gradient(90deg,transparent,#e0dcd6,transparent);}
+
+/* ============ CTA鎸夐挳 ============ */
+.cta-bar{max-width:900px;margin:0 auto;padding:24px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+.btn-buy{background:linear-gradient(135deg,#b89b5b,#d4b876);color:#fff;border:none;border-radius:10px;padding:14px 48px;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s;}
+.btn-buy:hover{box-shadow:0 4px 16px rgba(184,155,91,0.4);transform:translateY(-2px);}
+.btn-fav{background:#f8f8f8;border:1px solid #e0dcd6;color:var(--text);border-radius:10px;padding:14px 24px;font-size:14px;font-weight:500;cursor:pointer;transition:all .3s;}
+.btn-fav:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ============ 鐭崇尨绯诲垪婊氬姩鏉?============ */
+.sh-section{background:linear-gradient(180deg,#f0ece5,var(--bg));padding:32px 0 24px;margin-top:24px;}
+.sh-title{max-width:1200px;margin:0 auto;padding:0 24px 16px;font-size:20px;font-weight:700;color:var(--primary);display:flex;align-items:center;gap:10px;}
+.sh-title::before{content:'';width:4px;height:20px;background:var(--accent);border-radius:2px;}
+.marquee-wrap{overflow:hidden;position:relative;background:rgba(255,255,255,0.5);padding:20px 0;border-top:1px solid #e0dcd6;border-bottom:1px solid #e0dcd6;}
+.sh-track{display:flex;gap:24px;width:max-content;animation:shihouMarquee 45s linear infinite;}
+.marquee-wrap:hover .sh-track{animation-play-state:paused;}
+.sh-card{flex-shrink:0;width:180px;background:#fff;border-radius:14px;overflow:hidden;border:1px solid #e0dcd4;text-decoration:none;color:var(--text);transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,0.06);cursor:pointer;}
+.sh-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.12);}
+.sh-img{width:100%;height:140px;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;font-size:64px;}
+.sh-body{padding:12px;}
+.sh-code{font-size:11px;color:var(--muted);margin-bottom:4px;}
+.sh-name{font-size:13px;font-weight:600;line-height:1.4;}
+.sh-price{font-size:16px;font-weight:700;color:var(--accent);margin-top:6px;}
+.sh-hint{text-align:center;font-size:12px;color:var(--muted);margin-top:12px;}
+@keyframes shihouMarquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ============ 鐚滀綘鍠滄 ============ */
+.rec-section{max-width:900px;margin:0 auto;padding:32px 24px 48px;}
+.rec-title{font-size:18px;font-weight:700;color:var(--primary);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.rec-title::before{content:'';width:4px;height:18px;background:var(--accent);border-radius:2px;}
+.rec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.rec-card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e8e4de;text-decoration:none;color:var(--text);transition:all .3s;}
+.rec-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(26,60,110,0.12);}
+.rec-img{width:100%;padding-top:75%;background-size:cover;background-position:center;}
+.rec-body{padding:12px;}
+.rec-name{font-size:13px;font-weight:600;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.rec-price{font-size:15px;font-weight:700;color:var(--accent);margin-top:6px;}
+
+@media(max-width:768px){
+  .gallery-inner{grid-template-columns:1fr;}
+  .gallery-thumbs{flex-direction:row;height:80px;}
+  .product-title{font-size:22px;}
+  .attr-grid{grid-template-columns:repeat(2,1fr);}
+  .rec-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+/* ============ 渚ц竟鏍忓鑸?============ */
+.side-tab.active{background:var(--primary)!important;color:#fff!important;}
+.side-tab.active:hover{background:var(--primary)!important;}
+.tab-content{display:none;animation:fadeIn .5s ease;}
+.tab-content.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+    .shell { width: min(1240px, calc(100vw - 48px)); margin: 0 auto; }
+
+
+    .topbar {
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 60;
+
+      border-bottom: 1px solid var(--line-dark);
+
+      background: rgba(23, 20, 17, .91);
+
+      color: var(--cream);
+
+      backdrop-filter: blur(18px);
+
+    }
+
+    .nav {
+
+      min-height: 76px;
+
+      display: grid;
+
+      grid-template-columns: auto 1fr auto;
+
+      align-items: center;
+
+      gap: 28px;
+
+    }
+
+    .brand { display: flex; align-items: center; gap: 14px; min-width: max-content; color: var(--cream); text-decoration: none; }
+
+    .brand-mark {
+
+      position: relative;
+
+      width: 48px;
+
+      height: 48px;
+
+      border-radius: 50%;
+
+      overflow: hidden;
+
+      flex-shrink: 0;
+
+      box-shadow: 0 0 0 2px rgba(185,151,91,.45), 0 0 14px rgba(185,151,91,.15);
+
+    }
+
+    .brand-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .brand-mark::after { display: none; }
+
+    .brand strong { display: block; font-size: 21px; letter-spacing: 5px; font-weight: 900; }
+
+    .brand span span { display: block; margin-top: 3px; color: rgba(255,249,237,.58); font-family: var(--latin); font-size: 12px; letter-spacing: 4px; text-transform: uppercase; }
+
+    .navlinks { display: flex; justify-content: center; gap: 24px; color: rgba(255,249,237,.74); font-size: 14px; letter-spacing: 2px; }
+
+    .navlinks a { position: relative; white-space: nowrap; transition: color .25s ease; text-decoration: none; color: inherit; }
+
+    .navlinks a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -12px; height: 1px; background: var(--gold); transition: right .25s ease; }
+
+    .navlinks a:hover { color: var(--gold); }
+
+    .navlinks a:hover::after { right: 0; }
+
+    .nav-avatar {
+
+      width: 42px;
+
+      height: 42px;
+
+      border-radius: 50%;
+
+      border: 2px solid rgba(185,151,91,.6);
+
+      overflow: hidden;
+
+      cursor: pointer;
+
+      flex-shrink: 0;
+
+      background: rgba(185,151,91,.18);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      transition: border-color .2s;
+
+    }
+
+    .nav-avatar:hover { border-color: var(--gold); }
+
+    .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .nav-avatar-placeholder {
+
+      width: 22px;
+
+      height: 22px;
+
+      fill: rgba(255,249,237,.6);
+
+    }
+
+    /* 个人中心侧边栏 */
+
+    .profile-overlay {
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 200;
+
+      background: rgba(23,20,17,.45);
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: opacity .3s ease;
+
+    }
+
+    .profile-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .profile-sidebar {
+
+      position: fixed;
+
+      top: 0;
+
+      right: 0;
+
+      bottom: 0;
+
+      width: 320px;
+
+      z-index: 201;
+
+      background: #1c1812;
+
+      border-left: 1px solid rgba(185,151,91,.2);
+
+      display: flex;
+
+      flex-direction: column;
+
+      transform: translateX(100%);
+
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+
+      overflow-y: auto;
+
+    }
+
+    .profile-sidebar.open { transform: translateX(0); }
+
+    .profile-sidebar-header {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 22px 24px 18px;
+
+      border-bottom: 1px solid rgba(185,151,91,.15);
+
+    }
+
+    .profile-sidebar-header span {
+
+      color: var(--gold);
+
+      font-size: 15px;
+
+      letter-spacing: 3px;
+
+      font-weight: 900;
+
+    }
+
+    .profile-close {
+
+      width: 32px;
+
+      height: 32px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      cursor: pointer;
+
+      color: rgba(255,249,237,.5);
+
+      font-size: 20px;
+
+      border-radius: 4px;
+
+      transition: color .2s;
+
+    }
+
+    .profile-close:hover { color: var(--gold); }
+
+    .profile-user-block {
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 32px 24px 24px;
+
+      border-bottom: 1px solid rgba(185,151,91,.1);
+
+    }
+
+    .profile-avatar-large {
+
+      width: 80px;
+
+      height: 80px;
+
+      border-radius: 50%;
+
+      border: 2px solid rgba(185,151,91,.5);
+
+      overflow: hidden;
+
+      background: rgba(185,151,91,.15);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      cursor: pointer;
+
+      position: relative;
+
+    }
+
+    .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
+
+    .profile-avatar-large:hover::after {
+
+      content: "更换头像";
+
+      position: absolute;
+
+      inset: 0;
+
+      background: rgba(23,20,17,.6);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      color: var(--gold);
+
+      font-size: 12px;
+
+      letter-spacing: 1px;
+
+      border-radius: 50%;
+
+    }
+
+    .profile-username {
+
+      color: var(--cream);
+
+      font-size: 16px;
+
+      letter-spacing: 2px;
+
+      font-weight: 700;
+
+    }
+
+    .profile-tag {
+
+      color: rgba(255,249,237,.42);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+    }
+
+    .profile-upload-input { display: none; }
+
+    .profile-menu {
+
+      display: flex;
+
+      flex-direction: column;
+
+      padding: 16px 0;
+
+    }
+
+    .profile-menu a {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
+      padding: 14px 24px;
+
+      color: rgba(255,249,237,.7);
+
+      font-size: 14px;
+
+      letter-spacing: 1px;
+
+      transition: background .2s, color .2s;
+
+      border-left: 2px solid transparent;
+
+      text-decoration: none;
+
+    }
+
+    .profile-menu a:hover {
+
+      background: rgba(185,151,91,.08);
+
+      color: var(--gold);
+
+      border-left-color: var(--gold);
+
+    }
+
+    .profile-menu a svg { opacity: .6; flex-shrink: 0; }
+
+
+
+    /* 账户子面板 */
+
+    .profile-panel { display: none; flex-direction: column; flex: 1; }
+
+    .profile-panel.active { display: flex; }
+
+    .profile-panel-back {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      padding: 14px 24px;
+
+      color: rgba(255,249,237,.5);
+
+      font-size: 13px;
+
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      border-bottom: 1px solid rgba(185,151,91,.1);
+
+      transition: color .2s;
+
+    }
+
+    .profile-panel-back:hover { color: var(--gold); }
+
+    .account-balance-card {
+
+      margin: 20px 20px 0;
+
+      padding: 20px;
+
+      background: linear-gradient(135deg, rgba(185,151,91,.18), rgba(185,151,91,.06));
+
+      border: 1px solid rgba(185,151,91,.25);
+
+      border-radius: 4px;
+
+    }
+
+    .account-balance-card small {
+
+      display: block;
+
+      color: rgba(255,249,237,.45);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 8px;
+
+    }
+
+    .account-balance-amount {
+
+      font-size: 32px;
+
+      color: var(--gold);
+
+      font-weight: 700;
+
+      font-family: var(--latin);
+
+      letter-spacing: 1px;
+
+    }
+
+    .account-balance-amount span {
+
+      font-size: 14px;
+
+      margin-right: 4px;
+
+      opacity: .7;
+
+    }
+
+    .account-section-title {
+
+      padding: 20px 20px 10px;
+
+      color: rgba(255,249,237,.4);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+    }
+
+    .topup-grid {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 8px;
+
+      padding: 0 20px;
+
+    }
+
+    .topup-btn {
+
+      padding: 10px 0;
+
+      text-align: center;
+
+      border: 1px solid rgba(185,151,91,.25);
+
+      color: rgba(255,249,237,.7);
+
+      font-size: 14px;
+
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      background: rgba(185,151,91,.06);
+
+      border-radius: 2px;
+
+      transition: background .2s, color .2s, border-color .2s;
+
+    }
+
+    .topup-btn:hover { background: rgba(185,151,91,.18); color: var(--gold); border-color: rgba(185,151,91,.5); }
+
+    .topup-btn.selected { background: rgba(185,151,91,.22); color: var(--gold); border-color: var(--gold); }
+
+    .topup-custom {
+
+      margin: 10px 20px 0;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 0;
+
+      border: 1px solid rgba(185,151,91,.2);
+
+    }
+
+    .topup-custom span {
+
+      padding: 0 12px;
+
+      color: rgba(255,249,237,.4);
+
+      font-size: 14px;
+
+      background: rgba(185,151,91,.08);
+
+      height: 38px;
+
+      display: flex;
+
+      align-items: center;
+
+      border-right: 1px solid rgba(185,151,91,.2);
+
+    }
+
+    .topup-custom input {
+
+      flex: 1;
+
+      height: 38px;
+
+      background: transparent;
+
+      border: none;
+
+      outline: none;
+
+      color: var(--cream);
+
+      font-size: 14px;
+
+      padding: 0 12px;
+
+      font-family: var(--serif);
+
+    }
+
+    .topup-custom input::placeholder { color: rgba(255,249,237,.25); }
+
+    .topup-confirm {
+
+      margin: 14px 20px 20px;
+
+      width: calc(100% - 40px);
+
+      padding: 12px 0;
+
+      background: var(--gold);
+
+      color: var(--ink);
+
+      font-size: 14px;
+
+      font-weight: 900;
+
+      letter-spacing: 3px;
+
+      border: none;
+
+      cursor: pointer;
+
+      transition: opacity .2s;
+
+    }
+
+    .topup-confirm:hover { opacity: .85; }
+
+    .account-info-list {
+
+      padding: 0 20px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 0;
+
+    }
+
+    .account-info-row {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      padding: 12px 0;
+
+      border-bottom: 1px solid rgba(185,151,91,.08);
+
+      font-size: 13px;
+
+      color: rgba(255,249,237,.6);
+
+    }
+
+    .account-info-row:last-child { border-bottom: none; }
+
+    .account-info-row strong { color: rgba(255,249,237,.85); font-weight: 400; }
+
+
+
+    /* 订单卡片 */
+
+    .order-card {
+
+      margin: 0 20px 12px;
+
+      border: 1px solid rgba(185,151,91,.18);
+
+      background: rgba(185,151,91,.05);
+
+    }
+
+    .order-card-header {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      padding: 10px 14px;
+
+      border-bottom: 1px solid rgba(185,151,91,.12);
+
+    }
+
+    .order-card-header small { color: rgba(255,249,237,.35); font-size: 11px; letter-spacing: 1px; }
+
+    .order-status { font-size: 12px; letter-spacing: 1px; }
+
+    .order-status.delivering { color: #7eb8a4; }
+
+    .order-status.done { color: rgba(255,249,237,.4); }
+
+    .order-status.pending { color: var(--gold); }
+
+    .order-product-row {
+
+      display: flex;
+
+      gap: 12px;
+
+      padding: 12px 14px;
+
+      align-items: center;
+
+      border-bottom: 1px solid rgba(185,151,91,.08);
+
+    }
+
+    .order-product-row img {
+
+      width: 52px;
+
+      height: 52px;
+
+      object-fit: cover;
+
+      flex-shrink: 0;
+
+      opacity: .9;
+
+    }
+
+    .order-product-info { flex: 1; min-width: 0; }
+
+    .order-product-info h4 { color: rgba(255,249,237,.85); font-size: 13px; font-weight: 400; letter-spacing: 1px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .order-product-info span { color: rgba(255,249,237,.35); font-size: 12px; }
+
+    .order-product-price { color: var(--gold); font-size: 14px; font-family: var(--latin); flex-shrink: 0; }
+
+    .order-logistics {
+
+      padding: 12px 14px;
+
+    }
+
+    .order-logistics-title { color: rgba(255,249,237,.35); font-size: 11px; letter-spacing: 2px; margin-bottom: 10px; }
+
+    .logistics-track { display: flex; flex-direction: column; gap: 0; position: relative; }
+
+    .logistics-track::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: rgba(185,151,91,.2); }
+
+    .logistics-step { display: flex; gap: 14px; align-items: flex-start; position: relative; padding-bottom: 10px; }
+
+    .logistics-step:last-child { padding-bottom: 0; }
+
+    .logistics-dot { width: 11px; height: 11px; border-radius: 50%; border: 1px solid rgba(185,151,91,.4); background: #1c1812; flex-shrink: 0; margin-top: 2px; position: relative; z-index: 1; }
+
+    .logistics-step.active .logistics-dot { background: var(--gold); border-color: var(--gold); }
+
+    .logistics-step-body {}
+
+    .logistics-step-body p { font-size: 12px; color: rgba(255,249,237,.65); letter-spacing: .5px; margin-bottom: 2px; }
+
+    .logistics-step-body small { font-size: 11px; color: rgba(255,249,237,.3); }
+  </style>
+
+<style id="num-feature-fix">
+  /* 让数字字体（--latin）使用整齐的等宽 lining 数字 */
+  body { font-feature-settings: "kern" 1, "liga" 1; }
+  [class*="num"], [class*="price"], [class*="amount"], [class*="bid"],
+  .number, strong, .au-history-amt, .mc-card-num em, .au-detail-cat,
+  .mc-progress-head strong, .mc-stat-body strong, .au-time-box strong,
+  .au-cal-date strong, .au-stat strong, .mc-points-now > div strong,
+  .mc-coupon-l strong, .mc-os-num, .mc-tool-dot, .mc-points-list .add,
+  .mc-points-list .sub, .au-price-now strong, .au-history-rank {
+    font-feature-settings: "tnum" 1, "lnum" 1, "ss01" 1;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+</style>
+
+  <link rel="stylesheet" href="site-fixes.css">
+</head>
+<body>
+  <header class="topbar">
+
+    <div class="shell nav">
+
+      <a class="brand" href="index.html" aria-label="方城特产百珍坊首页">
+
+        <span class="brand-mark"><img src="uploads/logo.png" alt="百珍坊logo"></span>
+
+        <span>
+
+          <strong>方城特产百珍坊</strong>
+
+          <span>Fangcheng Selected</span>
+
+        </span>
+
+      </a>
+
+      <nav class="navlinks" aria-label="主导航">
+        <a href="index.html">首页</a>
+        <a href="baizhen-collection.html">百珍荟萃</a>
+        <a href="auction.html">拍卖中心</a>
+      </nav>
+
+
+
+          <div class="nav-avatar" id="navAvatar" role="button" aria-label="个人中心" tabindex="0">
+
+      <img src="" alt="头像" id="navAvatarImg" style="display:none">
+
+      <svg class="nav-avatar-placeholder" id="navAvatarIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="rgba(255,249,237,.6)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,249,237,.5)"/></svg>
+
+    </div>
+
+    </div>
+
+  </header>
+
+
+<!-- ============ Header ============ -->
+<!-- ============ 澶у浘灞曠ず ============ -->
+<div class="gallery">
+  <div class="gallery-inner">
+    <div class="gallery-main" id="mainImg" style="background-image:url(./uploads/product-shihou.jpg)"></div>
+    <div class="gallery-thumbs">
+      <div class="thumb active" style="background-image:url(./uploads/product-shihou.jpg)" onclick="switchImg(this,0)"></div>
+      <div class="thumb" style="background:linear-gradient(135deg,#8B7355,#A0826D)" onclick="switchImg(this,1)"></div>
+      <div class="thumb" style="background:linear-gradient(135deg,#6B5B4F,#8B7D6B)" onclick="switchImg(this,2)"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 鍟嗗搧鍚嶇О ============ -->
+<div class="info-wrap">
+  <div class="breadcrumb">
+    <a href="index.html">棣栭〉</a> &gt; <a href="cat-gongyi.html">宸ヨ壓瑁呴グ</a> &gt; 鏂瑰煄鐭崇尨
+  </div>
+  <div class="product-title">鏂瑰煄鐭抽洉鐚?路 鎵嬪伐闆曞埢鎽嗕欢</div>
+  <div class="product-subtitle">娌冲崡鐪侀潪鐗╄川鏂囧寲閬椾骇 | 浼忕墰灞遍潚鐭?| 绾墜宸ラ洉鍒?| 浠锋牸鍖洪棿 楼198-楼880</div>
+</div>
+
+<!-- ============ 鍟嗗搧浠嬬粛 ============ -->
+<!-- 渚ц竟鏍?+ 鍐呭鍖?-->
+<div style="display:flex;gap:32px;align-items:flex-start;max-width:900px;margin:0 auto;padding:0 24px;">
+
+<!-- 宸︿晶渚ц竟鏍?-->
+<div style="flex-shrink:0;width:140px;position:sticky;top:80px;align-self:flex-start;">
+  <button class="side-tab active" id="sideTab0" onclick="switchTab(0)" style="display:block;width:100%;text-align:left;padding:12px 16px;font-size:14px;font-weight:600;color:#fff;cursor:pointer;border:none;border-radius:8px;margin-bottom:4px;transition:all .3s;background:var(--primary);" onmouseover="if(!this.classList.contains('active'))this.style.background='rgba(184,155,91,0.08)'" onmouseout="if(!this.classList.contains('active'))this.style.background='transparent'">鍟嗗搧璇︽儏</button>
+  <button class="side-tab" id="sideTab1" onclick="switchTab(1)" style="display:block;width:100%;text-align:left;padding:12px 16px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border:none;border-radius:8px;margin-bottom:4px;transition:all .3s;background:transparent;" onmouseover="if(!this.classList.contains('active'))this.style.background='rgba(184,155,91,0.08)'" onmouseout="if(!this.classList.contains('active'))this.style.background='transparent'">鍒朵綔宸ヨ壓</button>
+  <button class="side-tab" id="sideTab2" onclick="switchTab(2)" style="display:block;width:100%;text-align:left;padding:12px 16px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border:none;border-radius:8px;margin-bottom:4px;transition:all .3s;background:transparent;" onmouseover="if(!this.classList.contains('active'))this.style.background='rgba(184,155,91,0.08)'" onmouseout="if(!this.classList.contains('active'))this.style.background='transparent'">浣跨敤鍏绘姢</button>
+  <button class="side-tab" id="sideTab3" onclick="switchTab(3)" style="display:block;width:100%;text-align:left;padding:12px 16px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border:none;border-radius:8px;margin-bottom:4px;transition:all .3s;background:transparent;" onmouseover="if(!this.classList.contains('active'))this.style.background='rgba(184,155,91,0.08)'" onmouseout="if(!this.classList.contains('active'))this.style.background='transparent'">鍖呰灞曠ず</button>
+</div>
+
+<!-- 鍙充晶鍐呭鍖?-->
+<div style="flex:1;min-width:0;">
+<div class="tab-content active">
+<div class="desc-section">
+  <div class="desc-title">鍟嗗搧浠嬬粛</div>
+  <div class="desc-content">
+    <p>鏂瑰煄鐭崇尨鏄渤鍗楃渷闈炵墿璐ㄦ枃鍖栭仐浜э紝婧愪簬鏂瑰煄鍘跨嫭鏍戦晣鐨勬皯闂寸煶闆曡壓鏈紝宸叉湁鏁扮櫨骞村巻鍙层€傚綋鍦扮煶鍖犱互浼忕墰灞辩壒鏈夌殑闈掔煶涓哄師鏂欙紝鎵嬪伐闆曞埢鍑哄舰鎬佸悇寮傜殑鐚村瓙閫犲瀷锛屾瘡涓€浠堕兘鏍╂牘濡傜敓銆佺鎬佷竾鍗冦€?/p>
+    <p>鐭崇尨鍦ㄥ綋鍦拌绉颁负"椹笂灏佷警"鐨勫悏绁ョ墿锛屽瘬鎰忓崌瀹樺彂璐€佹姝ラ珮鍗囥€傛棤璁烘槸鎽嗘斁鍦ㄤ功鎴挎澶达紝杩樻槸浣滀负棣堣禒绀煎搧锛岄兘鎵胯浇鐫€婊℃弧鐨勭編濂界鎰裤€?/p>
+    <p>姣忎欢鐭崇尨閮界敱璧勬繁鐭冲尃绾墜宸ラ洉鍒伙紝浠庨€夌煶銆佽璁°€佺矖闆曘€佺粏闆曞埌鎵撶（鎶涘厜锛岄渶鍘嗙粡鏁板崄閬撳伐搴忥紝鍘嗘椂7-15澶╂柟鍙畬鎴愩€傚洜鐭虫潗澶╃劧绾圭悊涓嶅悓锛屾瘡浠朵綔鍝侀兘鏄嫭涓€鏃犱簩鐨勫鍝併€?/p>
+    <div class="highlight-box">鐭崇尨閫夌敤浼忕墰灞辨繁澶勪紭璐ㄩ潚鐭筹紝鐭宠川鍧氱‖缁嗚吇锛岃壊娉借嚜鐒跺彜鏈淬€傞洉鍒诲畬鎴愮殑鐭崇尨琛ㄩ潰娓╂鼎鍏夋粦锛岃Е鎰熷啺鍑夌粏鑵伙紝涔呯疆涓嶉€€鑹层€佷笉寮€瑁傦紝鍙笘浠ｇ浉浼犮€?/div>
+  </div>
+</div>
+</div>
+
+<!-- Tab 1: 鍒朵綔宸ヨ壓 -->
+<div class="tab-content">
+<div class="desc-section">
+  <div class="desc-title">鍒朵綔宸ヨ壓</div>
+  <div class="desc-content">
+    <p><strong>閫夌煶锛?/strong>绮鹃€変紡鐗涘北娣卞浼樿川闈掔煶锛岀煶璐ㄥ潥纭粏鑵伙紝鑹叉辰鑷劧鍙ゆ湸銆傞€夌煶鏄洉鍒荤殑绗竴姝ワ紝鐭虫枡鐨勫ソ鍧忕洿鎺ュ喅瀹氫綔鍝佺殑鍝佽川銆?/p>
+    <p><strong>璁捐锛?/strong>鏍规嵁鐭虫枡鐨勫ぉ鐒跺舰鐘跺拰绾圭悊锛岃璁″嚭鏈€閫傚悎鐨勭尨瀛愰€犲瀷銆傛瘡鍧楃煶澶撮兘鏈夌嫭鐗圭殑绾圭悊锛岃璁¤鍥犵煶鍒跺疁锛屽厖鍒嗗埄鐢ㄥぉ鐒朵箣缇庛€?/p>
+    <p><strong>绮楅洉锛?/strong>鐢ㄩ敜瀛愬拰鍑垮瓙灏嗙煶鏂欏ぇ鑷撮洉鍒诲嚭鐚村瓙鐨勮疆寤擄紝鍘婚櫎澶氫綑閮ㄥ垎锛屽舰鎴愬熀鏈€犲瀷銆傝繖涓€姝ラ渶瑕佸姏閬撶簿鍑嗭紝鏃㈣澶ц儐鍙堣璋ㄦ厧銆?/p>
+    <p><strong>缁嗛洉锛?/strong>浣跨敤鍚勭绮剧粏鍒诲垁锛岄洉鍒诲嚭鐚村瓙鐨勪簲瀹樸€佹瘺鍙戙€佽〃鎯呯瓑缁嗚妭銆傝繖鏄渶鍏疯€冮獙鐨勭幆鑺傦紝闇€瑕佸尃浜哄叿澶囨瀬楂樼殑鎶€鑹哄拰鑰愬績銆?/p>
+    <p><strong>鎵撶（鎶涘厜锛?/strong>鍏堢敤绮楃爞绾告墦纾紝鍐嶇敤缁嗙爞绾搁€愭鎶涘厜锛岀洿鑷崇煶鐚磋〃闈㈠厜婊戞俯娑︼紝瑙︽劅缁嗚吇銆傛渶鍚庝笂铚′繚鎶わ紝浣跨煶鐚存洿鍔犲厜浜€?/p>
+    <div class="highlight-box">浠庨€夌煶鍒版垚鍝侊紝涓€浠剁煶鐚翠綔鍝侀渶瑕佸巻缁?-15澶╃殑绮惧績闆曠悽锛屾瘡涓€鍒€閮藉嚌鑱氱潃鍖犱汉鐨勫績琛€涓庢櫤鎱с€?/div>
+  </div>
+</div>
+</div>
+
+<!-- Tab 2: 浣跨敤鍏绘姢 -->
+<div class="tab-content">
+<div class="desc-section">
+  <div class="desc-title">浣跨敤鍏绘姢</div>
+  <div class="desc-content">
+    <p><strong>鎽嗘斁浣嶇疆锛?/strong>鐭崇尨閫傚悎鎽嗘斁鍦ㄤ功鎴挎澶淬€佸鍘呭崥鍙ゆ灦銆佸姙鍏妗岄潰绛変綅缃€傚簲閬垮厤闃冲厜鐩村皠鍜屾疆婀跨幆澧冿紝浠ュ厤褰卞搷鐭宠川銆?/p>
+    <p><strong>鏃ュ父娓呮磥锛?/strong>鐢ㄦ煍杞殑骞插竷杞昏交鎿︽嫮琛ㄩ潰鐏板皹鍗冲彲銆傚垏蹇岀敤婀垮竷鎴栧寲瀛︽竻娲佸墏锛屼互鍏嶆崯浼ょ煶鐚磋〃闈㈢殑淇濇姢灞傘€?/p>
+    <p><strong>瀹氭湡淇濆吇锛?/strong>姣忛殧3-6涓湀锛屽彲鐢ㄥ皯閲忔﹦姒勬补鎴栫煶铚℃秱鎶硅〃闈紝鐢ㄨ蒋甯冩摝鎷潎鍖€锛屼繚鎸佺煶鐚存俯娑﹀厜娉姐€?/p>
+    <p><strong>娉ㄦ剰浜嬮」锛?/strong>鐭崇尨涓哄ぉ鐒剁煶鏉愰洉鍒伙紝璐ㄥ湴鍧氱‖浣嗘€曟憯銆傛惉杩愭椂闇€杞绘嬁杞绘斁锛岄伩鍏嶄笌纭墿纰版挒銆傞暱鏈熶笉鐢ㄦ椂锛屽缓璁敤杞竷鍖呰９瀛樻斁銆?/p>
+    <div class="highlight-box">绮惧績鍏绘姢鐨勭煶鐚翠細瓒婄帺瓒婃鼎锛岃〃闈㈤€愭笎褰㈡垚鑷劧鍖呮祮锛岃壊娉芥洿鍔犲彜鏈撮泤鑷达紝鍏锋湁寰堥珮鐨勬敹钘忎环鍊笺€?/div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 灞炴€т俊鎭紙鍝佺被/鍖呰绛夛級 ============ -->
+<div class="tab-content">
+<div class="section-divider"><hr></div>
+<div class="attr-section">
+  <div class="desc-title">鍟嗗搧淇℃伅</div>
+  <div class="attr-grid">
+    <div class="attr-card"><div class="attr-icon">&#127807;</div><div class="attr-label">鍝佺被</div><div class="attr-value">宸ヨ壓瑁呴グ 路 鐭抽洉鎽嗕欢</div></div>
+    <div class="attr-card"><div class="attr-icon">&#127758;</div><div class="attr-label">浜у湴</div><div class="attr-value">娌冲崡鐪佸崡闃冲競鏂瑰煄鍘跨嫭鏍戦晣</div></div>
+    <div class="attr-card"><div class="attr-icon">&#128142;</div><div class="attr-label">鏉愯川</div><div class="attr-value">浼忕墰灞卞ぉ鐒堕潚鐭?/div></div>
+    <div class="attr-card"><div class="attr-icon">&#128295;</div><div class="attr-label">宸ヨ壓</div><div class="attr-value">绾墜宸ラ洉鍒绘墦纾?/div></div>
+    <div class="attr-card"><div class="attr-icon">&#128230;</div><div class="attr-label">鍖呰</div><div class="attr-value">閿︾洅+闃查渿娉℃搏+绀煎搧琚?/div></div>
+    <div class="attr-card"><div class="attr-icon">&#128667;</div><div class="attr-label">鍙戣揣</div><div class="attr-value">椤轰赴蹇€?路 48灏忔椂鍐呭彂璐?/div></div>
+    <div class="attr-card"><div class="attr-icon">&#127873;</div><div class="attr-label">瀵撴剰</div><div class="attr-value">椹笂灏佷警 路 鍚夌ゥ骞冲畨</div></div>
+    <div class="attr-card"><div class="attr-icon">&#127941;</div><div class="attr-label">绾у埆</div><div class="attr-value">鐪佺骇闈炵墿璐ㄦ枃鍖栭仐浜?/div></div>
+    <div class="attr-card"><div class="attr-icon">&#128207;</div><div class="attr-label">灏哄</div><div class="attr-value">楂樼害12-18cm锛堝洜娆捐€屽紓锛?/div></div>
+  </div>
+  <!-- 鍖呰灞曠ず -->
+  <div style="margin-top:24px;">
+    <div style="font-size:14px;font-weight:600;color:var(--primary);margin-bottom:12px;">馃摝 鍖呰灞曠ず</div>
+    <div style="width:100%;max-width:500px;height:280px;border-radius:12px;background-image:url(./uploads/pack-craft.jpg);background-size:cover;background-position:center;border:1px solid #e8e4de;"></div>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px;">绮剧編绀肩洅鍖呰锛岄€傚悎閫佺ぜ鎴栬嚜鐢ㄦ敹钘?/p>
+  </div>
+</div>
+</div><!-- /tab-content -->
+</div><!-- /鍙充晶鍐呭鍖?-->
+</div><!-- /渚ц竟鏍?鍐呭鍖篺lex -->
+
+<!-- ============ CTA ============ -->
+<div class="cta-bar">
+  <button class="btn-buy">绔嬪嵆璐拱</button>
+  <button class="btn-fav">&#9825; 鍔犲叆鏀惰棌</button>
+</div>
+
+<!-- ============ 鐭崇尨绯诲垪婊氬姩鏉?============ -->
+<div class="sh-section">
+  <div class="sh-title">鏂瑰煄鐭崇尨绯诲垪 鈥?姣忔鐙竴鏃犱簩</div>
+  <div class="marquee-wrap">
+    <div class="sh-track" id="shTrack">
+      <div class="sh-card" onclick="alert('缂栧彿锛?01\n鍚嶇О锛氱伒鐚寸尞鐟?路 鍧愬儚\n浠锋牸锛毬?98\n\n濡傞渶璁㈣喘锛岃鑱旂郴瀹㈡湇锛?00-888-6666')">
+        <div class="sh-img" style="background:linear-gradient(135deg,#8B7355,#A0826D);">&#128053;</div>
+        <div class="sh-body"><div class="sh-code">001鍙?/div><div class="sh-name">鐏电尨鐚憺 路 鍧愬儚</div><div class="sh-price">楼198</div></div>
+      </div>
+      <div class="sh-card" onclick="alert('缂栧彿锛?02\n鍚嶇О锛氶綈澶╁ぇ鍦?路 绔嬪Э\n浠锋牸锛毬?68\n\n濡傞渶璁㈣喘锛岃鑱旂郴瀹㈡湇锛?00-888-6666')">
+        <div class="sh-img" style="background:linear-gradient(135deg,#6B5B4F,#8B7D6B);">&#128018;</div>
+        <div class="sh-body"><div class="sh-code">002鍙?/div><div class="sh-name">榻愬ぉ澶у湥 路 绔嬪Э</div><div class="sh-price">楼268</div></div>
+      </div>
+      <div class="sh-card" onclick="alert('缂栧彿锛?03\n鍚嶇О锛氶噾鐚寸撼绂?路 鎶辨\n浠锋牸锛毬?28\n\n濡傞渶璁㈣喘锛岃鑱旂郴瀹㈡湇锛?00-888-6666')">
+        <div class="sh-img" style="background:linear-gradient(135deg,#7A6B5D,#9A8B7D);">&#128054;</div>
+        <div class="sh-body"><div class="sh-code">003鍙?/div><div class="sh-name">閲戠尨绾崇 路 鎶辨</div><div class="sh-price">楼328</div></div>
+      </div>
+      <div class="sh-card" onclick="alert('缂栧彿锛?04\n鍚嶇О锛氱尨鐜嬫垙鐝?路 韫插儚\n浠锋牸锛毬?88\n\n濡傞渶璁㈣喘锛岃鑱旂郴瀹㈡湇锛?00-888-6666')">
+        <div class="sh-img" style="background:linear-gradient(135deg,#5C4A3A,#7C6A5A);">&#129436;</div>
+        <div class="sh-body"><div class="sh-code">004鍙?/div><div class="sh-name">鐚寸帇鎴忕彔 路 韫插儚</div><div class="sh-price">楼388</div></div>
+      </div>
+      <div class="sh-card" onclick="alert('缂栧彿锛?05\n鍚嶇О锛氱鐚磋繋鏄?路 鏀€鐖琝n浠锋牸锛毬?58\n\n濡傞渶璁㈣喘锛岃鑱旂郴瀹㈡湇锛?00-888-6666')">
+        <div class="sh-img" style="background:linear-gradient(135deg,#8B7355,#A0826D);">&#128045;</div>
+        <div class="sh-body"><div class="sh-code">005鍙?/div><div class="sh-name">绂忕尨杩庢槬 路 鏀€鐖?/div><div class="sh-price">楼458</div></div>
+      </div>
+      <div class="sh-card" onclick="alert('缂栧彿锛?06\n鍚嶇О锛氱伒鐚存姢涓?路 鎵樿叜\n浠锋牸锛毬?28\n\n濡傞渶璁㈣喘锛岃鑱旂郴瀹㈡湇锛?00-888-6666')">
+        <div class="sh-img" style="background:linear-gradient(135deg,#6B5B4F,#8B7D6B);">&#128048;</div>
+        <div class="sh-body"><div class="sh-code">006鍙?/div><div class="sh-name">鐏电尨鎶や富 路 鎵樿叜</div><div class="sh-price">楼528</div></div>
+      </div>
+      <div class="sh-card" onclick="alert('缂栧彿锛?07\n鍚嶇О锛氫粰鐚寸尞瀵?路 鎹ф\n浠锋牸锛毬?28\n\n濡傞渶璁㈣喘锛岃鑱旂郴瀹㈡湇锛?00-888-6666')">
+        <div class="sh-img" style="background:linear-gradient(135deg,#7A6B5D,#9A8B7D);">&#128060;</div>
+        <div class="sh-body"><div class="sh-code">007鍙?/div><div class="sh-name">浠欑尨鐚 路 鎹ф</div><div class="sh-price">楼628</div></div>
+      </div>
+      <div class="sh-card" onclick="alert('缂栧彿锛?08\n鍚嶇О锛氱帀鐚村憟绁?路 鎵撳潗\n浠锋牸锛毬?28\n\n濡傞渶璁㈣喘锛岃鑱旂郴瀹㈡湇锛?00-888-6666')">
+        <div class="sh-img" style="background:linear-gradient(135deg,#5C4A3A,#7C6A5A);">&#128046;</div>
+        <div class="sh-body"><div class="sh-code">008鍙?/div><div class="sh-name">鐜夌尨鍛堢ゥ 路 鎵撳潗</div><div class="sh-price">楼728</div></div>
+      </div>
+      <div class="sh-card" onclick="alert('缂栧彿锛?09\n鍚嶇О锛氱憺鐚磋仛璐?路 鑳屽疂\n浠锋牸锛毬?80\n\n濡傞渶璁㈣喘锛岃鑱旂郴瀹㈡湇锛?00-888-6666')">
+        <div class="sh-img" style="background:linear-gradient(135deg,#8B7355,#A0826D);">&#128047;</div>
+        <div class="sh-body"><div class="sh-code">009鍙?/div><div class="sh-name">鐟炵尨鑱氳储 路 鑳屽疂</div><div class="sh-price">楼880</div></div>
+      </div>
+      <div class="sh-card" onclick="alert('缂栧彿锛?10\n鍚嶇О锛氱鐚撮晣瀹?路 闆勫Э\n浠锋牸锛毬?68\n\n濡傞渶璁㈣喘锛岃鑱旂郴瀹㈡湇锛?00-888-6666')">
+        <div class="sh-img" style="background:linear-gradient(135deg,#6B5B4F,#8B7D6B);">&#128056;</div>
+        <div class="sh-body"><div class="sh-code">010鍙?/div><div class="sh-name">绁炵尨闀囧畢 路 闆勫Э</div><div class="sh-price">楼668</div></div>
+      </div>
+      <div class="sh-card" onclick="alert('缂栧彿锛?11\n鍚嶇О锛氬枩鐚磋繋鏄?路 鎸ユ墜\n浠锋牸锛毬?98\n\n濡傞渶璁㈣喘锛岃鑱旂郴瀹㈡湇锛?00-888-6666')">
+        <div class="sh-img" style="background:linear-gradient(135deg,#7A6B5D,#9A8B7D);">&#128040;</div>
+        <div class="sh-body"><div class="sh-code">011鍙?/div><div class="sh-name">鍠滅尨杩庢槬 路 鎸ユ墜</div><div class="sh-price">楼298</div></div>
+      </div>
+      <div class="sh-card" onclick="alert('缂栧彿锛?12\n鍚嶇О锛氬疂鐚撮€佺 路 鎴忕悆\n浠锋牸锛毬?58\n\n濡傞渶璁㈣喘锛岃鑱旂郴瀹㈡湇锛?00-888-6666')">
+        <div class="sh-img" style="background:linear-gradient(135deg,#5C4A3A,#7C6A5A);">&#128057;</div>
+        <div class="sh-body"><div class="sh-code">012鍙?/div><div class="sh-name">瀹濈尨閫佺 路 鎴忕悆</div><div class="sh-price">楼358</div></div>
+      </div>
+    </div>
+  </div>
+  <p class="sh-hint">&#128161; 鍚戝乏婊氬姩鏌ョ湅鏇村娆惧紡 路 鐐瑰嚮浠绘剰娆惧紡鏌ョ湅璇︽儏 路 姣忔鐭崇尨鍧囦负绾墜宸ラ洉鍒伙紝鐙竴鏃犱簩</p>
+</div>
+
+<!-- ============ 鐚滀綘鍠滄 ============ -->
+<div class="rec-section">
+  <div class="rec-title">鐚滀綘鍠滄</div>
+  <div class="rec-grid">
+    <a href="detail-product1.html" class="rec-card"><div class="rec-img" style="background-image:url(./uploads/product1.jpg)"></div><div class="rec-body"><div class="rec-name">鏂瑰煄榛勭煶鐮?路 浜戦緳绾圭牃鍙?/div><div class="rec-price">楼3,680</div></div></a>
+    <a href="detail-danshen.html" class="rec-card"><div class="rec-img" style="background-image:url(./uploads/product-danshen.jpg)"></div><div class="rec-body"><div class="rec-name">鏂瑰煄閲庣敓涓瑰弬 路 250g</div><div class="rec-price">楼128</div></div></a>
+    <a href="detail-silk.html" class="rec-card"><div class="rec-img" style="background-image:url(./uploads/product-silk.jpg)"></div><div class="rec-body"><div class="rec-name">鏂瑰煄鎵嬪伐铓曚笣琚?/div><div class="rec-price">楼1,280</div></div></a>
+    <a href="detail-peanut.html" class="rec-card"><div class="rec-img" style="background-image:url(./uploads/product-peanut.jpg)"></div><div class="rec-body"><div class="rec-name">鏂瑰煄浜旈鍗よ姳鐢?路 500g</div><div class="rec-price">楼28</div></div></a>
+  </div>
+</div>
+
+<script>
+function switchTab(idx) {
+  for(var i=0;i<4;i++){
+    var btn=document.getElementById('sideTab'+i);
+    if(i===idx){ btn.classList.add('active'); btn.style.background='var(--primary)'; btn.style.color='#fff'; }
+    else { btn.classList.remove('active'); btn.style.background='transparent'; btn.style.color='var(--muted)'; }
+  }
+  document.querySelectorAll('.tab-content').forEach(function(c,i){c.classList.toggle('active',i===idx);});
+}
+function switchImg(el, idx) {
+  document.querySelectorAll('.thumb').forEach(function(t){t.classList.remove('active');});
+  el.classList.add('active');
+}
+// 澶嶅埗瀹炵幇鏃犵紳婊氬姩
+var track = document.getElementById('shTrack');
+track.innerHTML += track.innerHTML;
+</script>
+
+
+<script>
+</script>
+<!-- 个人中心侧边栏 -->
+  <div class="profile-overlay" id="profileOverlay"></div>
+  <aside class="profile-sidebar" id="profileSidebar">
+    <div class="profile-sidebar-header">
+      <span>个人中心</span>
+      <div class="profile-close" id="profileClose">✕</div>
+    </div>
+    <div class="profile-user-block">
+      <label class="profile-avatar-large" for="avatarUpload" title="点击更换头像">
+        <img src="" alt="头像" id="sidebarAvatarImg" style="display:none">
+        <svg id="sidebarAvatarIcon" width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="rgba(255,249,237,.5)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,249,237,.35)"/></svg>
+      </label>
+      <input type="file" id="avatarUpload" class="profile-upload-input" accept="image/*">
+      <div class="profile-username" id="profileUsername">访客</div>
+      <div class="profile-tag">方城特产百珍坊会员</div>
+    </div>
+    <!-- 主菜单面板 -->
+    <div class="profile-panel active" id="panelMain">
+      <nav class="profile-menu">
+                <a href="member-center.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          个人中心
+        </a>
+<a href="#" id="menuAccount">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          我的账户
+        </a>
+        <a href="#" id="menuOrders">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          我的订单
+        </a>
+        <a href="member-center.html#collection">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          我的收藏
+        </a>
+        <a href="custom-gift.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M12 8V21M3 13h18"/><path d="M12 8c0-2.5-2-4-4-2s0 4 4 4m0-4c0-2.5 2-4 4-2s0 4-4 4"/></svg>
+          礼盒定制
+        </a>
+        <a href="contact.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          联系合作
+        </a>
+      </nav>
+    </div>
+
+    <!-- 账户子面板 -->
+    <div class="profile-panel" id="panelAccount">
+      <div class="profile-panel-back" id="accountBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        返回
+      </div>
+      <div class="account-balance-card">
+        <small>账户余额</small>
+        <div class="account-balance-amount"><span>¥</span><span id="balanceNum">0.00</span></div>
+      </div>
+      <div class="account-section-title">快速充值</div>
+      <div class="topup-grid">
+        <div class="topup-btn" data-val="50">¥ 50</div>
+        <div class="topup-btn" data-val="100">¥ 100</div>
+        <div class="topup-btn" data-val="200">¥ 200</div>
+        <div class="topup-btn" data-val="500">¥ 500</div>
+      </div>
+      <div class="topup-custom">
+        <span>¥</span>
+        <input type="text" id="topupCustom" placeholder="自定义金额">
+      </div>
+      <button class="topup-confirm" id="topupConfirm">确认充值</button>
+      <div class="account-section-title">账户信息</div>
+      <div class="account-info-list">
+        <div class="account-info-row"><span>会员等级</span><strong>普通会员</strong></div>
+        <div class="account-info-row"><span>累计消费</span><strong id="totalSpend">¥ 0.00</strong></div>
+        <div class="account-info-row"><span>优惠券</span><strong>0 张</strong></div>
+        <div class="account-info-row"><span>积分</span><strong id="pointsNum">0</strong></div>
+      </div>
+    </div>
+
+    <!-- 订单子面板 -->
+    <div class="profile-panel" id="panelOrders">
+      <div class="profile-panel-back" id="ordersBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        返回
+      </div>
+      <div class="account-section-title">我的订单</div>
+      <div class="account-info-list" style="padding:0 20px;">
+        <div class="account-info-row"><span>待付款</span><strong>0</strong></div>
+        <div class="account-info-row"><span>待发货</span><strong>0</strong></div>
+        <div class="account-info-row"><span>待收货</span><strong>0</strong></div>
+        <div class="account-info-row"><span>已完成</span><strong>0</strong></div>
+        <div class="account-info-row"><span>退款/售后</span><strong>0</strong></div>
+      </div>
+      <div class="account-section-title" style="margin-top:8px;">最近订单</div>
+      <div class="order-card">
+        <div class="order-card-header">
+          <small>订单号 FC20240617001</small>
+          <span class="order-status delivering">配送中</span>
+        </div>
+        <div class="order-product-row">
+          <img src="uploads/product1.jpg" alt="方城黄石砚">
+          <div class="order-product-info">
+            <h4>方城黄石砚</h4>
+            <span>数量 × 1</span>
+          </div>
+          <span class="order-product-price">¥ 399</span>
+        </div>
+        <div class="order-logistics">
+          <div class="order-logistics-title">物流跟踪</div>
+          <div class="logistics-track">
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>包裹已签收</p>
+                <small>2024-06-17 &nbsp;14:32</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>派送中 — 快递员已取件</p>
+                <small>2024-06-17 &nbsp;09:05</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>已到达 南阳 转运中心</p>
+                <small>2024-06-16 &nbsp;22:41</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>商家已发货</p>
+                <small>2024-06-15 &nbsp;16:18</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>订单已下单，等待商家处理</p>
+                <small>2024-06-15 &nbsp;10:03</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+<script>
+    (function() {
+      const overlay = document.getElementById('profileOverlay');
+      const sidebar = document.getElementById('profileSidebar');
+      const navAvatar = document.getElementById('navAvatar');
+      const closeBtn = document.getElementById('profileClose');
+      const avatarUpload = document.getElementById('avatarUpload');
+      const navAvatarImg = document.getElementById('navAvatarImg');
+      const navAvatarIcon = document.getElementById('navAvatarIcon');
+      const sidebarAvatarImg = document.getElementById('sidebarAvatarImg');
+      const sidebarAvatarIcon = document.getElementById('sidebarAvatarIcon');
+
+      function openSidebar() {
+        overlay.classList.add('open');
+        sidebar.classList.add('open');
+      }
+      function closeSidebar() {
+        overlay.classList.remove('open');
+        sidebar.classList.remove('open');
+      }
+
+      navAvatar.addEventListener('click', openSidebar);
+      navAvatar.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openSidebar(); });
+      closeBtn.addEventListener('click', closeSidebar);
+      overlay.addEventListener('click', closeSidebar);
+
+      // 头像上传
+      avatarUpload.addEventListener('change', function() {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const src = e.target.result;
+          // 更新导航头像
+          navAvatarImg.src = src;
+          navAvatarImg.style.display = 'block';
+          navAvatarIcon.style.display = 'none';
+          // 更新侧边栏头像
+          sidebarAvatarImg.src = src;
+          sidebarAvatarImg.style.display = 'block';
+          sidebarAvatarIcon.style.display = 'none';
+          // 本地持久化
+          try { localStorage.setItem('baizhenfang_avatar', src); } catch(e) {}
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // 恢复已保存头像
+      try {
+        const saved = localStorage.getItem('baizhenfang_avatar');
+        if (saved) {
+          navAvatarImg.src = saved;
+          navAvatarImg.style.display = 'block';
+          navAvatarIcon.style.display = 'none';
+          sidebarAvatarImg.src = saved;
+          sidebarAvatarImg.style.display = 'block';
+          sidebarAvatarIcon.style.display = 'none';
+        }
+      } catch(e) {}
+
+      // 面板切换
+      const panelMain = document.getElementById('panelMain');
+      const panelAccount = document.getElementById('panelAccount');
+      const panelOrders = document.getElementById('panelOrders');
+      const menuAccount = document.getElementById('menuAccount');
+      const menuOrders = document.getElementById('menuOrders');
+      const accountBack = document.getElementById('accountBack');
+      const ordersBack = document.getElementById('ordersBack');
+
+      function showPanel(panel) {
+        panelMain.classList.remove('active');
+        panelAccount.classList.remove('active');
+        panelOrders.classList.remove('active');
+        panel.classList.add('active');
+      }
+
+      menuAccount.addEventListener('click', function(e) { e.preventDefault(); showPanel(panelAccount); });
+      menuOrders.addEventListener('click', function(e) { e.preventDefault(); showPanel(panelOrders); });
+      accountBack.addEventListener('click', function() { showPanel(panelMain); });
+      ordersBack.addEventListener('click', function() { showPanel(panelMain); });
+
+      // 关闭时重置到主面板
+      function closeSidebarFull() {
+        overlay.classList.remove('open');
+        sidebar.classList.remove('open');
+        setTimeout(() => showPanel(panelMain), 350);
+      }
+      closeBtn.removeEventListener('click', closeSidebar);
+      overlay.removeEventListener('click', closeSidebar);
+      closeBtn.addEventListener('click', closeSidebarFull);
+      overlay.addEventListener('click', closeSidebarFull);
+
+      // 余额与充值
+      const balanceNum = document.getElementById('balanceNum');
+      const topupCustom = document.getElementById('topupCustom');
+      const topupConfirm = document.getElementById('topupConfirm');
+      const topupBtns = document.querySelectorAll('.topup-btn');
+
+      let balance = 0;
+      try { balance = parseFloat(localStorage.getItem('baizhenfang_balance') || '0'); } catch(e) {}
+      balanceNum.textContent = balance.toFixed(2);
+
+      let selectedAmount = 0;
+      topupBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          topupBtns.forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedAmount = parseFloat(this.dataset.val);
+          topupCustom.value = '';
+        });
+      });
+      topupCustom.addEventListener('input', function() {
+        topupBtns.forEach(b => b.classList.remove('selected'));
+        selectedAmount = 0;
+      });
+
+      topupConfirm.addEventListener('click', function() {
+        const custom = parseFloat(topupCustom.value);
+        const amount = custom > 0 ? custom : selectedAmount;
+        if (!amount || amount <= 0) return;
+        balance += amount;
+        balanceNum.textContent = balance.toFixed(2);
+        try { localStorage.setItem('baizhenfang_balance', balance.toString()); } catch(e) {}
+        topupBtns.forEach(b => b.classList.remove('selected'));
+        topupCustom.value = '';
+        selectedAmount = 0;
+        topupConfirm.textContent = '充值成功 ✓';
+        setTimeout(() => { topupConfirm.textContent = '确认充值'; }, 1500);
+      });
+    })();
+  </script>
+  <script src="cart.js"></script>
+<script src="sku.js"></script>
+<script src="favorites.js"></script>
+  <script src="lightbox.js"></script>
+</body>
+</html>
+

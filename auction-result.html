@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>竞拍结果 - 方城百珍坊</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared-pages.css">
+  <style>
+    :root { --pine: #4a8d75; --crimson: #a84d34; }
+
+    body { background: #1a1510; min-height: 100vh; }
+
+    /* 面包屑 */
+    .ar-crumb {
+      background: #141108; padding: 14px 0;
+      color: rgba(255,249,237,.45); font-size: 12px; letter-spacing: 2px;
+      border-bottom: 1px solid rgba(255,249,237,.06);
+    }
+    .ar-crumb a { color: rgba(255,249,237,.45); text-decoration: none; transition: color .2s; }
+    .ar-crumb a:hover { color: var(--gold); }
+    .ar-crumb .sep { margin: 0 10px; color: rgba(255,249,237,.2); }
+    .ar-crumb .cur { color: var(--gold); }
+
+    /* 主体 */
+    .ar-main {
+      min-height: calc(100vh - 200px);
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: flex-start; padding: 60px 24px 80px;
+    }
+
+    /* 结果卡片容器 */
+    .ar-card {
+      width: 100%; max-width: 620px;
+      background: #211c14;
+      border: 1px solid rgba(185,151,91,.22);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,.6);
+    }
+
+    /* 卡头 — 动态背景色 */
+    .ar-card-head {
+      padding: 40px 36px 32px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .ar-card-head::before {
+      content: ""; position: absolute; inset: 0;
+      opacity: .18; pointer-events: none;
+      background: radial-gradient(circle at 50% 0%, var(--ar-accent, #B9975B), transparent 70%);
+    }
+    .ar-outcome-icon {
+      font-size: 52px; line-height: 1; margin-bottom: 18px; display: block;
+    }
+    .ar-outcome-label {
+      display: inline-block; padding: 6px 18px;
+      border: 1px solid var(--ar-accent, #B9975B);
+      color: var(--ar-accent, #B9975B);
+      font-size: 11px; letter-spacing: 5px; font-weight: 700;
+      margin-bottom: 20px;
+      font-family: var(--latin, 'Playfair Display', serif);
+    }
+    .ar-price-display {
+      font-family: var(--latin, 'Playfair Display', serif);
+      font-size: clamp(42px, 8vw, 72px); font-weight: 800;
+      color: var(--ar-accent, #B9975B); letter-spacing: 2px; line-height: 1;
+      margin-bottom: 8px;
+    }
+    .ar-price-display em { font-size: .42em; font-style: normal; opacity: .7; vertical-align: middle; }
+    .ar-outcome-title {
+      color: rgba(255,249,237,.7); font-size: 14px; letter-spacing: 3px; margin-top: 8px;
+    }
+
+    /* 拍品信息 */
+    .ar-lot-info {
+      display: flex; gap: 18px; align-items: flex-start;
+      padding: 24px 36px;
+      border-top: 1px solid rgba(185,151,91,.15);
+      border-bottom: 1px solid rgba(185,151,91,.15);
+    }
+    .ar-lot-img {
+      width: 88px; height: 88px; object-fit: cover; border-radius: 4px;
+      flex-shrink: 0; border: 1px solid rgba(185,151,91,.25);
+    }
+    .ar-lot-img-placeholder {
+      width: 88px; height: 88px; background: rgba(185,151,91,.08);
+      border-radius: 4px; flex-shrink: 0;
+      border: 1px solid rgba(185,151,91,.15);
+    }
+    .ar-lot-meta { flex: 1; min-width: 0; }
+    .ar-lot-no {
+      font-size: 11px; letter-spacing: 4px; color: var(--gold, #B9975B);
+      font-family: var(--latin, 'Playfair Display', serif); margin-bottom: 6px;
+    }
+    .ar-lot-title {
+      color: rgba(255,249,237,.9); font-size: 16px; letter-spacing: 2px;
+      font-weight: 700; margin-bottom: 6px; line-height: 1.4;
+    }
+    .ar-lot-cat {
+      color: rgba(255,249,237,.4); font-size: 12px; letter-spacing: 2px;
+    }
+
+    /* 细节行 */
+    .ar-detail-rows { padding: 20px 36px; }
+    .ar-detail-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0; border-bottom: 1px solid rgba(255,249,237,.06);
+      font-size: 13px; letter-spacing: 1.5px;
+    }
+    .ar-detail-row:last-child { border-bottom: none; }
+    .ar-detail-row span:first-child { color: rgba(255,249,237,.45); }
+    .ar-detail-row span:last-child { color: rgba(255,249,237,.85); font-weight: 600; }
+
+    /* 操作按钮 */
+    .ar-actions {
+      padding: 8px 36px 36px;
+      display: flex; gap: 12px; flex-wrap: wrap;
+    }
+    .ar-btn {
+      flex: 1; min-width: 120px; padding: 14px 20px;
+      font-size: 13px; letter-spacing: 3px; font-weight: 700;
+      text-align: center; border-radius: 2px; text-decoration: none;
+      cursor: pointer; border: none; font-family: inherit;
+      transition: all .25s; display: inline-block;
+    }
+    .ar-btn-primary {
+      background: var(--gold, #B9975B); color: #1c1812;
+    }
+    .ar-btn-primary:hover { background: #d4ac6b; }
+    .ar-btn-ghost {
+      background: transparent; color: rgba(255,249,237,.72);
+      border: 1px solid rgba(255,249,237,.25);
+    }
+    .ar-btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* 提示语 */
+    .ar-note {
+      max-width: 620px; width: 100%;
+      margin-top: 24px;
+      color: rgba(255,249,237,.35); font-size: 12px; letter-spacing: 1.5px;
+      line-height: 2; text-align: center;
+    }
+
+    /* 状态变体 accent colors */
+    .ar-card[data-status="unsold"]  { --ar-accent: rgba(255,249,237,.55); }
+    .ar-card[data-status="reserve"] { --ar-accent: #c97d3a; }
+    .ar-card[data-status="sold"]    { --ar-accent: #B9975B; }
+
+    @media (max-width: 520px) {
+      .ar-card-head { padding: 28px 22px 24px; }
+      .ar-lot-info  { padding: 18px 22px; }
+      .ar-detail-rows { padding: 16px 22px; }
+      .ar-actions   { padding: 8px 22px 28px; }
+    }
+  </style>
+  <link rel="stylesheet" href="site-fixes.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="shell nav">
+    <a class="brand" href="index.html" aria-label="方城特产百珍坊首页">
+      <span class="brand-mark"><img src="uploads/logo.png" alt="百珍坊logo"></span>
+      <span>
+        <strong>方城特产百珍坊</strong>
+        <span>Fangcheng Selected</span>
+      </span>
+    </a>
+    <nav class="navlinks" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="baizhen-collection.html">百珍荟萃</a>
+      <a class="active" href="auction.html">拍卖中心</a>
+    </nav>
+    <div class="nav-avatar" id="navAvatar" role="button" aria-label="个人中心" tabindex="0">
+      <img src="" alt="头像" id="navAvatarImg" style="display:none">
+      <svg class="nav-avatar-placeholder" id="navAvatarIcon" width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="8" r="4" fill="rgba(255,249,237,.6)"/>
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,249,237,.5)"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- 面包屑 -->
+<div class="ar-crumb">
+  <div class="shell">
+    <a href="index.html">首页</a>
+    <span class="sep">›</span>
+    <a href="auction.html">拍卖中心</a>
+    <span class="sep">›</span>
+    <span class="cur">竞拍结果</span>
+  </div>
+</div>
+
+<!-- 主体 -->
+<main class="ar-main">
+  <div class="ar-card" id="arCard" data-status="sold">
+    <!-- 卡头 -->
+    <div class="ar-card-head">
+      <span class="ar-outcome-icon" id="arIcon">🏆</span>
+      <div class="ar-outcome-label" id="arLabel">SOLD · 竞拍成功</div>
+      <div class="ar-price-display" id="arPrice"><em>¥</em>0</div>
+      <div class="ar-outcome-title" id="arSubtitle">恭喜您，成功拍得本件珍品</div>
+    </div>
+
+    <!-- 拍品信息 -->
+    <div class="ar-lot-info">
+      <img class="ar-lot-img" id="arLotImg" src="" alt="" onerror="this.style.display='none'">
+      <div class="ar-lot-meta">
+        <div class="ar-lot-no" id="arLotNo">LOT 01</div>
+        <div class="ar-lot-title" id="arLotTitle">–</div>
+        <div class="ar-lot-cat" id="arLotCat">–</div>
+      </div>
+    </div>
+
+    <!-- 细节 -->
+    <div class="ar-detail-rows">
+      <div class="ar-detail-row">
+        <span>成交价</span>
+        <span id="drPrice">–</span>
+      </div>
+      <div class="ar-detail-row">
+        <span>拍卖时间</span>
+        <span id="drTime">–</span>
+      </div>
+      <div class="ar-detail-row">
+        <span>订单状态</span>
+        <span id="drStatus">–</span>
+      </div>
+    </div>
+
+    <!-- 操作 -->
+    <div class="ar-actions" id="arActions"></div>
+  </div>
+
+  <p class="ar-note" id="arNote"></p>
+</main>
+
+<footer class="footer">
+  <div class="shell footer-grid">
+    <div>
+      <h2>方城特产百珍坊</h2>
+      <p>一屏看清方城风物四大方向：文房雅器、方城美食、养生滋补、工艺收藏；更多故事、礼盒、竞拍和合作咨询进入独立页面细看。</p>
+    </div>
+    <div>
+      <h4>商品品类</h4>
+      <a href="cat-wenfang.html">文房雅器</a>
+      <a href="cat-meishi.html">方城美食</a>
+      <a href="cat-yangsheng.html">养生滋补</a>
+      <a href="cat-gongyi.html">工艺收藏</a>
+    </div>
+    <div>
+      <h4>功能页面</h4>
+      <a href="auction.html">珍品竞拍</a>
+      <a href="custom-gift.html">礼盒定制</a>
+      <a href="brand-story.html">品牌故事</a>
+      <a href="member-center.html">会员中心</a>
+      <a href="contact.html">联系合作</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // 拍品基础数据（与 auction.html 保持同步）
+  var LOTS = {
+    'lot-yan':    { lotNo: 'LOT 01', title: '方城黄石砚 · 山水纹藏砚',    cat: '文房雅器 · 黄石砚', img: 'uploads/stone-qingshi.jpg' },
+    'lot-shihou': { lotNo: 'LOT 02', title: '方城石猴 · 案头守福摆件',    cat: '工艺收藏 · 石猴',   img: 'uploads/product-shihou.jpg' },
+    'lot-jade':   { lotNo: 'LOT 03', title: '独山玉件 · 温润平安牌',      cat: '工艺收藏 · 玉器',   img: 'uploads/product-jade.jpg' },
+    '1':          { lotNo: 'LOT 01', title: '方城黄石砚 · 山水纹藏砚',    cat: '文房雅器 · 黄石砚', img: 'uploads/stone-qingshi.jpg' },
+    '2':          { lotNo: 'LOT 02', title: '方城石猴 · 案头守福摆件',    cat: '工艺收藏 · 石猴',   img: 'uploads/product-shihou.jpg' },
+    '3':          { lotNo: 'LOT 03', title: '独山玉件 · 温润平安牌',      cat: '工艺收藏 · 玉器',   img: 'uploads/product-jade.jpg' }
+  };
+
+  // 状态配置
+  var STATES = {
+    sold: {
+      icon: '🏆', label: 'SOLD · 竞拍成功',
+      subtitle: '恭喜您，成功拍得本件珍品',
+      statusText: '待付款', note: '请在 24 小时内完成付款，逾期订单将自动取消。如有疑问请联系专员。',
+      actions: [
+        { href: 'member-center.html#orders', text: '立即付款', primary: true },
+        { href: 'auction.html', text: '继续竞拍', primary: false }
+      ]
+    },
+    unsold: {
+      icon: '📋', label: 'UNSOLD · 本场流拍',
+      subtitle: '本件拍品未能达到底价，暂时流拍',
+      statusText: '流拍', note: '感谢您的参与。流拍拍品有机会在下一场再次上拍，欢迎继续关注。',
+      actions: [
+        { href: 'auction.html', text: '浏览其他拍品', primary: true },
+        { href: 'member-center.html', text: '我的账户', primary: false }
+      ]
+    },
+    reserve: {
+      icon: '⚠️', label: 'RESERVE NOT MET · 未达底价',
+      subtitle: '出价未达最低保留价，拍卖师保留是否成交的权利',
+      statusText: '待确认', note: '拍卖师将在 2 小时内确认是否成交，届时将以短信通知您。',
+      actions: [
+        { href: 'tel:4000000000', text: '联系专员', primary: true },
+        { href: 'auction.html', text: '返回拍卖厅', primary: false }
+      ]
+    }
+  };
+
+  function parseParams() {
+    var q = {};
+    location.search.replace(/[?&]([^=&]+)=([^&]*)/g, function(_, k, v) {
+      q[decodeURIComponent(k)] = decodeURIComponent(v);
+    });
+    return q;
+  }
+
+  function fmtMoney(n) {
+    var num = parseInt(n, 10);
+    return isNaN(num) ? '–' : '¥ ' + num.toLocaleString('zh-CN');
+  }
+
+  function fmtNow() {
+    var d = new Date();
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0') + ' ' +
+      String(d.getHours()).padStart(2, '0') + ':' +
+      String(d.getMinutes()).padStart(2, '0');
+  }
+
+  function render() {
+    var p = parseParams();
+    var status  = (p.status || 'sold').toLowerCase();
+    var lotKey  = p.lot || '';
+    var price   = parseInt(p.price, 10) || 0;
+
+    // 读 localStorage 兜底（auction.html 保存的数据）
+    if (!price || !status || status === 'sold') {
+      try {
+        var saved = JSON.parse(localStorage.getItem('baizhenfang-auction-page-v1') || 'null');
+        if (saved) {
+          if (!price && saved.currentBid) price = saved.currentBid;
+          if (!status || status === 'sold') {
+            if (saved.resolved) status = saved.outcome || status;
+            if (!lotKey && saved.id) lotKey = saved.id;
+          }
+        }
+      } catch (e) {}
+    }
+
+    var state = STATES[status] || STATES.sold;
+    var lot   = LOTS[lotKey] || null;
+
+    // 更新卡片状态属性
+    var card = document.getElementById('arCard');
+    if (card) card.setAttribute('data-status', status);
+
+    // 图标 + 标签
+    var iconEl = document.getElementById('arIcon');
+    if (iconEl) iconEl.textContent = state.icon;
+
+    var labelEl = document.getElementById('arLabel');
+    if (labelEl) labelEl.textContent = state.label;
+
+    // 价格
+    var priceEl = document.getElementById('arPrice');
+    if (priceEl) {
+      if (status === 'unsold') {
+        priceEl.innerHTML = '<em style="font-size:.3em;opacity:.5;">无成交价</em>';
+      } else {
+        priceEl.innerHTML = price ? '<em>¥</em>' + price.toLocaleString('zh-CN') : '<em style="font-size:.35em;opacity:.5;">价格未知</em>';
+      }
+    }
+
+    var subEl = document.getElementById('arSubtitle');
+    if (subEl) subEl.textContent = state.subtitle;
+
+    // 拍品信息
+    if (lot) {
+      var imgEl = document.getElementById('arLotImg');
+      if (imgEl) { imgEl.src = lot.img; imgEl.alt = lot.title; }
+      var noEl = document.getElementById('arLotNo');
+      if (noEl) noEl.textContent = lot.lotNo;
+      var titleEl = document.getElementById('arLotTitle');
+      if (titleEl) titleEl.textContent = lot.title;
+      var catEl = document.getElementById('arLotCat');
+      if (catEl) catEl.textContent = lot.cat;
+    }
+
+    // 细节行
+    var drPrice = document.getElementById('drPrice');
+    if (drPrice) drPrice.textContent = (status === 'unsold') ? '–' : fmtMoney(price);
+
+    var drTime = document.getElementById('drTime');
+    if (drTime) drTime.textContent = fmtNow();
+
+    var drStatus = document.getElementById('drStatus');
+    if (drStatus) drStatus.textContent = state.statusText;
+
+    // 操作按钮
+    var actionsEl = document.getElementById('arActions');
+    if (actionsEl) {
+      actionsEl.innerHTML = state.actions.map(function(a) {
+        var cls = a.primary ? 'ar-btn ar-btn-primary' : 'ar-btn ar-btn-ghost';
+        return '<a href="' + a.href + '" class="' + cls + '">' + a.text + '</a>';
+      }).join('');
+    }
+
+    // 备注
+    var noteEl = document.getElementById('arNote');
+    if (noteEl) noteEl.textContent = state.note;
+
+    // 页面标题
+    document.title = (lot ? lot.title + ' · ' : '') + state.label + ' — 方城百珍坊';
+  }
+
+  render();
+})();
+</script>
+
+<script src="cart.js"></script>
+</body>
+</html>

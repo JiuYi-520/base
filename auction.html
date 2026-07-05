@@ -1,0 +1,2266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>珍品竞拍大厅 - 方城百珍坊</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared-pages.css">
+  <style>
+    
+    /* ======= 拍卖中心 v2 全新样式 ======= */
+    :root { --pine: #4a8d75; --crimson: #a84d34; }
+    .au-main { background: var(--paper); padding-bottom: 80px; }
+    .au-main a { text-decoration: none; }
+
+    /* 面包屑 */
+    .au-crumb { background: #1c1812; padding: 14px 0; color: rgba(255,249,237,.55); font-size: 12px; letter-spacing: 2px; }
+    .au-crumb a { color: rgba(255,249,237,.55); transition: color .2s; }
+    .au-crumb a:hover { color: var(--gold); }
+    .au-crumb .sep { margin: 0 10px; color: rgba(255,249,237,.25); }
+    .au-crumb .cur { color: var(--gold); }
+
+    /* HERO */
+    .au-hero { padding: 60px 0 70px; background: linear-gradient(135deg, #1c1812 0%, #2a1f15 60%, #1c1812 100%); color: var(--cream); position: relative; overflow: hidden; }
+    .au-hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 80% 30%, rgba(185,151,91,.18), transparent 55%), radial-gradient(circle at 15% 80%, rgba(168,77,52,.14), transparent 55%); pointer-events: none; }
+    .au-hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; position: relative; }
+    @media (max-width: 980px) { .au-hero-grid { grid-template-columns: 1fr; } }
+    .au-hero-eyebrow { display: inline-block; padding: 6px 14px; border: 1px solid rgba(185,151,91,.5); color: var(--gold); font-size: 12px; letter-spacing: 4px; margin-bottom: 18px; }
+    .au-hero h1 { font-size: clamp(38px, 5vw, 64px); letter-spacing: 6px; line-height: 1.15; font-weight: 900; margin-bottom: 20px; }
+    .au-hero h1 em { color: var(--gold); font-style: normal; }
+    .au-hero p.lead { color: rgba(255,249,237,.72); font-size: 15px; line-height: 2; letter-spacing: 1.5px; max-width: 520px; margin-bottom: 28px; }
+    .au-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
+    .au-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px; font-size: 13px; letter-spacing: 3px; font-weight: 700; border-radius: 2px; transition: all .25s; }
+    .au-btn-pri { background: var(--gold); color: #1c1812; border: 1px solid var(--gold); }
+    .au-btn-pri:hover { background: #e0c485; border-color: #e0c485; }
+    .au-btn-ghost { color: var(--cream); border: 1px solid rgba(255,249,237,.4); }
+    .au-btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .au-hero-tags { display: flex; gap: 18px; flex-wrap: wrap; color: rgba(255,249,237,.5); font-size: 12px; letter-spacing: 2px; }
+    .au-hero-tags i { color: var(--gold); margin-right: 6px; font-style: normal; }
+
+    .au-hero-visual { position: relative; aspect-ratio: 4/5; max-width: 420px; margin-left: auto; }
+    .au-hero-visual img { position: absolute; object-fit: cover; box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+    .au-hero-visual img:nth-child(1) { width: 80%; height: 80%; top: 0; right: 0; border: 1px solid rgba(185,151,91,.4); }
+    .au-hero-visual img:nth-child(2) { width: 55%; height: 55%; bottom: 0; left: 0; border: 1px solid rgba(185,151,91,.5); }
+    .au-hero-seal { position: absolute; right: -16px; bottom: -16px; width: 110px; height: 110px; border-radius: 50%; background: var(--gold); color: #1c1812; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; letter-spacing: 3px; font-size: 13px; line-height: 1.5; box-shadow: 0 12px 30px rgba(185,151,91,.4); }
+    .au-hero-seal small { font-family: var(--latin); font-size: 11px; opacity: .8; letter-spacing: 2px; }
+
+    /* 数据条 */
+    .au-stats { background: #fff; border-bottom: 1px solid var(--line); }
+    .au-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    @media (max-width: 760px) { .au-stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    .au-stat { padding: 30px 24px; text-align: center; border-right: 1px solid var(--line); }
+    .au-stat:last-child { border-right: none; }
+    @media (max-width: 760px) { .au-stat:nth-child(2) { border-right: none; } .au-stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
+    .au-stat strong { display: block; font-family: var(--latin); font-size: 36px; font-weight: 700; color: var(--clay); letter-spacing: 1px; line-height: 1; margin-bottom: 8px; }
+    .au-stat strong em { font-size: 16px; color: var(--smoke); font-style: normal; margin-right: 2px; }
+    .au-stat span { display: block; color: var(--smoke); font-size: 12px; letter-spacing: 3px; }
+
+    /* 通用 section head */
+    .au-section { padding: 60px 0 0; }
+    .au-section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 28px; gap: 16px; flex-wrap: wrap; }
+    .au-eyebrow { display: inline-block; color: var(--clay); font-family: var(--latin); font-size: 13px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 6px; }
+    .au-section-head h2 { color: var(--ink); font-size: 28px; letter-spacing: 5px; font-weight: 800; }
+    .au-section-head p { color: var(--smoke); font-size: 13px; letter-spacing: 1.5px; max-width: 460px; line-height: 1.8; }
+
+    /* 主拍场 stage */
+    .au-stage-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) 1fr; gap: 22px; }
+    @media (max-width: 1080px) { .au-stage-grid { grid-template-columns: 1fr; } }
+    .au-stage { display: grid; grid-template-columns: 1fr 1fr; min-height: 580px; background: #fff; border: 1px solid var(--line); box-shadow: 18px 18px 0 rgba(168,95,61,.08); overflow: hidden; }
+    @media (max-width: 880px) { .au-stage { grid-template-columns: 1fr; } }
+    .au-visual { position: relative; overflow: hidden; background: #1c1812; min-height: 380px; }
+    .au-visual img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+    .au-visual:hover img { transform: scale(1.04); }
+    .au-lot-badge { position: absolute; left: 20px; top: 20px; padding: 8px 14px; background: rgba(23,20,17,.85); color: var(--gold); border: 1px solid rgba(185,151,91,.5); font-weight: 900; letter-spacing: 3px; font-size: 12px; }
+    .au-lot-watermark { position: absolute; right: 20px; bottom: 20px; color: rgba(255,249,237,.18); font-family: var(--latin); font-size: 80px; font-weight: 900; letter-spacing: 4px; pointer-events: none; line-height: 1; }
+    .au-lot-thumbs { position: absolute; left: 20px; bottom: 20px; display: flex; gap: 8px; }
+    .au-lot-thumbs span { width: 56px; height: 56px; border-radius: 4px; background-size: cover; background-position: center; border: 2px solid transparent; cursor: pointer; opacity: .65; transition: all .2s; }
+    .au-lot-thumbs span.active { border-color: var(--gold); opacity: 1; }
+    .au-lot-thumbs span:hover { opacity: 1; }
+
+    .au-detail { padding: 32px 30px; display: flex; flex-direction: column; gap: 18px; background: linear-gradient(180deg, #fff 0%, #fbf6ec 100%); }
+    .au-detail-meta { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .au-detail-cat { color: var(--smoke); font-size: 12px; letter-spacing: 3px; }
+    .au-detail-status { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--pine); color: #fff; font-size: 11px; letter-spacing: 2px; font-weight: 800; border-radius: 2px; }
+    .au-detail-status.live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: auBlink 1s infinite; }
+    @keyframes auBlink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+    .au-detail h2 { font-size: clamp(26px, 3vw, 36px); letter-spacing: 4px; line-height: 1.15; color: var(--ink); }
+    .au-detail-desc { color: var(--smoke); font-size: 13px; line-height: 1.9; letter-spacing: 1px; }
+    .au-spec-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; padding: 14px 0; border-top: 1px dashed var(--line); border-bottom: 1px dashed var(--line); }
+    .au-spec-row > div { text-align: center; padding: 4px 8px; border-right: 1px solid var(--line); }
+    .au-spec-row > div:last-child { border-right: none; }
+    .au-spec-row small { display: block; color: var(--smoke); font-size: 11px; letter-spacing: 1.5px; margin-bottom: 4px; }
+    .au-spec-row strong { color: var(--ink); font-size: 13px; letter-spacing: 1px; font-weight: 700; }
+
+    .au-price-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; }
+    .au-price-now small { display: block; color: var(--smoke); font-size: 11px; letter-spacing: 3px; margin-bottom: 4px; }
+    .au-price-now strong { color: var(--clay); font-family: var(--latin); font-size: clamp(40px, 5vw, 58px); font-weight: 700; line-height: 1; letter-spacing: 1px; }
+    .au-price-now strong i { font-size: 18px; color: var(--smoke); font-style: normal; margin-right: 4px; }
+    .au-price-step { color: var(--smoke); font-size: 12px; letter-spacing: 1.5px; text-align: right; }
+    .au-price-step em { color: var(--clay); font-style: normal; font-family: var(--latin); font-weight: 700; }
+
+    .au-time-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .au-time-box { padding: 14px 8px; background: #1c1812; color: var(--cream); text-align: center; border-radius: 2px; }
+    .au-time-box strong { display: block; font-family: var(--latin); font-size: 28px; font-weight: 700; color: var(--gold); line-height: 1; letter-spacing: 1px; }
+    .au-time-box span { display: block; margin-top: 6px; font-size: 11px; letter-spacing: 2px; color: rgba(255,249,237,.55); }
+
+    .au-bid-form { display: grid; grid-template-columns: 1fr auto; border: 1px solid var(--clay); background: #fff; border-radius: 2px; overflow: hidden; }
+    .au-bid-form input { min-width: 0; height: 56px; padding: 0 18px; border: 0; outline: 0; background: transparent; color: var(--ink); font-family: var(--latin); font-size: 24px; letter-spacing: 1px; font-weight: 700; }
+    .au-bid-form button { min-width: 140px; border: 0; background: var(--clay); color: #fff; cursor: pointer; font-weight: 900; letter-spacing: 4px; font-size: 13px; transition: background .2s; }
+    .au-bid-form button:hover { background: #8a3e2a; }
+    .au-quick-bids { display: flex; gap: 6px; flex-wrap: wrap; }
+    .au-quick-bids button { padding: 6px 14px; background: rgba(168,95,61,.08); color: var(--clay); border: 1px solid rgba(168,95,61,.25); font-size: 12px; letter-spacing: 1px; cursor: pointer; border-radius: 2px; transition: all .2s; font-family: var(--latin); }
+    .au-quick-bids button:hover { background: var(--clay); color: #fff; border-color: var(--clay); }
+    .au-bid-help { min-height: 22px; color: var(--smoke); font-size: 12px; line-height: 1.6; letter-spacing: .5px; }
+    .au-bid-help.error { color: var(--crimson); }
+    .au-bid-help.success { color: var(--pine); }
+
+    /* 拍卖侧边栏 */
+    .au-side { display: flex; flex-direction: column; gap: 16px; }
+    .au-lot-list { display: flex; flex-direction: column; gap: 10px; }
+    .au-lot-card { display: grid; grid-template-columns: 90px 1fr; gap: 14px; padding: 12px; background: #fff; border: 1px solid var(--line); cursor: pointer; transition: all .25s; text-align: left; align-items: center; font-family: inherit; }
+    .au-lot-card:hover, .au-lot-card.active { border-color: var(--gold); transform: translateX(-3px); box-shadow: -6px 6px 0 rgba(185,151,91,.18); }
+    .au-lot-card.active { background: rgba(185,151,91,.06); }
+    .au-lot-card img { width: 90px; height: 90px; object-fit: cover; border-radius: 2px; }
+    .au-lot-card .au-lot-info { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .au-lot-card small { color: var(--clay); font-family: var(--latin); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
+    .au-lot-card h4 { color: var(--ink); font-size: 14px; letter-spacing: 1.5px; font-weight: 700; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; }
+    .au-lot-card .au-lot-price { margin-top: 2px; color: var(--clay); font-family: var(--latin); font-size: 18px; font-weight: 700; line-height: 1; }
+    .au-lot-card .au-lot-tag { display: inline-block; margin-top: 4px; padding: 1px 6px; font-size: 10px; letter-spacing: 1px; font-weight: 700; border-radius: 2px; }
+    .au-lot-card .au-lot-tag.live { background: var(--pine); color: #fff; }
+    .au-lot-card .au-lot-tag.soon { background: var(--gold); color: #1c1812; }
+
+    .au-history { padding: 22px; background: #1c1812; color: var(--cream); border: 1px solid rgba(185,151,91,.2); }
+    .au-history-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,249,237,.1); }
+    .au-history-head h3 { color: var(--cream); font-size: 16px; letter-spacing: 3px; font-weight: 800; }
+    .au-history-head em { color: var(--pine); font-style: normal; font-size: 11px; letter-spacing: 2px; }
+    .au-history-head em::before { content: "● "; }
+    .au-history-list { display: flex; flex-direction: column; gap: 10px; max-height: 280px; overflow-y: auto; padding-right: 4px; }
+    .au-history-list::-webkit-scrollbar { width: 4px; }
+    .au-history-list::-webkit-scrollbar-thumb { background: rgba(185,151,91,.35); }
+    .au-history-row { display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px dashed rgba(255,249,237,.08); }
+    .au-history-row:last-child { border-bottom: none; }
+    .au-history-rank { display: inline-flex; align-items: center; justify-content: center; min-width: 38px; padding: 3px 6px; background: rgba(185,151,91,.12); color: var(--gold); font-family: var(--latin); font-size: 11px; letter-spacing: 1px; font-style: normal; font-weight: 700; border-radius: 2px; text-align: center; }
+    .au-history-rank.top { background: var(--gold); color: #1c1812; }
+    .au-history-name { display: flex; flex-direction: column; min-width: 0; }
+    .au-history-name strong { color: rgba(255,249,237,.85); font-size: 13px; letter-spacing: 1px; font-weight: 700; }
+    .au-history-name small { margin-top: 2px; color: rgba(255,249,237,.4); font-size: 11px; letter-spacing: .5px; font-family: var(--latin); }
+    .au-history-amt { color: var(--gold); font-family: var(--latin); font-size: 17px; font-weight: 700; letter-spacing: .5px; white-space: nowrap; }
+
+    /* 拍卖日历 */
+    .au-cal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    @media (max-width: 980px) { .au-cal { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .au-cal { grid-template-columns: 1fr; } }
+    .au-cal-card { display: flex; flex-direction: column; padding: 22px 20px; background: #fff; border: 1px solid var(--line); border-top: 3px solid var(--gold); transition: all .25s; }
+    .au-cal-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(168,95,61,.1); }
+    .au-cal-date { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px dashed var(--line); }
+    .au-cal-date strong { color: var(--ink); font-family: var(--latin); font-size: 38px; font-weight: 700; line-height: 1; }
+    .au-cal-date small { color: var(--smoke); font-size: 12px; letter-spacing: 2px; }
+    .au-cal-card h4 { color: var(--ink); font-size: 17px; letter-spacing: 3px; font-weight: 800; margin-bottom: 8px; }
+    .au-cal-card p { color: var(--smoke); font-size: 12px; letter-spacing: 1px; line-height: 1.7; flex: 1; }
+    .au-cal-foot { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--line); display: flex; justify-content: space-between; align-items: center; }
+    .au-cal-foot small { color: var(--clay); font-size: 12px; letter-spacing: 1.5px; }
+    .au-cal-foot a { color: var(--ink); font-size: 12px; letter-spacing: 1.5px; font-weight: 700; }
+    .au-cal-foot a:hover { color: var(--clay); }
+    .au-cal-card.past { opacity: .65; border-top-color: var(--smoke); }
+    .au-cal-card.past .au-cal-foot small { color: var(--smoke); }
+
+    /* 流程 */
+    .au-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; position: relative; }
+    @media (max-width: 980px) { .au-flow { grid-template-columns: repeat(2, 1fr); } }
+    .au-flow-step { padding: 24px 18px; background: #fff; border: 1px solid var(--line); position: relative; transition: all .25s; }
+    .au-flow-step:hover { border-color: var(--gold); transform: translateY(-3px); }
+    .au-flow-num { display: inline-block; width: 36px; height: 36px; border-radius: 50%; background: var(--ink); color: var(--gold); font-family: var(--latin); font-weight: 700; font-size: 15px; line-height: 36px; text-align: center; margin-bottom: 14px; }
+    .au-flow-step h4 { color: var(--ink); font-size: 15px; letter-spacing: 2px; font-weight: 800; margin-bottom: 8px; }
+    .au-flow-step p { color: var(--smoke); font-size: 12px; line-height: 1.8; letter-spacing: .5px; }
+
+    /* 历史成交 */
+    .au-past { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    @media (max-width: 880px) { .au-past { grid-template-columns: 1fr; } }
+    .au-past-card { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 16px; background: #fff; border: 1px solid var(--line); transition: all .25s; align-items: center; }
+    .au-past-card:hover { border-color: var(--gold); box-shadow: 0 12px 24px rgba(168,95,61,.1); }
+    .au-past-card img { width: 110px; height: 110px; object-fit: cover; border-radius: 2px; }
+    .au-past-card small { color: var(--smoke); font-size: 11px; letter-spacing: 1.5px; }
+    .au-past-card h4 { color: var(--ink); font-size: 15px; letter-spacing: 2px; font-weight: 800; margin: 4px 0 8px; }
+    .au-past-card .au-past-price { color: var(--clay); font-family: var(--latin); font-size: 22px; font-weight: 700; letter-spacing: .5px; }
+    .au-past-card .au-past-price em { font-size: 12px; color: var(--smoke); font-style: normal; margin-left: 6px; }
+    .au-past-card .au-past-buyer { display: inline-block; margin-top: 8px; padding: 2px 8px; background: rgba(185,151,91,.15); color: var(--clay); font-size: 11px; letter-spacing: 1px; }
+
+    /* 信任徽章 */
+    .au-trust { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding: 30px; background: linear-gradient(135deg, #fbf6ec, #fff); border: 1px solid var(--line); }
+    @media (max-width: 880px) { .au-trust { grid-template-columns: repeat(2, 1fr); padding: 20px; } }
+    .au-trust-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px; }
+    .au-trust-ico { width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .au-trust-item h4 { color: var(--ink); font-size: 14px; letter-spacing: 2px; font-weight: 800; margin-bottom: 6px; }
+    .au-trust-item p { color: var(--smoke); font-size: 12px; line-height: 1.7; }
+
+    /* FAQ */
+    .au-faq { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; }
+    @media (max-width: 880px) { .au-faq { grid-template-columns: 1fr; } }
+    .au-faq-item { padding: 18px 22px; background: #fff; border: 1px solid var(--line); transition: all .25s; cursor: pointer; }
+    .au-faq-item:hover { border-color: var(--gold); }
+    .au-faq-item h4 { color: var(--ink); font-size: 14px; letter-spacing: 2px; font-weight: 800; margin-bottom: 10px; padding-left: 22px; position: relative; }
+    .au-faq-item h4::before { content: "Q"; position: absolute; left: 0; top: -1px; width: 18px; height: 18px; line-height: 18px; text-align: center; background: var(--gold); color: #1c1812; font-family: var(--latin); font-size: 11px; border-radius: 50%; font-weight: 900; }
+    .au-faq-item p { color: var(--smoke); font-size: 13px; line-height: 1.8; padding-left: 22px; position: relative; letter-spacing: .5px; }
+    .au-faq-item p::before { content: "A"; position: absolute; left: 0; top: 1px; width: 18px; height: 18px; line-height: 18px; text-align: center; background: var(--clay); color: #fff; font-family: var(--latin); font-size: 11px; border-radius: 50%; font-weight: 900; }
+
+    /* CTA */
+    .au-cta { margin-top: 60px; padding: 50px 40px; background: linear-gradient(135deg, #1c1812 0%, #2a1f15 100%); color: var(--cream); text-align: center; border-radius: 2px; position: relative; overflow: hidden; }
+    .au-cta::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 100%, rgba(185,151,91,.18), transparent 70%); pointer-events: none; }
+    .au-cta > * { position: relative; }
+    .au-cta h3 { font-size: 26px; letter-spacing: 5px; font-weight: 800; margin-bottom: 14px; }
+    .au-cta p { color: rgba(255,249,237,.65); font-size: 14px; line-height: 1.9; max-width: 540px; margin: 0 auto 24px; letter-spacing: 1px; }
+    .au-cta-actions { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+      /* 个人中心侧边栏 */
+    .shell { width: min(1240px, calc(100vw - 48px)); margin: 0 auto; }
+
+
+    .topbar {
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 60;
+
+      border-bottom: 1px solid var(--line-dark);
+
+      background: rgba(23, 20, 17, .91);
+
+      color: var(--cream);
+
+      backdrop-filter: blur(18px);
+
+    }
+
+    .nav {
+
+      min-height: 76px;
+
+      display: grid;
+
+      grid-template-columns: auto 1fr auto;
+
+      align-items: center;
+
+      gap: 28px;
+
+    }
+
+    .brand { display: flex; align-items: center; gap: 14px; min-width: max-content; color: var(--cream); text-decoration: none; }
+
+    .brand-mark {
+
+      position: relative;
+
+      width: 48px;
+
+      height: 48px;
+
+      border-radius: 50%;
+
+      overflow: hidden;
+
+      flex-shrink: 0;
+
+      box-shadow: 0 0 0 2px rgba(185,151,91,.45), 0 0 14px rgba(185,151,91,.15);
+
+    }
+
+    .brand-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .brand-mark::after { display: none; }
+
+    .brand strong { display: block; font-size: 21px; letter-spacing: 5px; font-weight: 900; }
+
+    .brand span span { display: block; margin-top: 3px; color: rgba(255,249,237,.58); font-family: var(--latin); font-size: 12px; letter-spacing: 4px; text-transform: uppercase; }
+
+    .navlinks { display: flex; justify-content: center; gap: 24px; color: rgba(255,249,237,.74); font-size: 14px; letter-spacing: 2px; }
+
+    .navlinks a { position: relative; white-space: nowrap; transition: color .25s ease; text-decoration: none; color: inherit; }
+
+    .navlinks a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -12px; height: 1px; background: var(--gold); transition: right .25s ease; }
+
+    .navlinks a:hover { color: var(--gold); }
+
+    .navlinks a:hover::after { right: 0; }
+
+    .nav-avatar {
+
+      width: 42px;
+
+      height: 42px;
+
+      border-radius: 50%;
+
+      border: 2px solid rgba(185,151,91,.6);
+
+      overflow: hidden;
+
+      cursor: pointer;
+
+      flex-shrink: 0;
+
+      background: rgba(185,151,91,.18);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      transition: border-color .2s;
+
+    }
+
+    .nav-avatar:hover { border-color: var(--gold); }
+
+    .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .nav-avatar-placeholder {
+
+      width: 22px;
+
+      height: 22px;
+
+      fill: rgba(255,249,237,.6);
+
+    }
+
+    /* 个人中心侧边栏 */
+
+    .profile-overlay {
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 200;
+
+      background: rgba(23,20,17,.45);
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: opacity .3s ease;
+
+    }
+
+    .profile-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .profile-sidebar {
+
+      position: fixed;
+
+      top: 0;
+
+      right: 0;
+
+      bottom: 0;
+
+      width: 320px;
+
+      z-index: 201;
+
+      background: #1c1812;
+
+      border-left: 1px solid rgba(185,151,91,.2);
+
+      display: flex;
+
+      flex-direction: column;
+
+      transform: translateX(100%);
+
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+
+      overflow-y: auto;
+
+    }
+
+    .profile-sidebar.open { transform: translateX(0); }
+
+    .profile-sidebar-header {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 22px 24px 18px;
+
+      border-bottom: 1px solid rgba(185,151,91,.15);
+
+    }
+
+    .profile-sidebar-header span {
+
+      color: var(--gold);
+
+      font-size: 15px;
+
+      letter-spacing: 3px;
+
+      font-weight: 900;
+
+    }
+
+    .profile-close {
+
+      width: 32px;
+
+      height: 32px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      cursor: pointer;
+
+      color: rgba(255,249,237,.5);
+
+      font-size: 20px;
+
+      border-radius: 4px;
+
+      transition: color .2s;
+
+    }
+
+    .profile-close:hover { color: var(--gold); }
+
+    .profile-user-block {
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 32px 24px 24px;
+
+      border-bottom: 1px solid rgba(185,151,91,.1);
+
+    }
+
+    .profile-avatar-large {
+
+      width: 80px;
+
+      height: 80px;
+
+      border-radius: 50%;
+
+      border: 2px solid rgba(185,151,91,.5);
+
+      overflow: hidden;
+
+      background: rgba(185,151,91,.15);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      cursor: pointer;
+
+      position: relative;
+
+    }
+
+    .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
+
+    .profile-avatar-large:hover::after {
+
+      content: "更换头像";
+
+      position: absolute;
+
+      inset: 0;
+
+      background: rgba(23,20,17,.6);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      color: var(--gold);
+
+      font-size: 12px;
+
+      letter-spacing: 1px;
+
+      border-radius: 50%;
+
+    }
+
+    .profile-username {
+
+      color: var(--cream);
+
+      font-size: 16px;
+
+      letter-spacing: 2px;
+
+      font-weight: 700;
+
+    }
+
+    .profile-tag {
+
+      color: rgba(255,249,237,.42);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+    }
+
+    .profile-upload-input { display: none; }
+
+    .profile-menu {
+
+      display: flex;
+
+      flex-direction: column;
+
+      padding: 16px 0;
+
+    }
+
+    .profile-menu a {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
+      padding: 14px 24px;
+
+      color: rgba(255,249,237,.7);
+
+      font-size: 14px;
+
+      letter-spacing: 1px;
+
+      transition: background .2s, color .2s;
+
+      border-left: 2px solid transparent;
+
+      text-decoration: none;
+
+    }
+
+    .profile-menu a:hover {
+
+      background: rgba(185,151,91,.08);
+
+      color: var(--gold);
+
+      border-left-color: var(--gold);
+
+    }
+
+    .profile-menu a svg { opacity: .6; flex-shrink: 0; }
+
+
+
+    /* 账户子面板 */
+
+    .profile-panel { display: none; flex-direction: column; flex: 1; }
+
+    .profile-panel.active { display: flex; }
+
+    .profile-panel-back {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      padding: 14px 24px;
+
+      color: rgba(255,249,237,.5);
+
+      font-size: 13px;
+
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      border-bottom: 1px solid rgba(185,151,91,.1);
+
+      transition: color .2s;
+
+    }
+
+    .profile-panel-back:hover { color: var(--gold); }
+
+    .account-balance-card {
+
+      margin: 20px 20px 0;
+
+      padding: 20px;
+
+      background: linear-gradient(135deg, rgba(185,151,91,.18), rgba(185,151,91,.06));
+
+      border: 1px solid rgba(185,151,91,.25);
+
+      border-radius: 4px;
+
+    }
+
+    .account-balance-card small {
+
+      display: block;
+
+      color: rgba(255,249,237,.45);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 8px;
+
+    }
+
+    .account-balance-amount {
+
+      font-size: 32px;
+
+      color: var(--gold);
+
+      font-weight: 700;
+
+      font-family: var(--latin);
+
+      letter-spacing: 1px;
+
+    }
+
+    .account-balance-amount span {
+
+      font-size: 14px;
+
+      margin-right: 4px;
+
+      opacity: .7;
+
+    }
+
+    .account-section-title {
+
+      padding: 20px 20px 10px;
+
+      color: rgba(255,249,237,.4);
+
+      font-size: 12px;
+
+      letter-spacing: 2px;
+
+    }
+
+    .topup-grid {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 8px;
+
+      padding: 0 20px;
+
+    }
+
+    .topup-btn {
+
+      padding: 10px 0;
+
+      text-align: center;
+
+      border: 1px solid rgba(185,151,91,.25);
+
+      color: rgba(255,249,237,.7);
+
+      font-size: 14px;
+
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      background: rgba(185,151,91,.06);
+
+      border-radius: 2px;
+
+      transition: background .2s, color .2s, border-color .2s;
+
+    }
+
+    .topup-btn:hover { background: rgba(185,151,91,.18); color: var(--gold); border-color: rgba(185,151,91,.5); }
+
+    .topup-btn.selected { background: rgba(185,151,91,.22); color: var(--gold); border-color: var(--gold); }
+
+    .topup-custom {
+
+      margin: 10px 20px 0;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 0;
+
+      border: 1px solid rgba(185,151,91,.2);
+
+    }
+
+    .topup-custom span {
+
+      padding: 0 12px;
+
+      color: rgba(255,249,237,.4);
+
+      font-size: 14px;
+
+      background: rgba(185,151,91,.08);
+
+      height: 38px;
+
+      display: flex;
+
+      align-items: center;
+
+      border-right: 1px solid rgba(185,151,91,.2);
+
+    }
+
+    .topup-custom input {
+
+      flex: 1;
+
+      height: 38px;
+
+      background: transparent;
+
+      border: none;
+
+      outline: none;
+
+      color: var(--cream);
+
+      font-size: 14px;
+
+      padding: 0 12px;
+
+      font-family: var(--serif);
+
+    }
+
+    .topup-custom input::placeholder { color: rgba(255,249,237,.25); }
+
+    .topup-confirm {
+
+      margin: 14px 20px 20px;
+
+      width: calc(100% - 40px);
+
+      padding: 12px 0;
+
+      background: var(--gold);
+
+      color: var(--ink);
+
+      font-size: 14px;
+
+      font-weight: 900;
+
+      letter-spacing: 3px;
+
+      border: none;
+
+      cursor: pointer;
+
+      transition: opacity .2s;
+
+    }
+
+    .topup-confirm:hover { opacity: .85; }
+
+    .account-info-list {
+
+      padding: 0 20px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 0;
+
+    }
+
+    .account-info-row {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      padding: 12px 0;
+
+      border-bottom: 1px solid rgba(185,151,91,.08);
+
+      font-size: 13px;
+
+      color: rgba(255,249,237,.6);
+
+    }
+
+    .account-info-row:last-child { border-bottom: none; }
+
+    .account-info-row strong { color: rgba(255,249,237,.85); font-weight: 400; }
+
+
+
+    /* 订单卡片 */
+
+    .order-card {
+
+      margin: 0 20px 12px;
+
+      border: 1px solid rgba(185,151,91,.18);
+
+      background: rgba(185,151,91,.05);
+
+    }
+
+    .order-card-header {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      padding: 10px 14px;
+
+      border-bottom: 1px solid rgba(185,151,91,.12);
+
+    }
+
+    .order-card-header small { color: rgba(255,249,237,.35); font-size: 11px; letter-spacing: 1px; }
+
+    .order-status { font-size: 12px; letter-spacing: 1px; }
+
+    .order-status.delivering { color: #7eb8a4; }
+
+    .order-status.done { color: rgba(255,249,237,.4); }
+
+    .order-status.pending { color: var(--gold); }
+
+    .order-product-row {
+
+      display: flex;
+
+      gap: 12px;
+
+      padding: 12px 14px;
+
+      align-items: center;
+
+      border-bottom: 1px solid rgba(185,151,91,.08);
+
+    }
+
+    .order-product-row img {
+
+      width: 52px;
+
+      height: 52px;
+
+      object-fit: cover;
+
+      flex-shrink: 0;
+
+      opacity: .9;
+
+    }
+
+    .order-product-info { flex: 1; min-width: 0; }
+
+    .order-product-info h4 { color: rgba(255,249,237,.85); font-size: 13px; font-weight: 400; letter-spacing: 1px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .order-product-info span { color: rgba(255,249,237,.35); font-size: 12px; }
+
+    .order-product-price { color: var(--gold); font-size: 14px; font-family: var(--latin); flex-shrink: 0; }
+
+    .order-logistics {
+
+      padding: 12px 14px;
+
+    }
+
+    .order-logistics-title { color: rgba(255,249,237,.35); font-size: 11px; letter-spacing: 2px; margin-bottom: 10px; }
+
+    .logistics-track { display: flex; flex-direction: column; gap: 0; position: relative; }
+
+    .logistics-track::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: rgba(185,151,91,.2); }
+
+    .logistics-step { display: flex; gap: 14px; align-items: flex-start; position: relative; padding-bottom: 10px; }
+
+    .logistics-step:last-child { padding-bottom: 0; }
+
+    .logistics-dot { width: 11px; height: 11px; border-radius: 50%; border: 1px solid rgba(185,151,91,.4); background: #1c1812; flex-shrink: 0; margin-top: 2px; position: relative; z-index: 1; }
+
+    .logistics-step.active .logistics-dot { background: var(--gold); border-color: var(--gold); }
+
+    .logistics-step-body {}
+
+    .logistics-step-body p { font-size: 12px; color: rgba(255,249,237,.65); letter-spacing: .5px; margin-bottom: 2px; }
+
+    .logistics-step-body small { font-size: 11px; color: rgba(255,249,237,.3); }
+
+    /* ======= 任务一：缩略图切换增强 ======= */
+    .au-lot-thumbs { position: absolute; left: 20px; bottom: 20px; display: flex; gap: 8px; z-index: 2; }
+    .au-lot-thumbs span { width: 56px; height: 56px; border-radius: 4px; background-size: cover; background-position: center; border: 2px solid transparent; cursor: pointer; opacity: .65; transition: all .2s; display: inline-block; }
+    .au-lot-thumbs span.active { border-color: var(--gold); opacity: 1; }
+    .au-lot-thumbs span:hover { opacity: 1; }
+
+    /* ======= 任务二：侧边列表状态标签 ======= */
+    .au-lot-card { position: relative; }
+    .au-lot-status { position: absolute; top: 8px; right: 8px; display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; font-size: 10px; letter-spacing: 1.5px; font-weight: 800; border-radius: 2px; }
+    .au-lot-status.live { background: var(--pine); color: #fff; }
+    .au-lot-status.live::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: #fff; animation: auBlink 1s infinite; flex-shrink: 0; }
+    .au-lot-status.soon { background: var(--gold); color: #1c1812; }
+    .au-lot-status.ended { background: var(--smoke); color: #fff; }
+    .au-lot-card.ended-lot { opacity: .72; }
+    .au-lot-card.ended-lot .au-lot-price { color: var(--smoke); }
+
+    /* ======= 任务三：日历提醒按钮增强 ======= */
+    .au-cal-remind { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; font-size: 12px; letter-spacing: 2px; font-weight: 700; border-radius: 2px; cursor: pointer; transition: all .25s; border: 1px solid var(--ink); color: var(--ink); background: transparent; }
+    .au-cal-remind.reminded { background: var(--gold); color: #1c1812; border-color: var(--gold); }
+    .au-cal-remind.reminded::before { content: "✓ "; }
+    .au-cal-past-text { font-size: 12px; color: var(--smoke); letter-spacing: 1.5px; }
+
+    /* ======= 任务四：余额提示行 ======= */
+    .au-balance-tip { font-size: 12px; color: var(--smoke); letter-spacing: 1px; padding: 8px 10px; background: rgba(185,151,91,.06); border-left: 2px solid var(--gold); margin-bottom: 2px; }
+    .au-balance-tip strong { color: var(--clay); font-family: var(--latin); font-weight: 700; }
+
+    /* ======= 任务六：订阅 Modal ======= */
+    .au-modal-overlay { position: fixed; inset: 0; background: rgba(20,16,12,.72); z-index: 9000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .25s; }
+    .au-modal-overlay.open { opacity: 1; pointer-events: auto; }
+    .au-modal { background: #1c1812; border: 1px solid rgba(185,151,91,.5); width: 90%; max-width: 420px; padding: 40px 36px 36px; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,.6); transform: translateY(20px); transition: transform .25s; }
+    .au-modal-overlay.open .au-modal { transform: translateY(0); }
+    .au-modal-close { position: absolute; top: 16px; right: 20px; color: rgba(255,249,237,.4); cursor: pointer; font-size: 20px; line-height: 1; background: none; border: none; transition: color .2s; }
+    .au-modal-close:hover { color: var(--gold); }
+    .au-modal-eyebrow { font-family: var(--latin); font-size: 11px; letter-spacing: 4px; color: var(--gold); margin-bottom: 10px; display: block; }
+    .au-modal h3 { font-size: 22px; letter-spacing: 4px; color: var(--cream); font-weight: 900; margin-bottom: 10px; }
+    .au-modal p { font-size: 13px; color: rgba(255,249,237,.55); line-height: 1.8; letter-spacing: 1px; margin-bottom: 22px; }
+    .au-modal-input { width: 100%; box-sizing: border-box; background: rgba(255,249,237,.06); border: 1px solid rgba(185,151,91,.3); color: var(--cream); font-family: var(--serif); font-size: 14px; padding: 12px 14px; outline: none; letter-spacing: 1px; margin-bottom: 14px; transition: border-color .2s; }
+    .au-modal-input:focus { border-color: var(--gold); }
+    .au-modal-input::placeholder { color: rgba(255,249,237,.25); }
+    .au-modal-submit { width: 100%; padding: 13px 0; background: var(--gold); color: #1c1812; font-size: 13px; font-weight: 900; letter-spacing: 3px; border: none; cursor: pointer; transition: opacity .2s; }
+    .au-modal-submit:hover { opacity: .85; }
+
+    /* ======= 任务七：移动端横滑 ======= */
+    @media (max-width: 760px) {
+      .au-lot-list { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 12px; scroll-snap-type: x mandatory; position: relative; }
+      .au-lot-list::-webkit-scrollbar { display: none; }
+      .au-lot-list { -ms-overflow-style: none; scrollbar-width: none; }
+      .au-lot-list::after { content: ""; position: absolute; right: 0; top: 0; bottom: 12px; width: 40px; background: linear-gradient(to left, var(--paper), transparent); pointer-events: none; }
+      .au-lot-card { scroll-snap-align: start; min-width: 220px; flex-shrink: 0; }
+    }
+
+    /* ======= 动画 keyframes ======= */
+    @keyframes auBlink { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+
+    /* ======= Task A1: 紧急倒计时 + 结果横幅 ======= */
+    .countdown--urgent .au-time-box { background: #2a1210; }
+    .countdown--urgent .au-time-box strong { color: var(--crimson); animation: urgentPulse 1s infinite; }
+    @keyframes urgentPulse { 0%,100%{opacity:1;} 50%{opacity:.45;} }
+    @media (prefers-reduced-motion:reduce) { .countdown--urgent .au-time-box strong { animation: none; } }
+
+    .au-result-banner { display: none; padding: 28px 24px; background: linear-gradient(135deg,#1c1812,#2a1f15); border: 1px solid rgba(185,151,91,.4); text-align: center; color: var(--cream); }
+    .au-result-banner.visible { display: block; }
+    .au-result-banner .rb-eyebrow { font-family: var(--latin); font-size: 11px; letter-spacing: 4px; color: var(--gold); margin-bottom: 10px; }
+    .au-result-banner .rb-price { font-family: var(--latin); font-size: 46px; font-weight: 700; color: var(--gold); line-height: 1; letter-spacing: 1px; margin: 12px 0 6px; }
+    .au-result-banner.unsold .rb-price { color: var(--smoke); }
+    .au-result-banner .rb-label { font-size: 15px; letter-spacing: 3px; color: rgba(255,249,237,.75); margin-bottom: 18px; }
+    .au-result-banner .rb-actions { display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .au-result-banner .rb-actions a { padding: 10px 22px; font-size: 12px; letter-spacing: 2.5px; font-weight: 700; border-radius: 2px; text-decoration: none; display: inline-block; }
+    .rb-btn-pay { background: var(--gold); color: #1c1812; }
+    .rb-btn-contact { color: var(--cream); border: 1px solid rgba(255,249,237,.3); }
+
+    .outbid-bar { position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-8px); z-index: 600; background: var(--crimson); color: #fff; padding: 11px 26px; font-size: 12px; letter-spacing: 2px; font-weight: 700; border-radius: 2px; box-shadow: 0 8px 24px rgba(168,77,52,.4); opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; white-space: nowrap; }
+    .outbid-bar.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ===== Task A2: 出价动画 ===== */
+    .au-price-now { position: relative; overflow: hidden; }
+    @keyframes priceSlideIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes priceFlash { 0%{background:rgba(185,151,91,.0);} 25%{background:rgba(185,151,91,.28);} 100%{background:rgba(185,151,91,.0);} }
+    .au-price-now.flash { animation: priceFlash .6s ease; border-radius: 4px; }
+    .au-price-now.flash strong { animation: priceSlideIn .35s ease both; }
+    @media (prefers-reduced-motion:reduce) { .au-price-now.flash, .au-price-now.flash strong { animation: none; } }
+  </style>
+
+<style id="num-feature-fix">
+  /* 让数字字体（--latin）使用整齐的等宽 lining 数字 */
+  body { font-feature-settings: "kern" 1, "liga" 1; }
+  [class*="num"], [class*="price"], [class*="amount"], [class*="bid"],
+  .number, strong, .au-history-amt, .mc-card-num em, .au-detail-cat,
+  .mc-progress-head strong, .mc-stat-body strong, .au-time-box strong,
+  .au-cal-date strong, .au-stat strong, .mc-points-now > div strong,
+  .mc-coupon-l strong, .mc-os-num, .mc-tool-dot, .mc-points-list .add,
+  .mc-points-list .sub, .au-price-now strong, .au-history-rank {
+    font-feature-settings: "tnum" 1, "lnum" 1, "ss01" 1;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+</style>
+
+  <link rel="stylesheet" href="site-fixes.css">
+</head>
+<body>
+  <header class="topbar">
+
+    <div class="shell nav">
+
+      <a class="brand" href="index.html" aria-label="方城特产百珍坊首页">
+
+        <span class="brand-mark"><img src="uploads/logo.png" alt="百珍坊logo"></span>
+
+        <span>
+
+          <strong>方城特产百珍坊</strong>
+
+          <span>Fangcheng Selected</span>
+
+        </span>
+
+      </a>
+
+      <nav class="navlinks" aria-label="主导航">
+        <a href="index.html">首页</a>
+        <a href="baizhen-collection.html">百珍荟萃</a>
+        <a class="active" href="auction.html">拍卖中心</a>
+      </nav>
+
+
+
+          <div class="nav-avatar" id="navAvatar" role="button" aria-label="个人中心" tabindex="0">
+
+      <img src="" alt="头像" id="navAvatarImg" style="display:none">
+
+      <svg class="nav-avatar-placeholder" id="navAvatarIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="rgba(255,249,237,.6)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,249,237,.5)"/></svg>
+
+    </div>
+
+    </div>
+
+  </header>
+
+  <!-- NAV -->
+<main class="au-main">
+
+    <!-- HERO -->
+    <section class="au-hero">
+      <div class="shell au-hero-grid">
+        <div>
+          <h1>方城百珍 · <em>春拍专场</em><br>风物入瓯，珍品入场</h1>
+          <p class="lead">从书房文房到工艺收藏，从地方风味到独山玉雕，方城百珍坊将散落民间的精品集结于此，依匠人脉络与市场公允透明竞拍，让每一件珍品都遇见真正懂它的人。</p>
+          <div class="au-hero-actions">
+            <a class="au-btn au-btn-pri" href="#au-stage">进入拍场
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a class="au-btn au-btn-ghost" href="#au-flow">参拍流程</a>
+          </div>
+          <div class="au-hero-tags">
+            <span><i>◆</i>每周三、六 20:00 开槌</span>
+            <span><i>◆</i>方城非遗工艺甄选</span>
+            <span><i>◆</i>百珍坊鉴定保真</span>
+          </div>
+        </div>
+        <div class="au-hero-visual">
+          <img src="uploads/stone-qingshi.jpg" alt="黄石砚">
+          <img src="uploads/product-shihou.jpg" alt="石猴">
+          <div class="au-hero-seal">春拍<br>开槌<small>SPRING 2024</small></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 数据条 -->
+    <section class="au-stats">
+      <div class="shell au-stats-grid">
+        <div class="au-stat">
+          <strong>3</strong>
+          <span>正在拍卖</span>
+        </div>
+        <div class="au-stat">
+          <strong>128</strong>
+          <span>注册藏家</span>
+        </div>
+        <div class="au-stat">
+          <strong><em>¥</em>86,420</strong>
+          <span>累计成交额</span>
+        </div>
+        <div class="au-stat">
+          <strong><em>¥</em>12,800</strong>
+          <span>最高单笔成交</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 主拍场 -->
+    <section class="au-section" id="au-stage">
+      <div class="shell">
+        <div class="au-section-head">
+          <div>
+            <span class="au-eyebrow">Live Auction</span>
+            <h2>今日主拍</h2>
+          </div>
+          <p>切换右侧拍品后，倒计时、当前价和出价记录会即时更新。本机数据仅作演示，正式上线后接入会员账户与保证金。</p>
+        </div>
+
+        <div class="au-stage-grid">
+          <!-- 主舞台 -->
+          <article class="au-stage">
+            <figure class="au-visual">
+              <img id="auctionImage" src="uploads/stone-qingshi.jpg" alt="竞拍拍品图片">
+              <figcaption class="au-lot-badge" id="auctionBadge">LOT 01</figcaption>
+              <span class="au-lot-watermark">FC</span>
+              <div class="au-lot-thumbs" id="lotThumbs"></div>
+            </figure>
+            <div class="au-detail">
+              <div class="au-detail-meta">
+                <span class="au-detail-cat" id="auctionCategory">文房雅器 · 黄石砚</span>
+                <strong class="au-detail-status live" id="auctionStatus">竞拍中</strong>
+              </div>
+              <h2 id="auctionTitle">方城黄石砚 · 山水纹藏砚</h2>
+              <p class="au-detail-desc" id="auctionDesc">纹理有山水走势，适合书房陈设与收藏赠礼。</p>
+
+              <div class="au-spec-row">
+                <div><small>产地</small><strong>河南方城</strong></div>
+                <div><small>年代</small><strong>当代精品</strong></div>
+                <div><small>认证</small><strong>百珍鉴真</strong></div>
+              </div>
+
+              <div class="au-price-row">
+                <div class="au-price-now">
+                  <small>当前出价 / CURRENT</small>
+                  <strong><i>¥</i><span id="currentBid">3680</span></strong>
+                </div>
+                <div class="au-price-step">
+                  最低加价 <em id="priceStep">¥200</em><br>
+                  共 <em id="bidCount">3</em> 次出价
+                </div>
+              </div>
+
+              <div class="au-time-grid">
+                <div class="au-time-box"><strong id="timeDay">00</strong><span>天</span></div>
+                <div class="au-time-box"><strong id="timeHour">00</strong><span>时</span></div>
+                <div class="au-time-box"><strong id="timeMinute">00</strong><span>分</span></div>
+                <div class="au-time-box"><strong id="timeSecond">00</strong><span>秒</span></div>
+              </div>
+
+              <p class="au-balance-tip" id="balanceTip">当前余额 <strong id="bidBalanceNum">¥0.00</strong> · 出价需冻结 10% 保证金</p>
+              <form id="bidForm">
+                <label class="au-bid-form">
+                  <input id="bidInput" type="number" min="0" step="1" aria-label="输入出价金额" placeholder="输入你的出价">
+                  <button type="submit">立即出价</button>
+                </label>
+              </form>
+              <div class="au-quick-bids" id="quickBids"></div>
+              <p class="au-bid-help" id="bidHelp">按最低加价出价，刷新页面也会保留本机记录。</p>
+
+              <!-- Task A1: 拍卖结果横幅 -->
+              <div class="au-result-banner" id="auctionResultBanner">
+                <p class="rb-eyebrow">AUCTION RESULT</p>
+                <div class="rb-price" id="rbPrice">¥0</div>
+                <p class="rb-label" id="rbLabel">本场拍卖已结束</p>
+                <div class="rb-actions">
+                  <a href="member-center.html" class="rb-btn-pay">立即支付</a>
+                  <a href="tel:4000000000" class="rb-btn-contact">联系专员</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 侧边 -->
+          <aside class="au-side">
+            <div class="au-lot-list" id="lotList" aria-label="拍品列表"></div>
+            <div class="au-history">
+              <div class="au-history-head">
+                <h3>实时出价</h3>
+                <em>LIVE</em>
+              </div>
+              <div class="au-history-list" id="bidHistory" aria-live="polite"></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- 拍卖日历 -->
+    <section class="au-section">
+      <div class="shell">
+        <div class="au-section-head">
+          <div>
+            <span class="au-eyebrow">Auction Calendar</span>
+            <h2>拍卖日程</h2>
+          </div>
+          <a class="au-btn au-btn-ghost" style="color:var(--ink);border-color:var(--ink);" href="#">订阅日历 →</a>
+        </div>
+        <div class="au-cal">
+          <div class="au-cal-card">
+            <div class="au-cal-date"><strong>06.22</strong><small>周六 · 20:00</small></div>
+            <h4>文房雅器专场</h4>
+            <p>方城黄石砚、笔墨纸砚精品 14 件，含名家题铭与限量首发。</p>
+            <div class="au-cal-foot"><small>● 即将开拍</small><a href="#au-stage">查看 →</a></div>
+          </div>
+          <div class="au-cal-card">
+            <div class="au-cal-date"><strong>06.26</strong><small>周三 · 20:00</small></div>
+            <h4>独山玉夜场</h4>
+            <p>独山玉精品 9 件，温润平安牌、把玩件、商务赠礼皆备。</p>
+            <div class="au-cal-foot"><small>● 火热预约</small><button class="au-cal-remind" type="button" data-session="2024-06-26-jade">提醒预约</button></div>
+          </div>
+          <div class="au-cal-card">
+            <div class="au-cal-date"><strong>06.29</strong><small>周六 · 20:00</small></div>
+            <h4>工艺民俗专场</h4>
+            <p>方城石猴、烙画葫芦、民俗手作 18 件，记录方城烟火气。</p>
+            <div class="au-cal-foot"><small>● 接受预拍</small><button class="au-cal-remind" type="button" data-session="2024-06-29-folk">提醒预约</button></div>
+          </div>
+          <div class="au-cal-card past">
+            <div class="au-cal-date"><strong>06.15</strong><small>周六 · 已结拍</small></div>
+            <h4>春季首拍 · 已结束</h4>
+            <p>10 件精品全部成交，总成交额 ¥12.8 万，溢价率 +18%。</p>
+            <div class="au-cal-foot"><small>● 已成交</small><span class="au-cal-past-text">已圆满结束</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 参拍流程 -->
+    <section class="au-section" id="au-flow">
+      <div class="shell">
+        <div class="au-section-head">
+          <div>
+            <span class="au-eyebrow">How to Bid</span>
+            <h2>参拍流程</h2>
+          </div>
+          <p>从注册认证到成交付款，5 步完成一次完整的拍卖体验，所有过程可追溯、可监督。</p>
+        </div>
+        <div class="au-flow">
+          <div class="au-flow-step">
+            <div class="au-flow-num">01</div>
+            <h4>实名注册</h4>
+            <p>使用手机号实名注册百珍坊会员账户，绑定常用收货地址。</p>
+          </div>
+          <div class="au-flow-step">
+            <div class="au-flow-num">02</div>
+            <h4>缴纳保证金</h4>
+            <p>按拍品起拍价的 10% 冻结保证金，未中拍立即解冻。</p>
+          </div>
+          <div class="au-flow-step">
+            <div class="au-flow-num">03</div>
+            <h4>实时出价</h4>
+            <p>开槌后按系统加价幅度出价，最后 60 秒延时机制防止抢拍。</p>
+          </div>
+          <div class="au-flow-step">
+            <div class="au-flow-num">04</div>
+            <h4>支付尾款</h4>
+            <p>成交后 48 小时内完成尾款支付，保证金自动抵扣。</p>
+          </div>
+          <div class="au-flow-step">
+            <div class="au-flow-num">05</div>
+            <h4>鉴定发货</h4>
+            <p>百珍坊出具鉴定证书，专人打包顺丰保价直送，支持 7 日复鉴。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 历史成交 -->
+    <section class="au-section" id="au-past">
+      <div class="shell">
+        <div class="au-section-head">
+          <div>
+            <span class="au-eyebrow">Past Records</span>
+            <h2>历史成交</h2>
+          </div>
+          <a class="au-btn au-btn-ghost" style="color:var(--ink);border-color:var(--ink);" href="#">全部记录 →</a>
+        </div>
+        <div class="au-past">
+          <div class="au-past-card">
+            <img src="uploads/product1.jpg" alt="">
+            <div>
+              <small>2024.06.15 · LOT 03</small>
+              <h4>方城黄石砚 · 紫袍玉带</h4>
+              <div class="au-past-price">¥ 12,800<em>溢价 +52%</em></div>
+              <span class="au-past-buyer">藏家 · 沪上书坊</span>
+            </div>
+          </div>
+          <div class="au-past-card">
+            <img src="uploads/product-jade.jpg" alt="">
+            <div>
+              <small>2024.06.08 · LOT 07</small>
+              <h4>独山玉 · 福寿牌</h4>
+              <div class="au-past-price">¥ 6,420<em>溢价 +28%</em></div>
+              <span class="au-past-buyer">藏家 · 京华雅集</span>
+            </div>
+          </div>
+          <div class="au-past-card">
+            <img src="uploads/product-shihou.jpg" alt="">
+            <div>
+              <small>2024.05.25 · LOT 12</small>
+              <h4>方城石猴 · 守福组合</h4>
+              <div class="au-past-price">¥ 3,680<em>溢价 +18%</em></div>
+              <span class="au-past-buyer">藏家 · 南阳张府</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 信任保障 -->
+    <section class="au-section">
+      <div class="shell">
+        <div class="au-section-head">
+          <div>
+            <span class="au-eyebrow">Trust &amp; Guarantee</span>
+            <h2>信任保障</h2>
+          </div>
+          <p>百珍坊为每件拍品提供专业鉴定、资金托管、原物保险与七日复鉴四重保障。</p>
+        </div>
+        <div class="au-trust">
+          <div class="au-trust-item">
+            <div class="au-trust-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+            <div>
+              <h4>专家鉴真</h4>
+              <p>每件拍品经方城非遗专家、文物鉴定师双签复核，附鉴定证书。</p>
+            </div>
+          </div>
+          <div class="au-trust-item">
+            <div class="au-trust-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+            <div>
+              <h4>资金托管</h4>
+              <p>保证金与尾款均由第三方银行托管，未交付前买家资金安全锁定。</p>
+            </div>
+          </div>
+          <div class="au-trust-item">
+            <div class="au-trust-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 16V8l-9-5-9 5v8l9 5z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/></svg></div>
+            <div>
+              <h4>原物保险</h4>
+              <p>从打包到签收全程顺丰保价直送，含碎件全额理赔保险。</p>
+            </div>
+          </div>
+          <div class="au-trust-item">
+            <div class="au-trust-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 6.5 2.7L21 3"/><path d="M21 3v6h-6"/></svg></div>
+            <div>
+              <h4>七日复鉴</h4>
+              <p>签收后 7 日内可申请第三方机构复鉴，鉴定不符全额退款并赔付。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="au-section">
+      <div class="shell">
+        <div class="au-section-head">
+          <div>
+            <span class="au-eyebrow">FAQ</span>
+            <h2>常见问题</h2>
+          </div>
+          <a class="au-btn au-btn-ghost" style="color:var(--ink);border-color:var(--ink);" href="contact.html">人工客服 →</a>
+        </div>
+        <div class="au-faq">
+          <div class="au-faq-item">
+            <h4>保证金怎么收？是否会被冻结？</h4>
+            <p>按起拍价 10% 冻结，最低 ¥200。未中拍闭场后 1 小时内自动解冻；中拍后保证金自动抵扣尾款。</p>
+          </div>
+          <div class="au-faq-item">
+            <h4>最后几秒能否抢拍？</h4>
+            <p>系统启用延时机制，最后 60 秒内任意一次有效出价都会重置倒计时为 60 秒，确保公平。</p>
+          </div>
+          <div class="au-faq-item">
+            <h4>拍下后多久必须付款？</h4>
+            <p>成交后 48 小时内须完成尾款支付，逾期视为自动放弃，保证金不予退还，并影响信用评级。</p>
+          </div>
+          <div class="au-faq-item">
+            <h4>如何确认拍品真伪？</h4>
+            <p>每件拍品附《百珍坊鉴定证书》和高清细节图；签收后 7 日内可申请第三方复鉴，全程留痕可追溯。</p>
+          </div>
+          <div class="au-faq-item">
+            <h4>是否可以委托代拍？</h4>
+            <p>钻石及以上会员可申请专属管家代拍服务，提前提交心理价位，由百珍坊客服严格执行。</p>
+          </div>
+          <div class="au-faq-item">
+            <h4>发货与运输如何保障？</h4>
+            <p>百珍坊统一打包为防震礼盒，全程顺丰保价直送，重要拍品可申请专人专车押运至同城。</p>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="au-cta">
+          <h3>成为百珍坊认证藏家</h3>
+          <p>注册即可订阅每周拍卖预告、独享会员专享场次，钻石会员更可获得专属藏品鉴赏与管家代拍服务。</p>
+          <div class="au-cta-actions">
+            <a class="au-btn au-btn-pri" href="member-center.html">免费注册</a>
+            <a class="au-btn au-btn-ghost" href="contact.html">联系客服</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    var auctionLots = [
+      { id: 'lot-yan', lotNo: 'LOT 01', title: '方城黄石砚 · 山水纹藏砚', category: '文房雅器 · 黄石砚', desc: '纹理有山水走势，适合书房陈设与收藏赠礼。当前为桌面展示版模拟竞拍，出价记录会保存在本机浏览器。', image: 'uploads/stone-qingshi.jpg', currentBid: 3680, step: 200, endOffset: 1000 * 60 * 60 * 7 + 1000 * 60 * 24, history: [{ name: '藏家 1027', amount: 3680, time: '刚刚' }, { name: '方城客商', amount: 3480, time: '12 分钟前' }, { name: '书房买手', amount: 3280, time: '28 分钟前' }] },
+      { id: 'lot-shihou', lotNo: 'LOT 02', title: '方城石猴 · 案头守福摆件', category: '工艺收藏 · 石猴', desc: '地方工艺小件，造型朴拙有趣，适合作为办公室案头陈设或伴手礼中的记忆点。', image: 'uploads/product-shihou.jpg', currentBid: 1380, step: 100, endOffset: 1000 * 60 * 60 * 12 + 1000 * 60 * 6, history: [{ name: '南阳藏友', amount: 1380, time: '5 分钟前' }, { name: '礼盒采购', amount: 1180, time: '21 分钟前' }, { name: '工艺玩家', amount: 980, time: '41 分钟前' }] },
+      { id: 'lot-jade', lotNo: 'LOT 03', title: '独山玉件 · 温润平安牌', category: '工艺收藏 · 玉器', desc: '温润雅致的小件玉牌，适合商务赠礼和收藏陈列，展示版支持本机模拟连续加价。', image: 'uploads/product-jade.jpg', currentBid: 2080, step: 150, endOffset: 1000 * 60 * 60 * 20 + 1000 * 60 * 42, history: [{ name: '企业礼赠', amount: 2080, time: '8 分钟前' }, { name: '玉器藏客', amount: 1880, time: '35 分钟前' }, { name: '百珍会员', amount: 1680, time: '52 分钟前' }] }
+    ];
+    var auctionState = { activeId: 'lot-yan', lots: {} };
+    var auctionStorageKey = 'baizhenfang-auction-page-v1';
+    function formatMoney(value) { return '¥' + Number(value || 0).toLocaleString('zh-CN'); }
+    function getBaseLot(id) { return auctionLots.find(function(lot) { return lot.id === id; }) || auctionLots[0]; }
+    function getLot(id) { var base = getBaseLot(id); var saved = auctionState.lots[id] || {}; return Object.assign({}, base, saved, { history: saved.history || base.history, endAt: saved.endAt || (Date.now() + base.endOffset) }); }
+    function saveState() { try { localStorage.setItem(auctionStorageKey, JSON.stringify(auctionState)); } catch (error) {} }
+    function loadState() { try { var raw = localStorage.getItem(auctionStorageKey); if (raw) auctionState = Object.assign(auctionState, JSON.parse(raw)); } catch (error) {} auctionLots.forEach(function(lot) { if (!auctionState.lots[lot.id]) auctionState.lots[lot.id] = { currentBid: lot.currentBid, history: lot.history, endAt: Date.now() + lot.endOffset }; }); saveState(); }
+    function resolveAuction(lot) {
+      var saved = auctionState.lots[lot.id] || {};
+      if (saved.resolved) return;
+      var hasBid = lot.history && lot.history.length > 0 && lot.currentBid > 0;
+      var outcome = hasBid ? 'sold' : 'unsold';
+      auctionState.lots[lot.id] = Object.assign({}, saved, { resolved: true, outcome: outcome });
+      saveState();
+      showResultBanner(lot, outcome);
+    }
+    function showResultBanner(lot, outcome) {
+      var banner = document.getElementById('auctionResultBanner');
+      var bidForm = document.getElementById('bidForm');
+      var quickBids = document.getElementById('quickBids');
+      var balanceTip = document.querySelector('.au-balance-tip');
+      if (!banner) return;
+      banner.className = 'au-result-banner visible ' + outcome;
+      var priceEl = document.getElementById('rbPrice');
+      var labelEl = document.getElementById('rbLabel');
+      if (outcome === 'sold') {
+        if (priceEl) priceEl.textContent = '\xa5' + Number(lot.currentBid).toLocaleString('zh-CN');
+        if (labelEl) labelEl.textContent = '恭喜，本场拍品已成交';
+        banner.querySelector('.rb-btn-pay').style.display = '';
+      } else {
+        if (priceEl) priceEl.textContent = '— —';
+        if (labelEl) labelEl.textContent = '本场拍品流拍';
+        var payBtn = banner.querySelector('.rb-btn-pay');
+        if (payBtn) payBtn.style.display = 'none';
+      }
+      if (bidForm) bidForm.style.display = 'none';
+      if (quickBids) quickBids.style.display = 'none';
+      if (balanceTip) balanceTip.style.display = 'none';
+      var statusEl = document.getElementById('auctionStatus');
+      if (statusEl) { statusEl.textContent = outcome === 'sold' ? '已成交' : '已流拍'; statusEl.className = 'au-detail-status'; }
+    }
+    var _resolvedTick = {};
+    function renderCountdown(lot) {
+      var remain = Math.max(0, lot.endAt - Date.now());
+      var day = Math.floor(remain / 86400000);
+      var hour = Math.floor((remain % 86400000) / 3600000);
+      var minute = Math.floor((remain % 3600000) / 60000);
+      var second = Math.floor((remain % 60000) / 1000);
+      [['timeDay', day], ['timeHour', hour], ['timeMinute', minute], ['timeSecond', second]].forEach(function(part) {
+        var node = document.getElementById(part[0]); if (node) node.textContent = String(part[1]).padStart(2, '0');
+      });
+      var timeGrid = document.querySelector('.au-time-grid');
+      if (timeGrid) {
+        if (remain > 0 && remain <= 60000) timeGrid.classList.add('countdown--urgent');
+        else timeGrid.classList.remove('countdown--urgent');
+      }
+      var status = document.getElementById('auctionStatus');
+      if (status && remain > 0) status.textContent = '竞拍中';
+      if (remain === 0 && !_resolvedTick[lot.id]) {
+        _resolvedTick[lot.id] = true;
+        resolveAuction(lot);
+      }
+    }
+    function renderLotList() {
+      var lotList = document.getElementById('lotList');
+      lotList.innerHTML = auctionLots.map(function(lot) {
+        var merged = getLot(lot.id);
+        var activeClass = lot.id === auctionState.activeId ? ' active' : '';
+        return '<button class="au-lot-card' + activeClass + '" type="button" data-lot="' + lot.id + '">'
+          + '<img src="' + lot.image + '" alt="' + lot.title + '">'
+          + '<div class="au-lot-info">'
+          + '<small>' + lot.lotNo + '</small>'
+          + '<h4>' + lot.title + '</h4>'
+          + '<div class="au-lot-price">' + formatMoney(merged.currentBid) + '</div>'
+          + '</div></button>';
+      }).join('');
+      Array.prototype.slice.call(lotList.querySelectorAll('[data-lot]')).forEach(function(button) {
+        button.addEventListener('click', function() {
+          auctionState.activeId = button.dataset.lot;
+          saveState();
+          renderAuction();
+        });
+      });
+    }
+    function renderBidHistory(lot) {
+      document.getElementById('bidHistory').innerHTML = lot.history.map(function(item, idx) {
+        var rank = idx === 0 ? '<em class="au-history-rank top">领先</em>' : '<em class="au-history-rank">#' + (idx + 1) + '</em>';
+        return '<div class="au-history-row">'
+          + rank
+          + '<div class="au-history-name"><strong>' + item.name + '</strong><small>' + item.time + '</small></div>'
+          + '<span class="au-history-amt">' + formatMoney(item.amount) + '</span>'
+          + '</div>';
+      }).join('');
+    }
+    function renderQuickBids(lot) {
+      var box = document.getElementById('quickBids');
+      if (!box) return;
+      var steps = [1, 2, 5];
+      box.innerHTML = steps.map(function(n) {
+        var v = lot.currentBid + lot.step * n;
+        return '<button type="button" class="au-quick-bid" data-amt="' + v + '">+' + formatMoney(lot.step * n).replace('¥','¥') + ' <small>(' + formatMoney(v) + ')</small></button>';
+      }).join('');
+      Array.prototype.slice.call(box.querySelectorAll('[data-amt]')).forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          document.getElementById('bidInput').value = btn.dataset.amt;
+        });
+      });
+    }
+    function renderAuction() {
+      var lot = getLot(auctionState.activeId);
+      document.getElementById('auctionImage').src = lot.image;
+      document.getElementById('auctionImage').alt = lot.title;
+      document.getElementById('auctionBadge').textContent = lot.lotNo;
+      document.getElementById('auctionCategory').textContent = lot.category;
+      document.getElementById('auctionTitle').textContent = lot.title;
+      document.getElementById('auctionDesc').textContent = lot.desc;
+      document.getElementById('currentBid').textContent = Number(lot.currentBid).toLocaleString('zh-CN');
+      var stepNode = document.getElementById('priceStep');
+      if (stepNode) stepNode.textContent = formatMoney(lot.step);
+      var countNode = document.getElementById('bidCount');
+      if (countNode) countNode.textContent = (lot.history || []).length;
+      var input = document.getElementById('bidInput');
+      input.min = lot.currentBid + lot.step;
+      input.placeholder = '最低 ' + formatMoney(lot.currentBid + lot.step);
+      renderCountdown(lot);
+      renderLotList();
+      renderBidHistory(lot);
+      renderQuickBids(lot);
+      // Task A1: restore result banner if lot already resolved
+      var savedLot = auctionState.lots[lot.id] || {};
+      var bidForm = document.getElementById('bidForm');
+      var quickBids = document.getElementById('quickBids');
+      var balanceTip = document.querySelector('.au-balance-tip');
+      var banner = document.getElementById('auctionResultBanner');
+      if (savedLot.resolved) {
+        showResultBanner(lot, savedLot.outcome);
+      } else {
+        if (banner) banner.className = 'au-result-banner';
+        if (bidForm) bidForm.style.display = '';
+        if (quickBids) quickBids.style.display = '';
+        if (balanceTip) balanceTip.style.display = '';
+        var statusEl = document.getElementById('auctionStatus');
+        if (statusEl) { statusEl.textContent = '竞拍中'; statusEl.className = 'au-detail-status live'; }
+      }
+    }
+    loadState(); renderAuction(); setInterval(function() { renderCountdown(getLot(auctionState.activeId)); }, 1000);
+    document.getElementById('bidForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var lot = getLot(auctionState.activeId);
+      var input = document.getElementById('bidInput');
+      var help = document.getElementById('bidHelp');
+      var value = Number(input.value);
+      var minimum = lot.currentBid + lot.step;
+      help.className = 'au-bid-help';
+      if (!value || value < minimum) {
+        help.textContent = '出价至少需要达到 ' + formatMoney(minimum) + '。';
+        help.classList.add('error');
+        return;
+      }
+      if (lot.endAt <= Date.now()) {
+        help.textContent = '这件拍品已结束，不能继续出价。';
+        help.classList.add('error');
+        return;
+      }
+      auctionState.lots[lot.id] = {
+        currentBid: value,
+        endAt: lot.endAt,
+        history: [{ name: '本机买家', amount: value, time: '刚刚' }].concat(lot.history).slice(0, 12)
+      };
+      input.value = '';
+      help.textContent = '出价成功，当前价已更新并保存到本机。';
+      help.classList.add('success');
+      saveState();
+      renderAuction();
+      // Task A2: 出价成功价格闪光动画
+      var priceNow = document.querySelector('.au-price-now');
+      if (priceNow) {
+        priceNow.classList.remove('flash');
+        void priceNow.offsetWidth; // reflow
+        priceNow.classList.add('flash');
+        setTimeout(function() { priceNow.classList.remove('flash'); }, 700);
+      }
+      // 出价成功后滚动历史列表到顶
+      var histList = document.getElementById('bidHistory');
+      if (histList) histList.scrollTop = 0;
+    });
+
+    // Task A2: 被超越提示横幅
+    (function() {
+      var bar = document.createElement('div');
+      bar.className = 'outbid-bar';
+      bar.id = 'outbidBar';
+      document.body.appendChild(bar);
+      var _outbidTimer = null;
+      window._showOutbid = function(newPrice) {
+        bar.textContent = '您已被超越，当前最高 ' + formatMoney(newPrice);
+        bar.classList.add('show');
+        clearTimeout(_outbidTimer);
+        _outbidTimer = setTimeout(function() { bar.classList.remove('show'); }, 6000);
+      };
+    })();
+  </script>
+
+  <footer class="footer">
+    <div class="shell footer-grid">
+      <div>
+        <h2>方城特产百珍坊</h2>
+        <p>一屏看清方城风物四大方向：文房雅器、方城美食、养生滋补、工艺收藏；更多故事、礼盒、竞拍和合作咨询进入独立页面细看。</p>
+      </div>
+      <div>
+        <h4>商品品类</h4>
+        <a href="cat-wenfang.html">文房雅器</a>
+        <a href="cat-meishi.html">方城美食</a>
+        <a href="cat-yangsheng.html">养生滋补</a>
+        <a href="cat-gongyi.html">工艺收藏</a>
+      </div>
+      <div>
+        <h4>功能页面</h4>
+        <a href="auction.html">珍品竞拍</a>
+        <a href="custom-gift.html">礼盒定制</a>
+        <a href="brand-story.html">品牌故事</a>
+        <a href="member-center.html">会员中心</a>
+        <a href="contact.html">联系合作</a>
+      </div>
+    </div>
+  </footer>
+
+
+
+<!-- 订阅日历 Modal（任务六） -->
+<div class="au-modal-overlay" id="auSubscribeModal" role="dialog" aria-modal="true" aria-labelledby="auModalTitle">
+  <div class="au-modal">
+    <button class="au-modal-close" id="auModalClose" aria-label="关闭">✕</button>
+    <span class="au-modal-eyebrow">AUCTION CALENDAR</span>
+    <h3 id="auModalTitle">订阅拍卖日历</h3>
+    <p>每场新专场开启前 48 小时，我们将第一时间向您推送拍品预览与开槌提醒，不错过任何珍品。</p>
+    <input class="au-modal-input" id="auSubscribeEmail" type="email" placeholder="请输入您的邮箱地址" autocomplete="email">
+    <button class="au-modal-submit" id="auSubscribeSubmit">确认订阅</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  /* ===== 任务一：多图缩略图切换 ===== */
+  // 为每个 lot 补充 images 字段（拍卖图 + 产品原图）
+  var lotImagesMap = {
+    'lot-yan':    ['uploads/stone-qingshi.jpg', 'uploads/auction1.jpg', 'uploads/product1.jpg'],
+    'lot-shihou': ['uploads/product-shihou.jpg', 'uploads/auction2.jpg'],
+    'lot-jade':   ['uploads/product-jade.jpg', 'uploads/auction3.jpg']
+  };
+
+  // 给 auctionLots 注入 images 字段
+  auctionLots.forEach(function(lot) {
+    if (!lot.images) lot.images = lotImagesMap[lot.id] || [lot.image];
+  });
+
+  // 扩展 renderAuction，填充 #lotThumbs 并绑定切换
+  var _origRenderAuction = renderAuction;
+  renderAuction = function() {
+    _origRenderAuction();
+    renderThumbs();
+    updateBalanceTip();
+  };
+
+  function renderThumbs() {
+    var lot = getLot(auctionState.activeId);
+    var baseLot = auctionLots.find(function(l) { return l.id === auctionState.activeId; });
+    var images = (baseLot && baseLot.images) ? baseLot.images : [lot.image];
+    var thumbs = document.getElementById('lotThumbs');
+    if (!thumbs) return;
+    var currentSrc = document.getElementById('auctionImage').src;
+    thumbs.innerHTML = images.map(function(src, i) {
+      var active = currentSrc.indexOf(src) !== -1 || (i === 0 && !images.some(function(s) { return currentSrc.indexOf(s) !== -1; }));
+      return '<span style="background-image:url(\'' + src + '\')" data-img="' + src + '" class="' + (active ? 'active' : '') + '" title="图片 ' + (i + 1) + '"></span>';
+    }).join('');
+    Array.prototype.slice.call(thumbs.querySelectorAll('[data-img]')).forEach(function(span) {
+      span.addEventListener('click', function() {
+        var mainImg = document.getElementById('auctionImage');
+        mainImg.src = span.dataset.img;
+        Array.prototype.slice.call(thumbs.querySelectorAll('span')).forEach(function(s) { s.classList.remove('active'); });
+        span.classList.add('active');
+      });
+    });
+  }
+
+  /* ===== 任务二：侧边列表动态状态标签 ===== */
+  var _origRenderLotList = renderLotList;
+  renderLotList = function() {
+    var lotList = document.getElementById('lotList');
+    lotList.innerHTML = auctionLots.map(function(lot) {
+      var merged = getLot(lot.id);
+      var activeClass = lot.id === auctionState.activeId ? ' active' : '';
+      var now = Date.now();
+      var remain = merged.endAt - now;
+      var statusLabel, statusClass, endedClass;
+      if (remain <= 0) {
+        statusLabel = '已结束'; statusClass = 'ended'; endedClass = ' ended-lot';
+      } else if (remain < 1000 * 60 * 30) {
+        statusLabel = '进行中'; statusClass = 'live'; endedClass = '';
+      } else {
+        statusLabel = '即将开始'; statusClass = 'soon'; endedClass = '';
+      }
+      // 覆盖：只要 endOffset 较小就算进行中（演示数据 lot-yan 最短）
+      if (lot.id === 'lot-yan' && remain > 0) { statusLabel = '进行中'; statusClass = 'live'; endedClass = ''; }
+      return '<button class="au-lot-card' + activeClass + endedClass + '" type="button" data-lot="' + lot.id + '">'
+        + '<img src="' + lot.image + '" alt="' + lot.title + '">'
+        + '<div class="au-lot-info">'
+        + '<small>' + lot.lotNo + '</small>'
+        + '<h4>' + lot.title + '</h4>'
+        + '<div class="au-lot-price">' + formatMoney(merged.currentBid) + '</div>'
+        + '</div>'
+        + '<span class="au-lot-status ' + statusClass + '">' + statusLabel + '</span>'
+        + '</button>';
+    }).join('');
+    Array.prototype.slice.call(lotList.querySelectorAll('[data-lot]')).forEach(function(button) {
+      button.addEventListener('click', function() {
+        auctionState.activeId = button.dataset.lot;
+        saveState();
+        renderAuction();
+      });
+    });
+  };
+
+  /* ===== 任务三：日历提醒按钮逻辑 ===== */
+  var REMINDER_KEY = 'baizhenfang-reminders';
+  function getReminders() {
+    try { return JSON.parse(localStorage.getItem(REMINDER_KEY) || '[]'); } catch(e) { return []; }
+  }
+  function saveReminders(list) {
+    try { localStorage.setItem(REMINDER_KEY, JSON.stringify(list)); } catch(e) {}
+  }
+  function initCalReminders() {
+    var btns = document.querySelectorAll('.au-cal-remind');
+    var reminded = getReminders();
+    btns.forEach(function(btn) {
+      var session = btn.dataset.session;
+      if (reminded.indexOf(session) !== -1) btn.classList.add('reminded');
+      btn.addEventListener('click', function() {
+        var list = getReminders();
+        var idx = list.indexOf(session);
+        if (idx === -1) {
+          list.push(session);
+          btn.classList.add('reminded');
+          btn.textContent = '已预约提醒';
+        } else {
+          list.splice(idx, 1);
+          btn.classList.remove('reminded');
+          btn.textContent = '提醒预约';
+        }
+        saveReminders(list);
+      });
+    });
+  }
+  initCalReminders();
+
+  /* ===== 任务四：余额与出价保证金联动 ===== */
+  function getBalance() {
+    try { return parseFloat(localStorage.getItem('baizhenfang_balance') || '0'); } catch(e) { return 0; }
+  }
+  function setBalance(val) {
+    try { localStorage.setItem('baizhenfang_balance', val.toFixed(2)); } catch(e) {}
+    // 同步侧边栏余额显示
+    var balNode = document.getElementById('balanceNum');
+    if (balNode) balNode.textContent = val.toFixed(2);
+  }
+  function updateBalanceTip() {
+    var bal = getBalance();
+    var lot = getLot(auctionState.activeId);
+    var deposit = Math.ceil(lot.currentBid * 0.1);
+    var node = document.getElementById('bidBalanceNum');
+    if (node) node.textContent = '¥' + bal.toFixed(2);
+    var tip = document.getElementById('balanceTip');
+    if (tip) {
+      tip.style.borderLeftColor = bal >= deposit ? 'var(--gold)' : 'var(--crimson)';
+    }
+  }
+  updateBalanceTip();
+
+  // 拦截原 bidForm submit，注入余额检查
+  var bidFormEl = document.getElementById('bidForm');
+  if (bidFormEl) {
+    var _origSubmitHandlers = [];
+    // 替换 submit 监听（原脚本已绑定，追加拦截层）
+    bidFormEl.addEventListener('submit', function(event) {
+      // 若原处理程序已取消默认行为，此处仍可继续检查余额
+      var lot = getLot(auctionState.activeId);
+      var value = Number(document.getElementById('bidInput').value);
+      var minimum = lot.currentBid + lot.step;
+      var help = document.getElementById('bidHelp');
+      if (!value || value < minimum) return; // 原脚本会处理错误提示
+      if (lot.endAt <= Date.now()) return;
+      var deposit = Math.ceil(value * 0.1);
+      var bal = getBalance();
+      if (bal < deposit) {
+        event.stopImmediatePropagation();
+        help.className = 'au-bid-help error';
+        help.textContent = '余额不足，出价需冻结保证金 ¥' + deposit + '，当前余额 ¥' + bal.toFixed(2) + '。请先充值。';
+        // 触发充值面板：打开侧边栏并切换到账户子面板
+        var navAvatar = document.getElementById('navAvatar');
+        var menuAccount = document.getElementById('menuAccount');
+        if (navAvatar) navAvatar.click();
+        setTimeout(function() { if (menuAccount) menuAccount.click(); }, 150);
+        return;
+      }
+      // 余额充足：扣除保证金
+      var newBal = bal - deposit;
+      setBalance(newBal);
+      updateBalanceTip();
+    }, true); // capture=true 保证在原 submit 之前触发
+  }
+
+  // 每次打开侧边栏刷新 balanceTip
+  var navAvatarOuter = document.getElementById('navAvatar');
+  if (navAvatarOuter) {
+    navAvatarOuter.addEventListener('click', function() {
+      setTimeout(updateBalanceTip, 100);
+    });
+  }
+
+  /* ===== 任务五：历史成交数据动态化 ===== */
+  function renderPastRecords() {
+    var pastSection = document.querySelector('#au-past .au-past');
+    if (!pastSection) return;
+
+    // 聚合所有 lot 的 history 为成交记录
+    var records = [];
+    auctionLots.forEach(function(lot) {
+      var merged = getLot(lot.id);
+      var hist = merged.history || [];
+      hist.forEach(function(item, idx) {
+        if (idx === 0) { // 仅取最高价（领先出价）
+          records.push({
+            image: lot.image,
+            lotNo: lot.lotNo,
+            title: lot.title,
+            amount: item.amount,
+            buyer: item.name,
+            time: item.time
+          });
+        }
+      });
+    });
+
+    // 加入静态预设记录（原页面已有的历史数据）
+    var staticRecords = [
+      { image: 'uploads/product1.jpg', lotNo: 'LOT 03', title: '方城黄石砚 · 紫袍玉带', amount: 12800, buyer: '藏家 · 沪上书坊', time: '2024.06.15', premium: '+52%' },
+      { image: 'uploads/product-jade.jpg', lotNo: 'LOT 07', title: '独山玉 · 福寿牌', amount: 6420, buyer: '藏家 · 京华雅集', time: '2024.06.08', premium: '+28%' },
+      { image: 'uploads/product-shihou.jpg', lotNo: 'LOT 12', title: '方城石猴 · 守福组合', amount: 3680, buyer: '藏家 · 南阳张府', time: '2024.05.25', premium: '+18%' }
+    ];
+
+    // 合并动态出价记录到静态列表前面（若余额有出价）
+    var dynamicHtml = '';
+    records.forEach(function(r) {
+      if (r.buyer === '本机买家') {
+        dynamicHtml += '<div class="au-past-card" style="border-left:2px solid var(--gold)">'
+          + '<img src="' + r.image + '" alt="">'
+          + '<div>'
+          + '<small>' + r.time + ' · ' + r.lotNo + '</small>'
+          + '<h4>' + r.title + '</h4>'
+          + '<div class="au-past-price">¥ ' + Number(r.amount).toLocaleString('zh-CN') + '<em>本机出价</em></div>'
+          + '<span class="au-past-buyer">藏家 · ' + r.buyer + '</span>'
+          + '</div></div>';
+      }
+    });
+
+    var staticHtml = staticRecords.map(function(r) {
+      return '<div class="au-past-card">'
+        + '<img src="' + r.image + '" alt="">'
+        + '<div>'
+        + '<small>' + r.time + ' · ' + r.lotNo + '</small>'
+        + '<h4>' + r.title + '</h4>'
+        + '<div class="au-past-price">¥ ' + Number(r.amount).toLocaleString('zh-CN') + '<em>溢价 ' + r.premium + '</em></div>'
+        + '<span class="au-past-buyer">' + r.buyer + '</span>'
+        + '</div></div>';
+    }).join('');
+
+    pastSection.innerHTML = dynamicHtml + staticHtml || staticHtml;
+  }
+  renderPastRecords();
+
+  /* ===== 任务六：订阅日历 Modal ===== */
+  var SUBSCRIBE_KEY = 'baizhenfang-subscribe';
+  var modal = document.getElementById('auSubscribeModal');
+  var modalClose = document.getElementById('auModalClose');
+  var subscribeSubmit = document.getElementById('auSubscribeSubmit');
+  var subscribeEmail = document.getElementById('auSubscribeEmail');
+
+  // "订阅日历 →" 按钮绑定
+  var calendarLinks = document.querySelectorAll('.au-section-head a');
+  calendarLinks.forEach(function(link) {
+    if (link.textContent.trim().indexOf('订阅日历') !== -1) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        openSubscribeModal();
+      });
+    }
+  });
+
+  function openSubscribeModal() {
+    // 若已订阅，填入已保存邮箱
+    try {
+      var saved = JSON.parse(localStorage.getItem(SUBSCRIBE_KEY) || 'null');
+      if (saved && saved.email) {
+        subscribeEmail.value = saved.email;
+        subscribeSubmit.textContent = '更新订阅';
+      }
+    } catch(e) {}
+    modal.classList.add('open');
+    setTimeout(function() { subscribeEmail.focus(); }, 50);
+  }
+
+  function closeSubscribeModal() {
+    modal.classList.remove('open');
+  }
+
+  if (modalClose) modalClose.addEventListener('click', closeSubscribeModal);
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeSubscribeModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeSubscribeModal();
+    });
+  }
+
+  if (subscribeSubmit) {
+    subscribeSubmit.addEventListener('click', function() {
+      var email = subscribeEmail.value.trim();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        subscribeEmail.style.borderColor = 'var(--crimson)';
+        subscribeEmail.focus();
+        return;
+      }
+      subscribeEmail.style.borderColor = '';
+      try { localStorage.setItem(SUBSCRIBE_KEY, JSON.stringify({ email: email, ts: Date.now() })); } catch(e) {}
+      subscribeSubmit.textContent = '订阅成功 ✓';
+      subscribeSubmit.style.background = 'var(--pine)';
+      setTimeout(function() {
+        closeSubscribeModal();
+        subscribeSubmit.textContent = '确认订阅';
+        subscribeSubmit.style.background = '';
+      }, 1400);
+    });
+  }
+
+  // 初始渲染（覆盖调用，触发任务一、二联动）
+  renderAuction();
+
+})();
+</script>
+<!-- 个人中心侧边栏 -->
+  <div class="profile-overlay" id="profileOverlay"></div>
+  <aside class="profile-sidebar" id="profileSidebar">
+    <div class="profile-sidebar-header">
+      <span>个人中心</span>
+      <div class="profile-close" id="profileClose">✕</div>
+    </div>
+    <div class="profile-user-block">
+      <label class="profile-avatar-large" for="avatarUpload" title="点击更换头像">
+        <img src="" alt="头像" id="sidebarAvatarImg" style="display:none">
+        <svg id="sidebarAvatarIcon" width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="rgba(255,249,237,.5)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="rgba(255,249,237,.35)"/></svg>
+      </label>
+      <input type="file" id="avatarUpload" class="profile-upload-input" accept="image/*">
+      <div class="profile-username" id="profileUsername">访客</div>
+      <div class="profile-tag">方城特产百珍坊会员</div>
+    </div>
+    <!-- 主菜单面板 -->
+    <div class="profile-panel active" id="panelMain">
+      <nav class="profile-menu">
+                <a href="member-center.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          个人中心
+        </a>
+<a href="#" id="menuAccount">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          我的账户
+        </a>
+        <a href="#" id="menuOrders">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          我的订单
+        </a>
+        <a href="member-center.html#collection">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          我的收藏
+        </a>
+        <a href="custom-gift.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M12 8V21M3 13h18"/><path d="M12 8c0-2.5-2-4-4-2s0 4 4 4m0-4c0-2.5 2-4 4-2s0 4-4 4"/></svg>
+          礼盒定制
+        </a>
+        <a href="contact.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          联系合作
+        </a>
+      </nav>
+    </div>
+
+    <!-- 账户子面板 -->
+    <div class="profile-panel" id="panelAccount">
+      <div class="profile-panel-back" id="accountBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        返回
+      </div>
+      <div class="account-balance-card">
+        <small>账户余额</small>
+        <div class="account-balance-amount"><span>¥</span><span id="balanceNum">0.00</span></div>
+      </div>
+      <div class="account-section-title">快速充值</div>
+      <div class="topup-grid">
+        <div class="topup-btn" data-val="50">¥ 50</div>
+        <div class="topup-btn" data-val="100">¥ 100</div>
+        <div class="topup-btn" data-val="200">¥ 200</div>
+        <div class="topup-btn" data-val="500">¥ 500</div>
+      </div>
+      <div class="topup-custom">
+        <span>¥</span>
+        <input type="text" id="topupCustom" placeholder="自定义金额">
+      </div>
+      <button class="topup-confirm" id="topupConfirm">确认充值</button>
+      <div class="account-section-title">账户信息</div>
+      <div class="account-info-list">
+        <div class="account-info-row"><span>会员等级</span><strong>普通会员</strong></div>
+        <div class="account-info-row"><span>累计消费</span><strong id="totalSpend">¥ 0.00</strong></div>
+        <div class="account-info-row"><span>优惠券</span><strong>0 张</strong></div>
+        <div class="account-info-row"><span>积分</span><strong id="pointsNum">0</strong></div>
+      </div>
+    </div>
+
+    <!-- 订单子面板 -->
+    <div class="profile-panel" id="panelOrders">
+      <div class="profile-panel-back" id="ordersBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        返回
+      </div>
+      <div class="account-section-title">我的订单</div>
+      <div class="account-info-list" style="padding:0 20px;">
+        <div class="account-info-row"><span>待付款</span><strong>0</strong></div>
+        <div class="account-info-row"><span>待发货</span><strong>0</strong></div>
+        <div class="account-info-row"><span>待收货</span><strong>0</strong></div>
+        <div class="account-info-row"><span>已完成</span><strong>0</strong></div>
+        <div class="account-info-row"><span>退款/售后</span><strong>0</strong></div>
+      </div>
+      <div class="account-section-title" style="margin-top:8px;">最近订单</div>
+      <div class="order-card">
+        <div class="order-card-header">
+          <small>订单号 FC20240617001</small>
+          <span class="order-status delivering">配送中</span>
+        </div>
+        <div class="order-product-row">
+          <img src="uploads/product1.jpg" alt="方城黄石砚">
+          <div class="order-product-info">
+            <h4>方城黄石砚</h4>
+            <span>数量 × 1</span>
+          </div>
+          <span class="order-product-price">¥ 399</span>
+        </div>
+        <div class="order-logistics">
+          <div class="order-logistics-title">物流跟踪</div>
+          <div class="logistics-track">
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>包裹已签收</p>
+                <small>2024-06-17 &nbsp;14:32</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>派送中 — 快递员已取件</p>
+                <small>2024-06-17 &nbsp;09:05</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>已到达 南阳 转运中心</p>
+                <small>2024-06-16 &nbsp;22:41</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>商家已发货</p>
+                <small>2024-06-15 &nbsp;16:18</small>
+              </div>
+            </div>
+            <div class="logistics-step active">
+              <span class="logistics-dot"></span>
+              <div class="logistics-step-body">
+                <p>订单已下单，等待商家处理</p>
+                <small>2024-06-15 &nbsp;10:03</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+<script>
+    (function() {
+      const overlay = document.getElementById('profileOverlay');
+      const sidebar = document.getElementById('profileSidebar');
+      const navAvatar = document.getElementById('navAvatar');
+      const closeBtn = document.getElementById('profileClose');
+      const avatarUpload = document.getElementById('avatarUpload');
+      const navAvatarImg = document.getElementById('navAvatarImg');
+      const navAvatarIcon = document.getElementById('navAvatarIcon');
+      const sidebarAvatarImg = document.getElementById('sidebarAvatarImg');
+      const sidebarAvatarIcon = document.getElementById('sidebarAvatarIcon');
+
+      function openSidebar() {
+        overlay.classList.add('open');
+        sidebar.classList.add('open');
+      }
+      function closeSidebar() {
+        overlay.classList.remove('open');
+        sidebar.classList.remove('open');
+      }
+
+      navAvatar.addEventListener('click', openSidebar);
+      navAvatar.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openSidebar(); });
+      closeBtn.addEventListener('click', closeSidebar);
+      overlay.addEventListener('click', closeSidebar);
+
+      // 头像上传
+      avatarUpload.addEventListener('change', function() {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const src = e.target.result;
+          // 更新导航头像
+          navAvatarImg.src = src;
+          navAvatarImg.style.display = 'block';
+          navAvatarIcon.style.display = 'none';
+          // 更新侧边栏头像
+          sidebarAvatarImg.src = src;
+          sidebarAvatarImg.style.display = 'block';
+          sidebarAvatarIcon.style.display = 'none';
+          // 本地持久化
+          try { localStorage.setItem('baizhenfang_avatar', src); } catch(e) {}
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // 恢复已保存头像
+      try {
+        const saved = localStorage.getItem('baizhenfang_avatar');
+        if (saved) {
+          navAvatarImg.src = saved;
+          navAvatarImg.style.display = 'block';
+          navAvatarIcon.style.display = 'none';
+          sidebarAvatarImg.src = saved;
+          sidebarAvatarImg.style.display = 'block';
+          sidebarAvatarIcon.style.display = 'none';
+        }
+      } catch(e) {}
+
+      // 面板切换
+      const panelMain = document.getElementById('panelMain');
+      const panelAccount = document.getElementById('panelAccount');
+      const panelOrders = document.getElementById('panelOrders');
+      const menuAccount = document.getElementById('menuAccount');
+      const menuOrders = document.getElementById('menuOrders');
+      const accountBack = document.getElementById('accountBack');
+      const ordersBack = document.getElementById('ordersBack');
+
+      function showPanel(panel) {
+        panelMain.classList.remove('active');
+        panelAccount.classList.remove('active');
+        panelOrders.classList.remove('active');
+        panel.classList.add('active');
+      }
+
+      menuAccount.addEventListener('click', function(e) { e.preventDefault(); showPanel(panelAccount); });
+      menuOrders.addEventListener('click', function(e) { e.preventDefault(); showPanel(panelOrders); });
+      accountBack.addEventListener('click', function() { showPanel(panelMain); });
+      ordersBack.addEventListener('click', function() { showPanel(panelMain); });
+
+      // 关闭时重置到主面板
+      function closeSidebarFull() {
+        overlay.classList.remove('open');
+        sidebar.classList.remove('open');
+        setTimeout(() => showPanel(panelMain), 350);
+      }
+      closeBtn.removeEventListener('click', closeSidebar);
+      overlay.removeEventListener('click', closeSidebar);
+      closeBtn.addEventListener('click', closeSidebarFull);
+      overlay.addEventListener('click', closeSidebarFull);
+
+      // 余额与充值
+      const balanceNum = document.getElementById('balanceNum');
+      const topupCustom = document.getElementById('topupCustom');
+      const topupConfirm = document.getElementById('topupConfirm');
+      const topupBtns = document.querySelectorAll('.topup-btn');
+
+      let balance = 0;
+      try { balance = parseFloat(localStorage.getItem('baizhenfang_balance') || '0'); } catch(e) {}
+      balanceNum.textContent = balance.toFixed(2);
+
+      let selectedAmount = 0;
+      topupBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          topupBtns.forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedAmount = parseFloat(this.dataset.val);
+          topupCustom.value = '';
+        });
+      });
+      topupCustom.addEventListener('input', function() {
+        topupBtns.forEach(b => b.classList.remove('selected'));
+        selectedAmount = 0;
+      });
+
+      topupConfirm.addEventListener('click', function() {
+        const custom = parseFloat(topupCustom.value);
+        const amount = custom > 0 ? custom : selectedAmount;
+        if (!amount || amount <= 0) return;
+        balance += amount;
+        balanceNum.textContent = balance.toFixed(2);
+        try { localStorage.setItem('baizhenfang_balance', balance.toString()); } catch(e) {}
+        topupBtns.forEach(b => b.classList.remove('selected'));
+        topupCustom.value = '';
+        selectedAmount = 0;
+        topupConfirm.textContent = '充值成功 ✓';
+        setTimeout(() => { topupConfirm.textContent = '确认充值'; }, 1500);
+      });
+    })();
+  </script>
+</body>
+</html>
