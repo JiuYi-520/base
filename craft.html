@@ -7,31 +7,37 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{--primary:#171411;--accent:#B9975B;--bg:#F6F0E6;--text:#2b241e;--muted:#766D61;--cream:#FFF9ED;--clay:#A85F3D;--dark:#1c1812;}
+:root{--primary:#171b19;--accent:#c3a66b;--bg:#e8ebe7;--text:#e9ece8;--muted:#a9b0aa;--cream:#f4f5f1;--forest:#1d2923;--forest-2:#24342c;--dark:#151a17;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:"Noto Serif SC",serif;background:var(--dark);color:var(--cream);}
+body{font-family:"Noto Serif SC",serif;background:var(--dark);color:var(--cream);line-height:1.6;}
 .shell{width:min(1240px,calc(100vw - 48px));margin:0 auto;}
 
 /* ── header ── */
-.topbar{height:72px;display:flex;align-items:center;background:rgba(23,20,17,.96);border-bottom:1px solid rgba(185,151,91,.15);position:sticky;top:0;z-index:100;}
-.topbar .shell{display:flex;align-items:center;justify-content:space-between;}
-.topbar-logo{font-size:18px;letter-spacing:6px;font-weight:900;color:var(--cream);text-decoration:none;}
-.topbar-back{display:flex;align-items:center;gap:8px;color:rgba(255,249,237,.5);font-size:12px;letter-spacing:2px;text-decoration:none;transition:color .2s;}
-.topbar-back:hover{color:var(--accent);}
-.topbar-back svg{transition:transform .2s;}
-.topbar-back:hover svg{transform:translateX(-3px);}
+.topbar{position:sticky;top:0;z-index:100;background:rgba(21,26,23,.96);border-bottom:1px solid rgba(195,166,107,.18);backdrop-filter:blur(16px);}
+.topbar .nav{min-height:76px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:30px;}
+.brand{display:flex;align-items:center;gap:12px;color:var(--cream);text-decoration:none;}
+.brand-mark{width:46px;height:46px;border-radius:50%;overflow:hidden;border:1px solid rgba(195,166,107,.55);}
+.brand-mark img{display:block;width:100%;height:100%;object-fit:cover;}
+.brand>span:last-child{display:flex;flex-direction:column;min-width:0;}
+.brand strong{font-size:17px;letter-spacing:3px;white-space:nowrap;}
+.brand span span{font-family:"Playfair Display",serif;font-size:9px;letter-spacing:2px;color:rgba(244,245,241,.45);}
+.navlinks{display:flex;justify-content:center;gap:34px;}
+.navlinks a{padding:27px 0 24px;color:rgba(244,245,241,.62);font-size:13px;letter-spacing:2px;text-decoration:none;border-bottom:2px solid transparent;}
+.navlinks a:hover,.navlinks a.active{color:var(--accent);border-bottom-color:var(--accent);}
+.nav-avatar{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1px solid rgba(195,166,107,.5);color:var(--accent);text-decoration:none;}
+.nav-avatar svg{width:20px;height:20px;fill:currentColor;}
 
 /* ── hero ── */
-.craft-hero{padding:80px 0 60px;text-align:center;border-bottom:1px solid rgba(185,151,91,.12);}
+.craft-hero{padding:76px 0 68px;text-align:left;border-bottom:1px solid rgba(195,166,107,.18);background:linear-gradient(120deg,var(--dark),var(--forest));}
 .craft-hero-label{font-size:11px;letter-spacing:6px;color:var(--accent);margin-bottom:20px;}
-.craft-hero h1{font-size:clamp(32px,5vw,60px);font-weight:900;letter-spacing:8px;line-height:1.2;color:var(--cream);}
-.craft-hero p{margin-top:20px;color:rgba(255,249,237,.55);font-size:14px;letter-spacing:2px;line-height:2;}
+.craft-hero h1{max-width:8em;font-size:clamp(36px,5vw,60px);font-weight:900;letter-spacing:8px;line-height:1.2;color:var(--cream);}
+.craft-hero p{max-width:620px;margin-top:20px;color:rgba(244,245,241,.68);font-size:14px;letter-spacing:1.5px;line-height:2;}
 
 /* ── overview cards grid ── */
-.craft-overview{padding:80px 0;}
-.craft-overview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(185,151,91,.1);}
-.craft-ov-card{background:var(--dark);padding:48px 36px 40px;position:relative;overflow:hidden;cursor:pointer;text-decoration:none;display:block;transition:background .3s;}
-.craft-ov-card:hover{background:rgba(185,151,91,.06);}
+.craft-overview{padding:72px 0;background:var(--forest);}
+.craft-overview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(195,166,107,.22);}
+.craft-ov-card{background:var(--forest);padding:44px 34px 36px;position:relative;overflow:hidden;cursor:pointer;text-decoration:none;display:block;transition:background .25s,transform .25s;}
+.craft-ov-card:hover{z-index:1;background:var(--forest-2);transform:translateY(-3px);}
 .craft-ov-card::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .35s;}
 .craft-ov-card:hover::after{transform:scaleX(1);}
 .craft-ov-card *{pointer-events:none;}
@@ -46,25 +52,29 @@ body{font-family:"Noto Serif SC",serif;background:var(--dark);color:var(--cream)
 .craft-ov-card:hover .craft-ov-arrow{color:var(--accent);}
 
 /* ── detail sections ── */
-.craft-details{padding:0 0 100px;}
-.craft-detail{padding:100px 0;border-top:1px solid rgba(185,151,91,.1);}
-.craft-detail:nth-child(even){background:rgba(255,249,237,.02);}
-.craft-detail .shell{display:grid;grid-template-columns:1fr 1.2fr;gap:80px;align-items:start;}
+.craft-details{padding:0;background:var(--dark);}
+.craft-detail{padding:88px 0;scroll-margin-top:86px;border-top:1px solid rgba(195,166,107,.14);}
+.craft-detail:nth-child(even){background:var(--forest);}
+.craft-detail .shell{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:72px;align-items:center;}
 .craft-detail-left{}
 .craft-detail-tag{font-size:11px;letter-spacing:5px;color:var(--accent);margin-bottom:16px;}
 .craft-detail h2{font-size:clamp(28px,3.5vw,44px);font-weight:900;letter-spacing:6px;color:var(--cream);line-height:1.3;margin-bottom:24px;}
-.craft-detail p{font-size:14px;color:rgba(255,249,237,.6);line-height:2.1;letter-spacing:1px;margin-bottom:32px;}
+.craft-detail p{max-width:54ch;font-size:14px;color:rgba(233,236,232,.72);line-height:2.05;letter-spacing:.8px;margin-bottom:32px;}
 .craft-detail-dur{display:inline-flex;align-items:center;gap:12px;padding:12px 24px;border:1px solid rgba(185,151,91,.25);border-radius:2px;}
 .craft-detail-dur small{font-size:11px;letter-spacing:3px;color:rgba(255,249,237,.4);}
 .craft-detail-dur strong{font-family:"Playfair Display",serif;font-size:20px;color:var(--accent);}
 .craft-detail-right{}
 .craft-detail-steps{list-style:none;}
-.craft-detail-steps li{display:flex;gap:20px;padding:20px 0;border-bottom:1px dashed rgba(185,151,91,.15);}
+.craft-detail-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(195,166,107,.16);}
+.craft-detail-steps li{display:flex;gap:12px;min-height:94px;padding:20px 16px;background:var(--dark);border:0;}
+.craft-detail:nth-child(even) .craft-detail-steps li{background:var(--forest);}
 .craft-detail-steps li:last-child{border-bottom:none;}
 .craft-step-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:6px;}
-.craft-step-text{font-size:13px;color:rgba(255,249,237,.65);letter-spacing:1px;line-height:1.9;}
-.craft-detail-vis{margin-top:32px;aspect-ratio:16/9;background:rgba(185,151,91,.06);border:1px solid rgba(185,151,91,.12);border-radius:2px;display:flex;align-items:center;justify-content:center;}
-.craft-detail-vis span{font-size:12px;color:rgba(255,249,237,.2);letter-spacing:3px;}
+.craft-step-text{font-size:12px;color:rgba(233,236,232,.72);letter-spacing:.5px;line-height:1.75;}
+.craft-detail-vis{position:relative;margin-top:22px;aspect-ratio:16/9;overflow:hidden;border:1px solid rgba(195,166,107,.2);border-radius:2px;background:#252c28;}
+.craft-detail-vis img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.78) contrast(1.04);transition:transform .5s ease;}
+.craft-detail-vis:hover img{transform:scale(1.025);}
+.craft-detail-vis figcaption{position:absolute;right:16px;bottom:14px;padding:7px 10px;color:rgba(244,245,241,.86);background:rgba(21,26,23,.82);font-size:11px;letter-spacing:2px;}
 
 /* ── footer cta ── */
 .craft-cta{background:rgba(185,151,91,.06);border-top:1px solid rgba(185,151,91,.15);padding:60px 0;text-align:center;}
@@ -78,19 +88,32 @@ body{font-family:"Noto Serif SC",serif;background:var(--dark);color:var(--cream)
 }
 @media(max-width:560px){
   .craft-overview-grid{grid-template-columns:1fr;}
+  .craft-hero{padding:54px 0 48px;}
+  .craft-hero h1{letter-spacing:5px;}
+  .craft-detail{padding:64px 0;}
+  .craft-detail .shell{gap:36px;}
+  .craft-detail-steps{grid-template-columns:1fr;}
+  .craft-detail-steps li{min-height:0;}
 }
 </style>
   <link rel="stylesheet" href="site-fixes.css">
 </head>
-<body>
+<body class="craft-page">
 
 <!-- header -->
 <header class="topbar">
-  <div class="shell">
-    <a href="index.html" class="topbar-logo">百珍坊</a>
-    <a href="detail-product1.html#craft" class="topbar-back">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-      返回商品页
+  <div class="shell nav">
+    <a class="brand" href="index.html" aria-label="方城特产百珍坊首页">
+      <span class="brand-mark"><img src="uploads/logo.png" alt="百珍坊logo"></span>
+      <span><strong>方城特产百珍坊</strong><span>Fangcheng Selected</span></span>
+    </a>
+    <nav class="navlinks" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="baizhen-collection.html">百珍荟萃</a>
+      <a href="auction.html">拍卖中心</a>
+    </nav>
+    <a class="nav-avatar" href="member-center.html" aria-label="进入个人中心">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.87 0-7 2.24-7 5v2h14v-2c0-2.76-3.13-5-7-5z"/></svg>
     </a>
   </div>
 </header>
@@ -98,9 +121,9 @@ body{font-family:"Noto Serif SC",serif;background:var(--dark);color:var(--cream)
 <!-- hero -->
 <section class="craft-hero">
   <div class="shell">
-    <p class="craft-hero-label">NON-HERITAGE CRAFT · 非遗制砚工艺</p>
+    <p class="craft-hero-label">INTANGIBLE HERITAGE CRAFT · 非遗制砚工艺</p>
     <h1>制砚六法</h1>
-    <p>选石入山、制坯成型、雕刻纹样、细磨抛光<br>验墨定品、装盒出库——每方砚台历经六道工序</p>
+    <p>选石入山、制坯成型、雕刻纹样、细磨抛光<br>验墨定品、装盒出库，每方砚台历经六道工序。</p>
   </div>
 </section>
 
@@ -199,7 +222,7 @@ body{font-family:"Noto Serif SC",serif;background:var(--dark);color:var(--cream)
           <li><span class="craft-step-dot"></span><span class="craft-step-text">石色均匀细腻方为优品</span></li>
           <li><span class="craft-step-dot"></span><span class="craft-step-text">叩击声、色泽、山水肌理三判</span></li>
         </ul>
-        <div class="craft-detail-vis"><span>选石现场图</span></div>
+        <figure class="craft-detail-vis"><img src="uploads/stone-fengyan.jpg" alt="黄石砚天然凤眼纹原石" loading="lazy"><figcaption>天然凤眼纹原石</figcaption></figure>
       </div>
     </div>
   </div>
@@ -221,7 +244,7 @@ body{font-family:"Noto Serif SC",serif;background:var(--dark);color:var(--cream)
           <li><span class="craft-step-dot"></span><span class="craft-step-text">顺石脉之天然纹理走向开料</span></li>
           <li><span class="craft-step-dot"></span><span class="craft-step-text">大小尺寸分级，各有专用途</span></li>
         </ul>
-        <div class="craft-detail-vis"><span>制坯工序图</span></div>
+        <figure class="craft-detail-vis"><img src="uploads/stone-qingshi.jpg" alt="黄石砚青石坯料" loading="lazy"><figcaption>青石坯料与石脉</figcaption></figure>
       </div>
     </div>
   </div>
@@ -243,7 +266,7 @@ body{font-family:"Noto Serif SC",serif;background:var(--dark);color:var(--cream)
           <li><span class="craft-step-dot"></span><span class="craft-step-text">顺应石材之天然纹路走向</span></li>
           <li><span class="craft-step-dot"></span><span class="craft-step-text">失误率高达 30%，每刀无可逆</span></li>
         </ul>
-        <div class="craft-detail-vis"><span>雕刻工序图</span></div>
+        <figure class="craft-detail-vis"><img src="uploads/product1.jpg" alt="黄石砚雕刻成品细节" loading="lazy"><figcaption>顺纹雕刻成品</figcaption></figure>
       </div>
     </div>
   </div>
@@ -264,7 +287,7 @@ body{font-family:"Noto Serif SC",serif;background:var(--dark);color:var(--cream)
           <li><span class="craft-step-dot"></span><span class="craft-step-text">水磨 + 旱磨交替工艺</span></li>
           <li><span class="craft-step-dot"></span><span class="craft-step-text">最终水滴不散为合格标准</span></li>
         </ul>
-        <div class="craft-detail-vis"><span>抛光工序图</span></div>
+        <figure class="craft-detail-vis"><img src="uploads/stone-moshi.jpg" alt="黄石砚墨石抛光纹理" loading="lazy"><figcaption>水磨后的墨石肌理</figcaption></figure>
       </div>
     </div>
   </div>
@@ -286,7 +309,7 @@ body{font-family:"Noto Serif SC",serif;background:var(--dark);color:var(--cream)
           <li><span class="craft-step-dot"></span><span class="craft-step-text">研墨速度 &amp; 均匀度双标准</span></li>
           <li><span class="craft-step-dot"></span><span class="craft-step-text">不合格品回炉再磨不出库</span></li>
         </ul>
-        <div class="craft-detail-vis"><span>验墨工序图</span></div>
+        <figure class="craft-detail-vis"><img src="uploads/product-ink.jpg" alt="黄石砚研墨测试" loading="lazy"><figcaption>研墨与发墨测试</figcaption></figure>
       </div>
     </div>
   </div>
@@ -308,7 +331,7 @@ body{font-family:"Noto Serif SC",serif;background:var(--dark);color:var(--cream)
           <li><span class="craft-step-dot"></span><span class="craft-step-text">木质匣 / 织锦垫定制包装</span></li>
           <li><span class="craft-step-dot"></span><span class="craft-step-text">编号溯源，匠人信息可查</span></li>
         </ul>
-        <div class="craft-detail-vis"><span>装盒工序图</span></div>
+        <figure class="craft-detail-vis"><img src="uploads/pack-wenfang.jpg" alt="黄石砚文房礼盒包装" loading="lazy"><figcaption>文房礼盒包装</figcaption></figure>
       </div>
     </div>
   </div>

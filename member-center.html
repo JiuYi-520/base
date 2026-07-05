@@ -1585,6 +1585,21 @@
         }
         .gate-row input:focus { border-color:var(--gold); background:rgba(185,151,91,.06); }
         .gate-row input::placeholder { color:rgba(255,249,237,.2); }
+        .gate-password-wrap { position:relative; }
+        .gate-password-wrap input { padding-right:68px; }
+        .gate-pwd-toggle {
+          position:absolute; right:10px; top:50%; transform:translateY(-50%);
+          padding:6px 8px; border:0; background:transparent; color:var(--gold);
+          font-family:var(--serif); font-size:11px; letter-spacing:1px; cursor:pointer;
+        }
+        .gate-login-options {
+          display:flex; align-items:center; justify-content:space-between;
+          gap:16px; margin:-3px 0 14px; font-size:11px; letter-spacing:1px;
+        }
+        .gate-remember { display:flex; align-items:center; gap:7px; color:rgba(255,249,237,.48); cursor:pointer; }
+        .gate-remember input { width:14px; height:14px; accent-color:var(--gold); }
+        .gate-login-options a { color:var(--gold); text-decoration:none; }
+        .gate-login-options a:hover { text-decoration:underline; text-underline-offset:3px; }
         .gate-phone-row { display:flex; gap:10px; }
         .gate-phone-row input:first-child { flex:1; }
         .gate-sms-btn {
@@ -1627,10 +1642,10 @@
           min-height: calc(100vh - 130px);
           flex-direction: column;
           align-items: center;
-          justify-content: center;
+          justify-content: flex-start;
         }
         #mc-guest .guest-header {
-          text-align: center; margin-bottom: 36px;
+          text-align: center; margin-bottom: 26px;
         }
         #mc-guest .guest-eyebrow {
           display: block; font-size: 11px; letter-spacing: 5px;
@@ -1655,7 +1670,7 @@
           background: var(--ink); padding-bottom: 0;
         }
         @media (max-width: 600px) {
-          #mc-guest { padding: 40px 16px 56px; }
+          #mc-guest { min-height:0; padding: 36px 16px 56px; }
           #mc-guest .guest-form-box { padding: 28px 20px; }
           #mc-guest .guest-header h2 { font-size: 24px; }
         }
@@ -1768,10 +1783,17 @@
         <div class="gate-panel active" id="gatePanelLogin">
           <div class="gate-err" id="gateLoginErr"></div>
           <div class="gate-row"><label>手机号 / 用户名</label>
-            <input type="text" id="gateLoginAccount" placeholder="请输入手机号或用户名">
+            <input type="text" id="gateLoginAccount" placeholder="请输入手机号或用户名" autocomplete="username">
           </div>
           <div class="gate-row"><label>密码</label>
-            <input type="password" id="gateLoginPwd" placeholder="请输入密码">
+            <div class="gate-password-wrap">
+              <input type="password" id="gateLoginPwd" placeholder="请输入密码" autocomplete="current-password">
+              <button type="button" class="gate-pwd-toggle" id="gatePwdToggle" aria-label="显示密码" aria-pressed="false">显示</button>
+            </div>
+          </div>
+          <div class="gate-login-options">
+            <label class="gate-remember"><input type="checkbox" id="gateRemember">记住登录</label>
+            <a href="contact.html">忘记密码？</a>
           </div>
           <button class="gate-submit" id="gateLoginBtn">登 录</button>
           <div class="gate-switch">还没有账号？<span onclick="gateSwitchTab('reg')">立即注册</span></div>
@@ -3478,6 +3500,20 @@
     }, 1000);
   };
 
+  // 密码显隐与回车登录，补齐键盘和触屏操作。
+  var pwdToggle = document.getElementById('gatePwdToggle');
+  var loginPwdInput = document.getElementById('gateLoginPwd');
+  if (pwdToggle && loginPwdInput) {
+    pwdToggle.addEventListener('click', function() {
+      var shouldShow = loginPwdInput.type === 'password';
+      loginPwdInput.type = shouldShow ? 'text' : 'password';
+      pwdToggle.textContent = shouldShow ? '隐藏' : '显示';
+      pwdToggle.setAttribute('aria-label', shouldShow ? '隐藏密码' : '显示密码');
+      pwdToggle.setAttribute('aria-pressed', String(shouldShow));
+      loginPwdInput.focus();
+    });
+  }
+
   // 登录
   var loginBtn = document.getElementById('gateLoginBtn');
   if (loginBtn) {
@@ -3501,6 +3537,16 @@
       afterGateLogin();
     });
   }
+
+  ['gateLoginAccount', 'gateLoginPwd'].forEach(function(inputId) {
+    var input = document.getElementById(inputId);
+    if (!input || !loginBtn) return;
+    input.addEventListener('keydown', function(event) {
+      if (event.key !== 'Enter') return;
+      event.preventDefault();
+      loginBtn.click();
+    });
+  });
 
   // 注册
   var regBtn = document.getElementById('gateRegBtn');
@@ -3801,7 +3847,7 @@
     { id: 'FC20240617001', status: 'delivering',   name: '方城黄石砚 · 紫袍玉带款', spec: '标准款 · 数量 1', price: 399,  img: 'uploads/product1.jpg',  tip: '包裹已抵达 南阳转运中心', date: '2024-06-17' },
     { id: 'FC20240612083', status: 'pending_pay',   name: '方城风味四宝礼盒',         spec: '中秋限定 · 数量 2', price: 1260, img: 'uploads/pack-silk.jpg',  tip: '订单将于 23:46 后自动取消', date: '2024-06-12' },
     { id: 'FC20240530042', status: 'completed',     name: '方城黄石砚 · 云纹刻章款', spec: '精装款 · 数量 1', price: 1380, img: 'uploads/product2.jpg',  tip: '已于 2024-06-03 确认收货', date: '2024-05-30' },
-    { id: 'FC20240501019', status: 'completed',     name: '养生丹参礼盒 · 60粒装',   spec: '标准装 · 数量 3', price: 537,  img: 'uploads/pack-danshen.jpg', tip: '已于 2024-05-07 确认收货', date: '2024-05-01' }
+    { id: 'FC20240501019', status: 'completed',     name: '养生丹参礼盒 · 60粒装',   spec: '标准装 · 数量 3', price: 537,  img: 'uploads/product-danshen.jpg', tip: '已于 2024-05-07 确认收货', date: '2024-05-01' }
   ];
 
   var currentFilter = 'all';
