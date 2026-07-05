@@ -1022,6 +1022,7 @@ body{font-feature-settings:"kern" 1,"liga" 1;}
 </style>
 
   <link rel="stylesheet" href="site-fixes.css">
+  <link rel="stylesheet" href="detail-floating-nav.css">
 </head>
 <body>
   <header class="topbar">
@@ -1065,15 +1066,16 @@ body{font-feature-settings:"kern" 1,"liga" 1;}
 <main class="hs-main">
 
   <!-- 锚点导航 -->
-  <div class="hs-anchor">
+  <nav class="hs-anchor" aria-label="本页章节目录">
     <div class="shell">
-      <a href="#hs-bg" class="active"><span class="anc-num">01</span>砚石溯源</a>
+      <span class="hs-anchor-title">页面目录</span>
+      <a href="#hs-bg" class="active" aria-current="true"><span class="anc-num">01</span>砚石溯源</a>
       <a href="#hs-craft"><span class="anc-num">02</span>古法工艺</a>
       <a href="#hs-coll"><span class="anc-num">03</span>砚林集珍</a>
       <a href="#hs-reviews"><span class="anc-num">04</span>藏家评说</a>
       <a href="#hs-faq"><span class="anc-num">05</span>常见问题</a>
     </div>
-  </div>
+  </nav>
 
 
   <!-- 面包屑 -->
@@ -1742,6 +1744,58 @@ body{font-feature-settings:"kern" 1,"liga" 1;}
 </main>
 
 <script>
+  // 悬浮目录：使用观察器同步当前章节，避免持续监听滚动造成性能开销。
+  (function(){
+    var nav = document.querySelector('.hs-anchor');
+    if (!nav || !('IntersectionObserver' in window)) return;
+
+    var links = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]'));
+    var sections = links.map(function(link) {
+      return document.querySelector(link.getAttribute('href'));
+    }).filter(Boolean);
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function setActive(sectionId) {
+      links.forEach(function(link) {
+        var isActive = link.getAttribute('href') === '#' + sectionId;
+        link.classList.toggle('active', isActive);
+        if (isActive) {
+          link.setAttribute('aria-current', 'true');
+          var track = link.parentElement;
+          if (window.innerWidth <= 760) {
+            track.scrollTo({
+              left: Math.max(0, link.offsetLeft - (track.clientWidth - link.offsetWidth) / 2),
+              behavior: reduceMotion ? 'auto' : 'smooth'
+            });
+          }
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+    }
+
+    function updateActiveSection() {
+      var marker = window.innerHeight * 0.38;
+      var current = sections[0];
+      sections.forEach(function(section) {
+        if (section.getBoundingClientRect().top <= marker) current = section;
+      });
+      if (current) setActive(current.id);
+    }
+
+    var observer = new IntersectionObserver(updateActiveSection, {
+      rootMargin: '-28% 0px -58% 0px',
+      threshold: [0, 1]
+    });
+    sections.forEach(function(section) { observer.observe(section); });
+    links.forEach(function(link) {
+      link.addEventListener('click', function() {
+        setActive(link.getAttribute('href').slice(1));
+      });
+    });
+    updateActiveSection();
+  })();
+
   // 砚林集珍：分类筛选
   (function(){
     var btns = document.querySelectorAll('.hs-coll-filter');

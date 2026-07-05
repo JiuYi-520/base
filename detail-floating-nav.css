@@ -1,0 +1,264 @@
+/* 黄石砚专题悬浮目录：桌面右侧停靠，移动端底部横向停靠。 */
+.hs-main {
+  position: relative;
+}
+
+.hs-anchor {
+  position: fixed;
+  top: 50%;
+  right: max(18px, calc((100vw - 1480px) / 2));
+  z-index: 80;
+  width: 158px;
+  max-width: calc(100vw - 36px);
+  overflow: visible;
+  background: rgba(23, 32, 25, 0.92);
+  border: 1px solid rgba(195, 166, 107, 0.28);
+  border-radius: 4px;
+  box-shadow: 0 18px 45px rgba(12, 18, 14, 0.24);
+  backdrop-filter: blur(16px);
+  transform: translateY(-50%);
+}
+
+.hs-anchor .shell {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 8px;
+  overflow: visible;
+}
+
+.hs-anchor-title {
+  display: block;
+  padding: 8px 11px 10px;
+  color: rgba(244, 245, 241, 0.38);
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.hs-anchor a {
+  position: relative;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  align-items: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 8px 10px;
+  color: rgba(244, 245, 241, 0.62);
+  border: 0;
+  border-radius: 2px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.hs-anchor a::before {
+  content: "";
+  position: absolute;
+  top: 9px;
+  bottom: 9px;
+  left: 0;
+  width: 2px;
+  background: #c3a66b;
+  transform: scaleY(0);
+  transition: transform 180ms ease;
+}
+
+.hs-anchor a:hover {
+  color: #f4f5f1;
+  background: rgba(244, 245, 241, 0.05);
+  transform: translateX(-2px);
+}
+
+.hs-anchor a.active,
+.hs-anchor a[aria-current="true"] {
+  color: #d7bb7a;
+  background: rgba(195, 166, 107, 0.1);
+}
+
+.hs-anchor a.active::before,
+.hs-anchor a[aria-current="true"]::before {
+  transform: scaleY(1);
+}
+
+.hs-anchor .anc-num {
+  color: rgba(195, 166, 107, 0.55);
+  font-family: "Playfair Display", serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.hs-anchor a.active .anc-num,
+.hs-anchor a[aria-current="true"] .anc-num {
+  color: #d7bb7a;
+}
+
+.hs-crumb {
+  position: absolute;
+  top: 18px;
+  right: 0;
+  left: 0;
+  z-index: 5;
+  padding: 0;
+  background: transparent;
+  pointer-events: none;
+}
+
+.hs-crumb .shell {
+  width: min(1240px, calc(100vw - 48px));
+  max-width: 1240px;
+  padding: 0;
+}
+
+.hs-crumb .shell > * {
+  pointer-events: auto;
+}
+
+.hs-crumb .shell {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 34px;
+  margin-left: max(24px, calc((100vw - 1240px) / 2));
+  padding: 0 13px;
+  color: rgba(244, 245, 241, 0.56);
+  background: rgba(23, 32, 25, 0.72);
+  border: 1px solid rgba(195, 166, 107, 0.2);
+  border-radius: 2px;
+  backdrop-filter: blur(12px);
+}
+
+.hs-crumb a {
+  color: rgba(244, 245, 241, 0.7);
+  text-decoration: none;
+}
+
+.hs-crumb .cur {
+  color: #d7bb7a;
+}
+
+.hs-section,
+#hs-reviews,
+#hs-faq {
+  scroll-margin-top: 88px;
+}
+
+@media (max-width: 1180px) {
+  .hs-anchor {
+    right: 12px;
+    width: 48px;
+  }
+
+  .hs-anchor-title {
+    display: none;
+  }
+
+  .hs-anchor a {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding: 8px 5px;
+    font-size: 0;
+  }
+
+  .hs-anchor .anc-num {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 760px) {
+  .hs-main {
+    padding-bottom: 82px;
+  }
+
+  .hs-anchor {
+    top: auto;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    width: auto;
+    max-width: none;
+    border-radius: 4px;
+    transform: none;
+  }
+
+  .hs-anchor .shell {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    width: 100%;
+    max-width: 100%;
+    padding: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .hs-anchor .shell::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hs-anchor a {
+    display: flex;
+    flex: 0 0 auto;
+    grid-template-columns: none;
+    justify-items: initial;
+    min-height: 40px;
+    padding: 8px 12px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .hs-anchor a::before {
+    top: auto;
+    right: 10px;
+    bottom: 0;
+    left: 10px;
+    width: auto;
+    height: 2px;
+    transform: scaleX(0);
+  }
+
+  .hs-anchor a.active::before,
+  .hs-anchor a[aria-current="true"]::before {
+    transform: scaleX(1);
+  }
+
+  .hs-anchor a:hover {
+    transform: none;
+  }
+
+  .hs-crumb {
+    top: 12px;
+  }
+
+  .hs-crumb .shell {
+    width: fit-content;
+    min-height: 30px;
+    margin-left: 16px;
+    padding: 0 10px;
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  .hs-crumb .shell a:nth-of-type(2),
+  .hs-crumb .shell .sep:nth-of-type(2) {
+    display: none;
+  }
+
+  .hs-section,
+  #hs-reviews,
+  #hs-faq {
+    scroll-margin-top: 122px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hs-anchor,
+  .hs-anchor a,
+  .hs-anchor a::before {
+    transition: none;
+  }
+}
