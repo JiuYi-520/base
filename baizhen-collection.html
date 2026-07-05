@@ -1033,9 +1033,10 @@
   }
 </style>
 
+  <link rel="stylesheet" href="collection-redesign.css">
   <link rel="stylesheet" href="site-fixes.css">
 </head>
-<body>
+<body class="collection-page">
   <header class="topbar">
 
     <div class="shell nav">
@@ -1078,32 +1079,52 @@
 <!-- NAV -->
 <!-- HERO -->
 <section class="collection-hero">
-  <div class="hero-watermark">百珍坊</div>
-  <div class="hero-orb hero-orb-l"></div>
-  <div class="hero-orb hero-orb-r"></div>
-  <span class="kicker">Fangcheng · Selected Collection</span>
-  <h1>百珍<em>荟萃</em></h1>
-  <p>以方城风物为线索，汇聚文房、美食、养生、工艺四大类目，每一件皆源于本地，精选而来。</p>
-  <div class="hero-divider"></div>
+  <div class="shell collection-hero-grid">
+    <div class="collection-hero-copy">
+      <span class="kicker">Fangcheng Selected Collection</span>
+      <h1>百珍<em>荟萃</em></h1>
+      <p>循着方城的山石、烟火与手艺，甄选文房、美食、养生、工艺四类代表风物。</p>
+      <div class="collection-hero-actions">
+        <a href="#wenfang">浏览珍品</a>
+        <a href="custom-gift.html">礼盒定制</a>
+      </div>
+      <div class="collection-hero-meta" aria-label="精选概览">
+        <span><strong>11</strong>件代表珍品</span>
+        <span><strong>4</strong>类方城风物</span>
+        <span><strong>100%</strong>本地甄选</span>
+      </div>
+    </div>
+    <div class="collection-hero-media" aria-label="方城珍品展示">
+      <figure><img src="uploads/product1.jpg" alt="方城黄石砚"><figcaption>文房雅器</figcaption></figure>
+      <figure><img src="uploads/product-guokui.jpg" alt="方城锅盔"><figcaption>地方风味</figcaption></figure>
+      <figure><img src="uploads/product-shihou.jpg" alt="石猴手作"><figcaption>工艺收藏</figcaption></figure>
+    </div>
+  </div>
 </section>
 
 <!-- FILTER -->
-<div class="filter-bar">
-  <button class="filter-tab active">全部</button>
-  <button class="filter-tab">文房雅器</button>
-  <button class="filter-tab">地方美食</button>
-  <button class="filter-tab">养生滋补</button>
-  <button class="filter-tab">工艺收藏</button>
-  <button class="filter-tab">礼盒套装</button>
+<div class="filter-shell">
+<div class="filter-bar" aria-label="珍品分类索引">
+  <button class="filter-tab active" data-target="catalog">全部</button>
+  <button class="filter-tab" data-target="wenfang">文房雅器</button>
+  <button class="filter-tab" data-target="taste">地方美食</button>
+  <button class="filter-tab" data-target="wellness">养生滋补</button>
+  <button class="filter-tab" data-target="craft-collect">工艺收藏</button>
   <span class="filter-count">共 11 件精选</span>
+</div>
 </div>
 
 <script>
-  // Filter tabs
+  // 分类索引：点击后滚动到对应展陈，并同步当前状态。
   document.querySelectorAll('.filter-tab').forEach(tab => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
+      const target = document.getElementById(tab.dataset.target);
+      if (target) {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      }
     });
   });
 
@@ -1148,28 +1169,48 @@
       if (counterEl) counterEl.textContent = pad(cur+1) + ' / ' + pad(items.length);
     }
 
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let timer = null;
+
+    function stopTimer() {
+      if (!timer) return;
+      clearInterval(timer);
+      timer = null;
+    }
+
+    function startTimer() {
+      stopTimer();
+      if (reduceMotion || document.hidden) return;
+      timer = setInterval(() => go((cur + 1) % items.length), 5000);
+    }
+
+    function resetTimer() {
+      startTimer();
+    }
+
     prevBtn.addEventListener('click', () => { resetTimer(); if (cur > 0) go(cur - 1); else go(items.length - 1); });
     nextBtn.addEventListener('click', () => { resetTimer(); go((cur + 1) % items.length); });
 
-    // 5s 自动轮播
-    let timer = setInterval(() => go((cur + 1) % items.length), 5000);
-    function resetTimer() { clearInterval(timer); timer = setInterval(() => go((cur + 1) % items.length), 5000); }
-    // 鼠标悬停暂停
-    el.addEventListener('mouseenter', () => clearInterval(timer));
-    el.addEventListener('mouseleave', () => { timer = setInterval(() => go((cur + 1) % items.length), 5000); });
+    // 5 秒自动轮播；悬停、后台标签页及减少动画模式下暂停。
+    el.addEventListener('mouseenter', stopTimer);
+    el.addEventListener('mouseleave', startTimer);
+    document.addEventListener('visibilitychange', () => document.hidden ? stopTimer() : startTimer());
 
     go(0);
+    startTimer();
   }
 </script>
 
+<main class="collection-catalog" id="catalog">
 <!-- 文房雅器 -->
-<div class="cat-section">
+<section class="cat-section" id="wenfang">
   <div class="cat-label">
     <div class="cat-label-left">
       <span class="cat-label-en">Wenfang</span>
       <span class="cat-label-text">文房雅器</span>
       <span class="cat-label-line"><span></span></span>
     </div>
+    <span class="cat-label-count">3 件精选</span>
   </div>
   <div class="showcase" data-showcase>
     <button class="sc-btn sc-prev" aria-label="上一件">&#8249;</button>
@@ -1191,7 +1232,7 @@
     </div>
     <div class="sc-counter" data-sc-counter>01 / 03</div>
   </div>
-</div>
+</section>
 <script>
 (function(){
   const sets = [
@@ -1222,13 +1263,14 @@
 </script>
 
 <!-- 地方美食 -->
-<div class="cat-section">
+<section class="cat-section reverse" id="taste">
   <div class="cat-label">
     <div class="cat-label-left">
       <span class="cat-label-en">Local Taste</span>
       <span class="cat-label-text">地方美食</span>
       <span class="cat-label-line"><span></span></span>
     </div>
+    <span class="cat-label-count">3 件精选</span>
   </div>
   <div class="showcase" data-showcase>
     <button class="sc-btn sc-prev" aria-label="上一件">&#8249;</button>
@@ -1249,7 +1291,7 @@
     </div>
     <div class="sc-counter" data-sc-counter>01 / 03</div>
   </div>
-</div>
+</section>
 <script>
 (function(){
   const sets = [
@@ -1265,14 +1307,14 @@
       badge:'',cat:'Taste · 糕点',
       name:'方城年糕礼盒',
       desc:'选用本地糯米，软糯香甜，节庆馈赠首选，精心礼盒包装，颜值与口感兼备。',
-      salesCount:'3,200+',price:'¥68 – 168',href:'detail-niangao.html'
+      salesCount:'3,200+',price:'¥68 – 168',href:'detail-huimian.html'
     },
     {
       img:'uploads/product-mushroom.jpg',alt:'方城酱叶',
       badge:'',cat:'Taste · 酱腌',
       name:'方城酱叶',
       desc:'独特腌制工艺，咸鲜适口，下饭佐餐皆宜。小批量生产，保留地道风味。',
-      salesCount:'2,400+',price:'¥28 – 88',href:'detail-jiangye.html'
+      salesCount:'2,400+',price:'¥28 – 88',href:'detail-mushroom.html'
     }
   ];
   initShowcase(document.querySelectorAll('[data-showcase]')[1], sets);
@@ -1280,13 +1322,14 @@
 </script>
 
 <!-- 养生滋补 -->
-<div class="cat-section">
+<section class="cat-section" id="wellness">
   <div class="cat-label">
     <div class="cat-label-left">
       <span class="cat-label-en">Wellness</span>
       <span class="cat-label-text">养生滋补</span>
       <span class="cat-label-line"><span></span></span>
     </div>
+    <span class="cat-label-count">2 件精选</span>
   </div>
   <div class="showcase" data-showcase>
     <button class="sc-btn sc-prev" aria-label="上一件">&#8249;</button>
@@ -1308,7 +1351,7 @@
     </div>
     <div class="sc-counter" data-sc-counter>01 / 02</div>
   </div>
-</div>
+</section>
 <script>
 (function(){
   const sets = [
@@ -1324,7 +1367,7 @@
       badge:'',cat:'Wellness · 本草',
       name:'黄芪礼盒',
       desc:'补气固表，质地饱满。与丹参搭配成双草礼盒，适合长辈节庆馈赠。',
-      salesCount:'1,200+',price:'¥138 – 298',href:'detail-huangqi.html'
+      salesCount:'1,200+',price:'¥138 – 298',href:'detail-danshen.html'
     }
   ];
   initShowcase(document.querySelectorAll('[data-showcase]')[2], sets);
@@ -1332,13 +1375,14 @@
 </script>
 
 <!-- 工艺收藏 -->
-<div class="cat-section" style="padding-bottom:80px;">
+<section class="cat-section reverse" id="craft-collect">
   <div class="cat-label">
     <div class="cat-label-left">
       <span class="cat-label-en">Craft &amp; Art</span>
       <span class="cat-label-text">工艺收藏</span>
       <span class="cat-label-line"><span></span></span>
     </div>
+    <span class="cat-label-count">3 件精选</span>
   </div>
   <div class="showcase" data-showcase>
     <button class="sc-btn sc-prev" aria-label="上一件">&#8249;</button>
@@ -1359,7 +1403,7 @@
     </div>
     <div class="sc-counter" data-sc-counter>01 / 03</div>
   </div>
-</div>
+</section>
 <script>
 (function(){
   const sets = [
@@ -1386,7 +1430,7 @@
       badge:'珍藏推荐',cat:'Collect · 珍藏',
       name:'黄石砚·收藏级',
       desc:'名家手工雕刻，石质温润、纹理天成，附鉴定证书，适合商务礼赠与文化空间陈设。',
-      salesCount:'320+',price:'¥1,280 – 3,800',href:'detail-inkstone-premium.html',
+      salesCount:'320+',price:'¥1,280 – 3,800',href:'detail-product1.html',
       rating:4.9,
       comments:['附证书有收藏价值','雕工精细叹为观止','作为商务礼品太有面了','石质温润手感极佳','实物比图片更惊艳']
     }
@@ -1394,6 +1438,7 @@
   initShowcase(document.querySelectorAll('[data-showcase]')[3], sets);
 })();
 </script>
+</main>
 
 <!-- FOOTER -->
 <footer>
@@ -1410,32 +1455,6 @@
     </nav>
   </div>
 </footer>
-
-  <footer class="footer">
-    <div class="shell footer-grid">
-      <div>
-        <h2>方城特产百珍坊</h2>
-        <p>一屏看清方城风物四大方向：文房雅器、方城美食、养生滋补、工艺收藏；更多故事、礼盒、竞拍和合作咨询进入独立页面细看。</p>
-      </div>
-      <div>
-        <h4>商品品类</h4>
-        <a href="cat-wenfang.html">文房雅器</a>
-        <a href="cat-meishi.html">方城美食</a>
-        <a href="cat-yangsheng.html">养生滋补</a>
-        <a href="cat-gongyi.html">工艺收藏</a>
-      </div>
-      <div>
-        <h4>功能页面</h4>
-        <a href="auction.html">珍品竞拍</a>
-        <a href="custom-gift.html">礼盒定制</a>
-        <a href="brand-story.html">品牌故事</a>
-        <a href="member-center.html">会员中心</a>
-        <a href="contact.html">联系合作</a>
-      </div>
-    </div>
-  </footer>
-
-
 
 <script>
 </script>
