@@ -7,11 +7,18 @@
 //   FAIL  invalid UTF-8 bytes in a text file
 //   FAIL  structurally eaten '<'  ("?/tag>" -- an unclosed <title> renders the
 //         whole page blank, which is how 13 pages were silently broken)
+//   FAIL  an inline <script> that is not valid JavaScript (an eaten newline can
+//         comment out the following line and kill an entire handler)
+//   FAIL  a start tag whose attribute list is malformed (an eaten quote folds
+//         the next attribute into the previous value)
 //   FAIL  an HTML page without a well-formed <title>
 //   FAIL  a local href/src/url() target that does not exist
 //   FAIL  a root-absolute reference ("/x.css"), which breaks a project Pages site
 //   WARN  U+FFFD replacement characters (irrecoverable damage, see README)
-import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs'
+//
+// Deliberately dependency-free: this repository has no package.json, so the CI
+// job cannot install anything. Everything below uses the Node standard library.
+import { readFileSync, readdirSync, existsSync } from 'node:fs'
 import { join, dirname, resolve, relative, extname } from 'node:path'
 
 const root = resolve(process.argv[2] ?? '.')
@@ -93,6 +100,88 @@ for (const f of files) {
       fail.push(`${rel(f)}: reference "${ref}" does not resolve`)
     }
   }
+}
+
+// ---- 5. inline JavaScript must actually parse ---------------------------
+// An eaten newline after a "//" comment silently comments out the next line;
+// the page still renders and the failure is invisible until a button does
+// nothing. This is the check that catches that.
+const SCRIPT = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi
+
+function checkScripts(html, name) {
+  let m
+  SCRIPT.lastIndex = 0
+  while ((m = SCRIPT.exec(html)) !== null) {
+    const attrs = m[1] ?? ''
+    const body = m[2] ?? ''
+    if (!body.trim()) continue
+    if (/\bsrc\s*=/i.test(attrs)) continue
+    if (/type\s*=\s*["']?(module|application\/json|text\/template|text\/plain)/i.test(attrs)) continue
+    try {
+      // Compiles the body as a function body: enough to surface syntax errors
+      // such as a swallowed brace, without executing anything.
+      new Function(body) // eslint-disable-line no-new-func
+    } catch (e) {
+      fail.push(`${name}: inline <script> is not valid JavaScript -- ${e.message}`)
+    }
+  }
+}
+
+// ---- 6. start-tag attribute lists must be well formed -------------------
+// A name character that cannot legally appear in an attribute name means the
+// tokenizer desynchronised, which is exactly what an eaten '"' produces.
+const TAG_REGION = /<([a-zA-Z][a-zA-Z0-9:-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>/g
+const VALID_NAME = /^[^\s"'>/=]+$/
+
+function malformedAttributes(region) {
+  let i = 0
+  while (i < region.length) {
+    while (i < region.length && /\s/.test(region[i])) i++
+    if (i >= region.length) break
+
+    const start = i
+    while (i < region.length && !/[\s=/>]/.test(region[i])) i++
+    const name = region.slice(start, i)
+    if (!VALID_NAME.test(name)) return name
+
+    while (i < region.length && /\s/.test(region[i])) i++
+    if (region[i] === '=') {
+      i++
+      while (i < region.length && /\s/.test(region[i])) i++
+      if (region[i] === '"' || region[i] === "'") {
+        const q = region[i]
+        i++
+        while (i < region.length && region[i] !== q) i++
+        if (i >= region.length) return 'unterminated quoted value'
+        i++
+      } else {
+        while (i < region.length && !/[\s>]/.test(region[i])) i++
+      }
+    }
+  }
+  return null
+}
+
+function checkAttributes(html, name) {
+  let m
+  let reported = 0
+  TAG_REGION.lastIndex = 0
+  while ((m = TAG_REGION.exec(html)) !== null) {
+    const bad = malformedAttributes(m[2] ?? '')
+    if (bad) {
+      // Report every occurrence, not just the first: one file can carry several
+      // independently damaged tags, and stopping early hides the rest.
+      fail.push(`${name}: malformed attribute list in <${m[1]}> -- a quote or name was eaten (saw ${JSON.stringify(bad)})`)
+      if (++reported >= 5) return
+    }
+  }
+}
+
+for (const f of files) {
+  if (extname(f).toLowerCase() !== '.html') continue
+  const html = readFileSync(f, 'utf8')
+  checkScripts(html, rel(f))
+  checkAttributes(html, rel(f))
 }
 
 // ---- report --------------------------------------------------------------

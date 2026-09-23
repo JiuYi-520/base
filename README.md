@@ -40,11 +40,15 @@ python -m http.server 8000
 
 - 文本文件包含非法 UTF-8 字节
 - 出现 `?/tag>` 形式的损坏闭合标签（`<` 被吞掉）——`<title>` 未闭合会让**整页渲染空白**，这类故障不会报错，只会静默变白
+- **某段内联 `<script>` 不是合法的 JavaScript**——被吞掉的一个换行足以让 `//` 注释吞掉下一行，从而让整个处理函数失效。这类故障页面照常渲染，直到用户点击按钮才发现
+- **某个起始标签的属性列表不合法**——被吞掉的一个引号会把后一个属性折进前一个取值里
 - 某个 HTML 缺少合法的 `<title>`
 - 任意本地 `href` / `src` / `url()` 指向不存在的文件
 - 使用了根绝对路径（`/x.css`），它会破坏项目级 Pages 的子路径部署
 
 残留的 `U+FFFD` 替换字符只产生**警告**、不使构建失败——它记录的是下述历史损坏，而不是新增缺陷。
+
+检查脚本刻意**不依赖任何 npm 包**：本仓库没有 `package.json`，CI 无法安装依赖，因此全部使用 Node 标准库实现。
 
 ## `_normalize/`
 
@@ -64,38 +68,46 @@ python -m http.server 8000
 
 ### 后果
 
+受影响的**不是整篇文件，而是文件中的部分区段**：标题与正文商品文案被破坏，而头部、导航、侧边栏、账号面板等共享模板区段**始终是正确的 UTF-8**。这一点很关键——它决定了正确的修复必须逐区段判断，不能整篇统一处理。
+
 - **350 处闭合标签的 `<` 被吞掉**（`</title>`、`</p>`、`</div>`、`</strong>`、`</li>`、`</h1>` 等）。其中 `<title>` 未闭合会把文档剩余部分全部吞进标题，导致页面**渲染为空白**。
-- 大量中文字符被不可逆破坏。
+- 被吞掉的字节里还包含 **ASCII 字符**（引号、空格、换行），会造成 HTML 属性错乱和 **JavaScript 语法错误**——后者让整段脚本静默失效（登录按钮无效、类目筛选与图库全死）。
+- 部分中文字符被不可逆破坏。
 
 ### 已修复
 
 - **结构 100% 修复**，35 个页面全部可正常解析与渲染（经 HTML5 解析器逐页验证）。
-- **13 个页面标题完整恢复**。
-- 可依据证据确定的标点已恢复。
+- **17 个页面的标题完整恢复**。
+- **未受损区段逐字保留**：91 个原本正确的 `aria-label`/`alt` 取值全部原样保留，`主导航`、`百珍荟萃`、`方城特产百珍坊首页` 等区块已还原。
+- **JavaScript 恢复可解析**：`admin-login.html` 与 4 个类目页的内联脚本重新通过语法校验，登录按钮、类目筛选与图库恢复工作。
+- **HTML 属性恢复合法**：被吃掉的引号已补回。
+
+### 受影响文件（17 个）
+
+| 文件 | 残留 `U+FFFD` | 说明 |
+|---|---:|---|
+| `admin-login.html` | 0 | 已完全修复（含 JS 与属性） |
+| `cat-gongyi.html` | 0 | 仅一行 JS 受损，已修复 |
+| `cat-meishi.html` | 0 | 同上 |
+| `cat-wenfang.html` | 0 | 同上 |
+| `cat-yangsheng.html` | 0 | 同上 |
+| `detail-brush.html` | 40 | |
+| `detail-danshen.html` | 45 | |
+| `detail-fan.html` | 37 | |
+| `detail-guokui.html` | 38 | |
+| `detail-huimian.html` | 33 | |
+| `detail-ink.html` | 39 | |
+| `detail-jade.html` | 34 | |
+| `detail-mushroom.html` | 45 | |
+| `detail-peanut.html` | 42 | |
+| `detail-pear.html` | 42 | |
+| `detail-shihou.html` | 115 | |
+| `detail-silk.html` | 42 | |
 
 ### 仍未恢复
 
-**5784 个 `U+FFFD`**，其中：
+**552 个 `U+FFFD`**，分布在 12 个商品详情页。这些字符在事故发生时已被解码器销毁，**无法由程序还原**，需要依据上下文逐处校对。
 
-- **1951 个**位于注释与内联样式中，**不影响渲染**
-- **3833 个**位于可见标记中（含正文、`style=`、`aria-label=`、`alt` 等属性）
+残留量之所以从最初统计的 5784 降到这里，是因为早期的修复脚本曾对**整篇文件**做字节级逆向，把本来正确的区段也一并送入了逆向表——正确汉字的 GBK 字节并非合法 UTF-8，于是被降级成 `U+FFFD`。现行修复改为逐区段判定：能构成合法 UTF-8 的字节序列才还原，否则原样保留。
 
-这些字符在事故发生时已被销毁，**无法由程序还原**，需要人工依据上下文逐处校对。
-
-| 文件 | 残留 `U+FFFD` | 其中可见 |
-|---|---:|---:|
-| `admin-login.html` | 30 | 7 |
-| `detail-brush.html` | 511 | 310 |
-| `detail-danshen.html` | 471 | 320 |
-| `detail-fan.html` | 467 | 317 |
-| `detail-guokui.html` | 467 | 316 |
-| `detail-huimian.html` | 458 | 308 |
-| `detail-ink.html` | 496 | 312 |
-| `detail-jade.html` | 493 | 308 |
-| `detail-mushroom.html` | 464 | 314 |
-| `detail-peanut.html` | 461 | 311 |
-| `detail-pear.html` | 461 | 311 |
-| `detail-shihou.html` | 540 | 384 |
-| `detail-silk.html` | 465 | 315 |
-
-`index.html`、`member-center.html`、`auction.html`、`detail-product1..8.html` 等其余 22 个页面**未受影响**。
+`index.html`、`member-center.html`、`auction.html`、`detail-product1..8.html` 等其余 18 个页面**未受影响**。
