@@ -1,0 +1,52 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Stage site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Publish only what the site actually serves. _normalize/ holds one-off
+      # Python maintenance scripts and injection templates; they are not part of
+      # the served site and are deliberately excluded.
+      - name: Stage publishable site
+        run: |
+          mkdir -p _site
+          find . -maxdepth 1 -mindepth 1 \
+            ! -name '.git' \
+            ! -name '_site' \
+            ! -name '_normalize' \
+            -exec cp -r {} _site/ \;
+          echo "staged $(find _site -type f | wc -l) files"
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
