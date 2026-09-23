@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  site-integrity:
+    name: Site integrity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # No package.json in this repository, so the script runs on the
+      # standard library alone -- nothing to install.
+      - name: Check encoding, structure, titles and local references
+        run: node .github/scripts/check-site.mjs .
